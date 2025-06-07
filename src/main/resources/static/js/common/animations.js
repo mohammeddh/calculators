@@ -1,5 +1,5 @@
 /**
- * Animation utilities and scroll-based animations
+ * Animation utilities and scroll-based animations - jQuery Version
  */
 
 WebSpace.Animations = {
@@ -9,9 +9,10 @@ WebSpace.Animations = {
         this.setupScrollAnimations();
         this.setupHoverAnimations();
         this.setupLoadingAnimations();
+        this.setupParallax();
     },
 
-    // Scroll-based animations using Intersection Observer
+    // Scroll-based animations using Intersection Observer and jQuery
     setupScrollAnimations: function() {
         // Check if user prefers reduced motion
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -25,8 +26,9 @@ WebSpace.Animations = {
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
+                const $element = $(entry.target);
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
+                    $element.addClass('animate-in');
                     // Optional: Stop observing after animation
                     // observer.unobserve(entry.target);
                 }
@@ -34,72 +36,69 @@ WebSpace.Animations = {
         }, observerOptions);
 
         // Observe elements that should animate on scroll
-        const animatedElements = document.querySelectorAll(
-            '.feature-card, .calculator-card, .content-section'
-        );
+        const $animatedElements = $('.feature-card, .calculator-card, .content-section');
 
-        animatedElements.forEach((el, index) => {
+        $animatedElements.each(function(index) {
+            const $element = $(this);
             // Add stagger delay
-            el.style.animationDelay = `${index * 0.1}s`;
-            el.classList.add('animate-on-scroll');
-            observer.observe(el);
+            $element.css('animation-delay', `${index * 0.1}s`);
+            $element.addClass('animate-on-scroll');
+            observer.observe(this);
         });
     },
 
-    // Enhanced hover animations
+    // Enhanced hover animations using jQuery
     setupHoverAnimations: function() {
         // Enhanced ad space interactions
-        const adSpaces = document.querySelectorAll('.ad-space');
-        adSpaces.forEach(adSpace => {
-            adSpace.addEventListener('click', function() {
-                this.style.transform = 'scale(0.98)';
-                this.style.transition = 'transform 0.1s ease';
-
-                setTimeout(() => {
-                    this.style.transform = 'scale(1)';
-                }, 100);
+        $('.ad-space').on('click', function() {
+            const $adSpace = $(this);
+            $adSpace.css({
+                'transform': 'scale(0.98)',
+                'transition': 'transform 0.1s ease'
             });
+
+            setTimeout(() => {
+                $adSpace.css('transform', 'scale(1)');
+            }, 100);
         });
 
         // Feature card hover effects
-        const featureCards = document.querySelectorAll('.feature-card, .calculator-card');
-        featureCards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
+        $('.feature-card, .calculator-card').hover(
+            function() {
                 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                    this.style.transform = 'translateY(-2px)';
+                    $(this).css('transform', 'translateY(-2px)');
                 }
-            });
-
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
+            },
+            function() {
+                $(this).css('transform', 'translateY(0)');
+            }
+        );
 
         // Button ripple effect
-        const buttons = document.querySelectorAll('.btn');
-        buttons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                    return;
-                }
+        $('.btn').on('click', function(e) {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                return;
+            }
 
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
+            const $button = $(this);
+            const $ripple = $('<span class="ripple"></span>');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
 
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.classList.add('ripple');
-
-                this.appendChild(ripple);
-
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
+            $ripple.css({
+                width: size + 'px',
+                height: size + 'px',
+                left: x + 'px',
+                top: y + 'px'
             });
+
+            $button.append($ripple);
+
+            setTimeout(() => {
+                $ripple.remove();
+            }, 600);
         });
     },
 
@@ -109,222 +108,521 @@ WebSpace.Animations = {
         this.createSkeletonLoaders();
     },
 
-    // Create skeleton loading placeholders
+    // Create skeleton loading placeholders using jQuery
     createSkeletonLoaders: function() {
-        const style = document.createElement('style');
-        style.textContent = `
-            .skeleton {
-                background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-                background-size: 200% 100%;
-                animation: loading 1.5s infinite;
-            }
+        // Check if styles already exist
+        if ($('#skeleton-styles').length === 0) {
+            const skeletonStyles = `
+                <style id="skeleton-styles">
+                    .skeleton {
+                        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+                        background-size: 200% 100%;
+                        animation: loading 1.5s infinite;
+                    }
 
-            .skeleton-text {
-                height: 1em;
-                margin-bottom: 0.5em;
-                border-radius: 4px;
-            }
+                    .skeleton-text {
+                        height: 1em;
+                        margin-bottom: 0.5em;
+                        border-radius: 4px;
+                    }
 
-            .skeleton-title {
-                height: 1.5em;
-                margin-bottom: 1em;
-                border-radius: 4px;
-            }
+                    .skeleton-title {
+                        height: 1.5em;
+                        margin-bottom: 1em;
+                        border-radius: 4px;
+                    }
 
-            .skeleton-card {
-                height: 200px;
-                border-radius: var(--radius-lg);
-                margin-bottom: 1rem;
-            }
+                    .skeleton-card {
+                        height: 200px;
+                        border-radius: var(--radius-lg);
+                        margin-bottom: 1rem;
+                    }
 
-            @keyframes loading {
-                0% { background-position: 200% 0; }
-                100% { background-position: -200% 0; }
-            }
+                    @keyframes loading {
+                        0% { background-position: 200% 0; }
+                        100% { background-position: -200% 0; }
+                    }
 
-            .ripple {
-                position: absolute;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.3);
-                transform: scale(0);
-                animation: ripple-animation 0.6s linear;
-                pointer-events: none;
-            }
+                    .ripple {
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255, 255, 255, 0.3);
+                        transform: scale(0);
+                        animation: ripple-animation 0.6s linear;
+                        pointer-events: none;
+                    }
 
-            @keyframes ripple-animation {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
+                    @keyframes ripple-animation {
+                        to {
+                            transform: scale(4);
+                            opacity: 0;
+                        }
+                    }
 
-            .animate-on-scroll {
-                opacity: 0;
-                transform: translateY(30px);
-                transition: opacity 0.6s ease, transform 0.6s ease;
-            }
+                    .animate-on-scroll {
+                        opacity: 0;
+                        transform: translateY(30px);
+                        transition: opacity 0.6s ease, transform 0.6s ease;
+                    }
 
-            .animate-on-scroll.animate-in {
-                opacity: 1;
-                transform: translateY(0);
-            }
+                    .animate-on-scroll.animate-in {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
 
-            .pulse {
-                animation: pulse 2s infinite;
-            }
+                    .pulse {
+                        animation: pulse 2s infinite;
+                    }
 
-            @keyframes pulse {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0.5; }
-            }
+                    @keyframes pulse {
+                        0%, 100% { opacity: 1; }
+                        50% { opacity: 0.5; }
+                    }
 
-            .bounce {
-                animation: bounce 1s infinite;
-            }
+                    .bounce {
+                        animation: bounce 1s infinite;
+                    }
 
-            @keyframes bounce {
-                0%, 20%, 53%, 80%, 100% {
-                    transform: translate3d(0,0,0);
-                }
-                40%, 43% {
-                    transform: translate3d(0,-10px,0);
-                }
-                70% {
-                    transform: translate3d(0,-5px,0);
-                }
-                90% {
-                    transform: translate3d(0,-2px,0);
-                }
-            }
-        `;
-        document.head.appendChild(style);
+                    @keyframes bounce {
+                        0%, 20%, 53%, 80%, 100% {
+                            transform: translate3d(0,0,0);
+                        }
+                        40%, 43% {
+                            transform: translate3d(0,-10px,0);
+                        }
+                        70% {
+                            transform: translate3d(0,-5px,0);
+                        }
+                        90% {
+                            transform: translate3d(0,-2px,0);
+                        }
+                    }
+
+                    .fade-in {
+                        animation: fadeIn 0.6s ease-in;
+                    }
+
+                    .slide-up {
+                        animation: slideUp 0.6s ease-out;
+                    }
+
+                    .scale-in {
+                        animation: scaleIn 0.3s ease-out;
+                    }
+
+                    @keyframes fadeIn {
+                        from { opacity: 0; }
+                        to { opacity: 1; }
+                    }
+
+                    @keyframes slideUp {
+                        from {
+                            opacity: 0;
+                            transform: translateY(30px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
+
+                    @keyframes scaleIn {
+                        from {
+                            opacity: 0;
+                            transform: scale(0.95);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: scale(1);
+                        }
+                    }
+
+                    /* Reduced motion preferences */
+                    @media (prefers-reduced-motion: reduce) {
+                        *,
+                        *::before,
+                        *::after {
+                            animation-duration: 0.01ms !important;
+                            animation-iteration-count: 1 !important;
+                            transition-duration: 0.01ms !important;
+                            scroll-behavior: auto !important;
+                        }
+                    }
+                </style>
+            `;
+            $('head').append(skeletonStyles);
+        }
     },
 
-    // Show skeleton loading
-    showSkeleton: function(container, type = 'card') {
-        const skeleton = document.createElement('div');
-        skeleton.className = `skeleton skeleton-${type}`;
+    // Show skeleton loading using jQuery
+    showSkeleton: function($container, type = 'card') {
+        const $skeleton = $('<div class="skeleton skeleton-' + type + '"></div>');
 
         if (type === 'text') {
             for (let i = 0; i < 3; i++) {
-                const line = document.createElement('div');
-                line.className = 'skeleton skeleton-text';
-                line.style.width = `${Math.random() * 40 + 60}%`;
-                skeleton.appendChild(line);
+                const $line = $('<div class="skeleton skeleton-text"></div>');
+                $line.css('width', `${Math.random() * 40 + 60}%`);
+                $skeleton.append($line);
             }
         }
 
-        container.appendChild(skeleton);
-        return skeleton;
+        $container.append($skeleton);
+        return $skeleton;
     },
 
-    // Hide skeleton loading
-    hideSkeleton: function(skeleton) {
-        if (skeleton && skeleton.parentNode) {
-            skeleton.style.opacity = '0';
-            setTimeout(() => {
-                skeleton.remove();
-            }, 300);
-        }
-    },
-
-    // Smooth scroll to element
-    scrollTo: function(target, offset = 0) {
-        const element = typeof target === 'string' ? document.querySelector(target) : target;
-        if (!element) return;
-
-        const targetPosition = element.offsetTop - offset;
-
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            window.scrollTo(0, targetPosition);
-        } else {
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
+    // Hide skeleton loading using jQuery
+    hideSkeleton: function($skeleton) {
+        if ($skeleton && $skeleton.length) {
+            $skeleton.animate({ opacity: 0 }, 300, function() {
+                $(this).remove();
             });
         }
     },
 
-    // Parallax effect for hero sections
+    // Smooth scroll to element using jQuery
+    scrollTo: function(target, offset = 0) {
+        const $element = typeof target === 'string' ? $(target) : target;
+        if (!$element.length) return;
+
+        const targetPosition = $element.offset().top - offset;
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            $(window).scrollTop(targetPosition);
+        } else {
+            $('html, body').animate({
+                scrollTop: targetPosition
+            }, 600);
+        }
+    },
+
+    // Parallax effect for hero sections using jQuery
     setupParallax: function() {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             return;
         }
 
-        const parallaxElements = document.querySelectorAll('.parallax');
+        const $parallaxElements = $('.parallax');
+        if ($parallaxElements.length === 0) return;
 
         const handleScroll = WebSpace.Core.utils.throttle(() => {
-            const scrolled = window.pageYOffset;
+            const scrolled = $(window).scrollTop();
 
-            parallaxElements.forEach(element => {
+            $parallaxElements.each(function() {
+                const $element = $(this);
                 const rate = scrolled * -0.5;
-                element.style.transform = `translateY(${rate}px)`;
+                $element.css('transform', `translateY(${rate}px)`);
             });
         }, 16); // ~60fps
 
-        window.addEventListener('scroll', handleScroll);
+        $(window).on('scroll', handleScroll);
     },
 
-    // Fade in animation for new content
-    fadeIn: function(element, duration = 300) {
+    // Fade in animation for new content using jQuery
+    fadeIn: function($element, duration = 300) {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            element.style.opacity = '1';
+            $element.css('opacity', '1');
             return;
         }
 
-        element.style.opacity = '0';
-        element.style.transition = `opacity ${duration}ms ease`;
-
-        requestAnimationFrame(() => {
-            element.style.opacity = '1';
-        });
+        $element.css('opacity', '0').animate({ opacity: 1 }, duration);
     },
 
-    // Scale in animation
-    scaleIn: function(element, duration = 300) {
+    // Scale in animation using jQuery
+    scaleIn: function($element, duration = 300) {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             return;
         }
 
-        element.style.transform = 'scale(0.9)';
-        element.style.opacity = '0';
-        element.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
-
-        requestAnimationFrame(() => {
-            element.style.transform = 'scale(1)';
-            element.style.opacity = '1';
+        $element.css({
+            'transform': 'scale(0.9)',
+            'opacity': '0'
+        }).animate({
+            opacity: 1
+        }, {
+            duration: duration,
+            step: function(now, fx) {
+                if (fx.prop === 'opacity') {
+                    const scale = 0.9 + (0.1 * now);
+                    $(this).css('transform', `scale(${scale})`);
+                }
+            }
         });
     },
 
-    // Slide in from direction
-    slideIn: function(element, direction = 'up', duration = 300) {
+    // Slide in from direction using jQuery
+    slideIn: function($element, direction = 'up', duration = 300) {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             return;
         }
 
         const directions = {
-            up: 'translateY(20px)',
-            down: 'translateY(-20px)',
-            left: 'translateX(20px)',
-            right: 'translateX(-20px)'
+            up: { transform: 'translateY(20px)', animateTo: 'translateY(0)' },
+            down: { transform: 'translateY(-20px)', animateTo: 'translateY(0)' },
+            left: { transform: 'translateX(20px)', animateTo: 'translateX(0)' },
+            right: { transform: 'translateX(-20px)', animateTo: 'translateX(0)' }
         };
 
-        element.style.transform = directions[direction] || directions.up;
-        element.style.opacity = '0';
-        element.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
+        const dir = directions[direction] || directions.up;
 
-        requestAnimationFrame(() => {
-            element.style.transform = 'translateY(0) translateX(0)';
-            element.style.opacity = '1';
+        $element.css({
+            'transform': dir.transform,
+            'opacity': '0'
         });
+
+        // Use CSS transition for transform
+        $element.css('transition', `transform ${duration}ms ease, opacity ${duration}ms ease`);
+
+        setTimeout(() => {
+            $element.css({
+                'transform': dir.animateTo,
+                'opacity': '1'
+            });
+        }, 10);
+    },
+
+    // Advanced animations using jQuery
+    animateCounter: function($element, start, end, duration = 1000) {
+        $({ counter: start }).animate({ counter: end }, {
+            duration: duration,
+            easing: 'swing',
+            step: function() {
+                $element.text(Math.ceil(this.counter));
+            },
+            complete: function() {
+                $element.text(end);
+            }
+        });
+    },
+
+    // Typewriter effect using jQuery
+    typeWriter: function($element, text, speed = 100) {
+        $element.text('');
+        let i = 0;
+
+        const typeInterval = setInterval(() => {
+            $element.text(text.slice(0, i + 1));
+            i++;
+
+            if (i >= text.length) {
+                clearInterval(typeInterval);
+
+                // Add blinking cursor
+                const $cursor = $('<span class="cursor">|</span>');
+                $element.append($cursor);
+
+                // Animate cursor blinking
+                setInterval(() => {
+                    $cursor.fadeToggle(500);
+                }, 1000);
+            }
+        }, speed);
+    },
+
+    // Stagger animation for multiple elements
+    staggerAnimation: function($elements, animationClass, delay = 100) {
+        $elements.each(function(index) {
+            const $element = $(this);
+            setTimeout(() => {
+                $element.addClass(animationClass);
+            }, index * delay);
+        });
+    },
+
+    // Progress bar animation
+    animateProgressBar: function($progressBar, targetWidth, duration = 1000) {
+        $progressBar.animate({
+            width: targetWidth + '%'
+        }, duration);
+    },
+
+    // Entrance animations for page load
+    entranceAnimations: function() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+
+        // Animate header
+        $('.header').addClass('fade-in');
+
+        // Stagger animate feature cards
+        setTimeout(() => {
+            this.staggerAnimation($('.feature-card'), 'slide-up', 200);
+        }, 300);
+
+        // Animate CTA section
+        setTimeout(() => {
+            $('.cta').addClass('scale-in');
+        }, 800);
+    },
+
+    // Exit animations for page transitions
+    exitAnimations: function(callback) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            if (callback) callback();
+            return;
+        }
+
+        $('.main-content').addClass('fade-out');
+
+        setTimeout(() => {
+            if (callback) callback();
+        }, 300);
+    },
+
+    // Smooth reveal on scroll with jQuery
+    revealOnScroll: function() {
+        const $revealElements = $('.reveal-on-scroll');
+
+        if ($revealElements.length === 0) return;
+
+        const handleScroll = WebSpace.Core.utils.throttle(() => {
+            $revealElements.each(function() {
+                const $element = $(this);
+
+                if (WebSpace.Core.utils.isInViewport($element, 100)) {
+                    $element.addClass('revealed');
+                }
+            });
+        }, 100);
+
+        $(window).on('scroll', handleScroll);
+        handleScroll(); // Check on initial load
+    },
+
+    // Floating animation for decorative elements
+    floatingAnimation: function($elements) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+
+        $elements.each(function(index) {
+            const $element = $(this);
+            const baseDelay = index * 500;
+
+            setInterval(() => {
+                const randomY = (Math.random() - 0.5) * 20;
+                const randomX = (Math.random() - 0.5) * 10;
+                const randomRotation = (Math.random() - 0.5) * 10;
+
+                $element.css({
+                    'transform': `translate(${randomX}px, ${randomY}px) rotate(${randomRotation}deg)`,
+                    'transition': 'transform 3s ease-in-out'
+                });
+            }, 3000 + baseDelay);
+        });
+    },
+
+    // Morphing background animation
+    morphingBackground: function($element) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+
+        const colors = ['#3498db', '#e74c3c', '#f39c12', '#2ecc71', '#9b59b6'];
+        let currentIndex = 0;
+
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % colors.length;
+            $element.animate({
+                backgroundColor: colors[currentIndex]
+            }, 2000);
+        }, 3000);
+    },
+
+    // Image hover zoom effect
+    setupImageHoverEffects: function() {
+        $('.hover-zoom').hover(
+            function() {
+                $(this).css('transform', 'scale(1.05)');
+            },
+            function() {
+                $(this).css('transform', 'scale(1)');
+            }
+        );
+    },
+
+    // Loading spinner with jQuery
+    showLoadingSpinner: function($container, message = 'Loading...') {
+        const $spinner = $(`
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p>${message}</p>
+            </div>
+        `);
+
+        $container.append($spinner);
+        return $spinner;
+    },
+
+    hideLoadingSpinner: function($spinner) {
+        if ($spinner && $spinner.length) {
+            $spinner.fadeOut(300, function() {
+                $(this).remove();
+            });
+        }
+    },
+
+    // Page transition effects
+    pageTransition: function(url, transitionType = 'fade') {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            window.location.href = url;
+            return;
+        }
+
+        const $overlay = $('<div class="page-transition-overlay"></div>');
+        $('body').append($overlay);
+
+        switch (transitionType) {
+            case 'slide':
+                $overlay.css({
+                    'position': 'fixed',
+                    'top': 0,
+                    'left': '-100%',
+                    'width': '100%',
+                    'height': '100%',
+                    'background': 'var(--primary)',
+                    'z-index': 9999
+                }).animate({
+                    left: 0
+                }, 500, function() {
+                    window.location.href = url;
+                });
+                break;
+
+            case 'fade':
+            default:
+                $overlay.css({
+                    'position': 'fixed',
+                    'top': 0,
+                    'left': 0,
+                    'width': '100%',
+                    'height': '100%',
+                    'background': 'rgba(0,0,0,0.8)',
+                    'z-index': 9999,
+                    'opacity': 0
+                }).animate({
+                    opacity: 1
+                }, 300, function() {
+                    window.location.href = url;
+                });
+                break;
+        }
     }
 };
 
 // Initialize animations when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-        WebSpace.Animations.init();
-    });
-} else {
+$(document).ready(function() {
     WebSpace.Animations.init();
-}
+    WebSpace.Animations.entranceAnimations();
+    WebSpace.Animations.revealOnScroll();
+    WebSpace.Animations.setupImageHoverEffects();
+
+    // Setup floating animations for decorative elements
+    const $floatingElements = $('.floating-element, .decorative-element');
+    if ($floatingElements.length) {
+        WebSpace.Animations.floatingAnimation($floatingElements);
+    }
+});
+
+// Export animations for external use
+window.WebSpaceAnimations = WebSpace.Animations;
