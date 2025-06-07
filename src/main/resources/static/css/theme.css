@@ -1,0 +1,171 @@
+/*
+ * WebSpace Calculator Tools Theme
+ * Main CSS file that imports all component styles
+ */
+
+/* Import all common styles */
+@import url('./common/base.css');
+@import url('./common/components.css');
+@import url('./common/header.css');
+@import url('./common/footer.css');
+@import url('./common/sidebar.css');
+@import url('./common/breadcrumb.css');
+@import url('./common/utilities.css');
+@import url('./common/responsive.css');
+
+/* Theme-specific overrides and additional styles */
+body {
+    font-feature-settings: "liga" 1, "kern" 1;
+    text-rendering: optimizeLegibility;
+}
+
+/* Focus styles for accessibility */
+*:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--primary);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 1000;
+    border-radius: 0 0 4px 4px;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--primary-lighter);
+    border-top: 2px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Error states */
+.error {
+    color: #dc2626;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+}
+
+/* Success states */
+.success {
+    color: #065f46;
+    background-color: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+}
+
+/* Warning states */
+.warning {
+    color: #92400e;
+    background-color: #fffbeb;
+    border: 1px solid #fed7aa;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+}
+
+/* Info states */
+.info {
+    color: #1e40af;
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+}
+
+/* Animation classes */
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease-out;
+}
+
+.scale-in {
+    animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+    :root {
+        --border: #2c3e50;
+        --border-light: #34495e;
+        --text-light: #2c3e50;
+        --text-lightest: #34495e;
+        --primary: #2980b9;
+    }
+}

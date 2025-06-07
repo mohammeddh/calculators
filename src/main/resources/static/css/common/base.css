@@ -1,0 +1,147 @@
+:root {
+    /* Professional Dark Color Palette */
+    --primary: #3498db;
+    --primary-light: #74b9ff;
+    --primary-lighter: #a8daff;
+    --primary-lightest: #e3f2fd;
+
+    --accent: #2c3e50;
+    --accent-light: #34495e;
+    --accent-lighter: #7f8c8d;
+
+    --text-primary: #2c3e50;
+    --text-secondary: #34495e;
+    --text-light: #7f8c8d;
+    --text-lightest: #bdc3c7;
+
+    --background: #ffffff;
+    --background-soft: #fefefe;
+    --background-light: #fafafb;
+    --background-lighter: #f8fafc;
+    --background-lightest: #ecf0f1;
+
+    --border: #ecf0f1;
+    --border-light: #ddd;
+    --border-lighter: #ecf0f1;
+
+    --shadow-subtle: 0 1px 2px 0 rgb(0 0 0 / 0.02);
+    --shadow-light: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+    --shadow-medium: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    --shadow-soft: 0 10px 15px -3px rgb(0 0 0 / 0.03), 0 4px 6px -4px rgb(0 0 0 / 0.03);
+
+    --radius: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
+
+    --transition: all 0.2s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--background);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Layout - Clean Grid */
+.main-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr 250px;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 1.5rem auto;
+    padding: 0 1rem;
+}
+
+.main-layout.no-sidebars {
+    grid-template-columns: 1fr;
+}
+
+.main-layout.no-left-sidebar {
+    grid-template-columns: 1fr 250px;
+}
+
+.main-layout.no-right-sidebar {
+    grid-template-columns: 250px 1fr;
+}
+
+/* Main Content - Light & Airy */
+.main-content {
+    background: var(--background);
+    border-radius: var(--radius-xl);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-light);
+    border: 1px solid var(--border);
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.page-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+h2 { font-size: 1.875rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.125rem; }
+h6 { font-size: 1rem; }
+
+p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Selection colors */
+::selection {
+    background: var(--primary-lighter);
+    color: var(--primary);
+}
+
+::-moz-selection {
+    background: var(--primary-lighter);
+    color: var(--primary);
+}

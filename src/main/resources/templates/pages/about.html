@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::content})}">
+
+<div th:fragment="content">
+    <header class="page-header">
+        <h1>About WebSpace</h1>
+        <p>We're passionate about creating beautiful, accessible calculator tools that make complex calculations simple and enjoyable.</p>
+    </header>
+
+    <section class="about-content">
+        <div class="content-section">
+            <h2>Our Mission</h2>
+            <p>At WebSpace, we believe that powerful calculation tools shouldn't be complicated or ugly. We're dedicated to creating calculator applications that are not only functionally excellent but also visually appealing and user-friendly.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>What We Offer</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Financial Calculators</h3>
+                    <p>Mortgage, loan, investment, and budgeting calculators to help you make informed financial decisions.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">❤️</div>
+                    <h3>Health & Fitness</h3>
+                    <p>BMI, calorie, body fat, and fitness calculators to support your health and wellness journey.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔢</div>
+                    <h3>Math & Science</h3>
+                    <p>Advanced mathematical and scientific calculators for students, professionals, and enthusiasts.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏠</div>
+                    <h3>Everyday Tools</h3>
+                    <p>Unit converters, date calculators, and other practical tools for daily use.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Our Values</h2>
+            <ul class="values-list">
+                <li><strong>Simplicity:</strong> Complex calculations made simple and intuitive</li>
+                <li><strong>Beauty:</strong> Every tool designed with care and attention to aesthetics</li>
+                <li><strong>Accuracy:</strong> Reliable calculations you can trust</li>
+                <li><strong>Accessibility:</strong> Tools that work for everyone, everywhere</li>
+                <li><strong>Privacy:</strong> Your data stays with you - we don't track or store personal information</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta">
+        <a href="/tools" class="btn btn-primary">Explore Our Tools</a>
+        <a href="/contact" class="btn btn-secondary">Get in Touch</a>
+    </section>
+</div>
+
+</html>

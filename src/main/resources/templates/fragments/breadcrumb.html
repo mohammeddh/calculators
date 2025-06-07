@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="breadcrumb">
+    <div class="breadcrumb" th:if="${breadcrumbs != null and !breadcrumbs.empty}">
+        <div class="container">
+            <nav aria-label="Breadcrumb">
+                <th:block th:each="crumb, iter : ${breadcrumbs}">
+                    <th:block th:if="${!iter.last}">
+                        <a href="/" th:if="${crumb == 'Home'}" th:text="${crumb}">Home</a>
+                        <span th:unless="${crumb == 'Home'}" th:text="${crumb}">Breadcrumb</span>
+                        <span class="breadcrumb-separator">›</span>
+                    </th:block>
+                    <span th:if="${iter.last}" th:text="${crumb}">Current Page</span>
+                </th:block>
+            </nav>
+        </div>
+    </div>
+</div>
+
+</html>

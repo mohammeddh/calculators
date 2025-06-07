@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout (content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">WebSpace - Beautiful Calculator Tools</title>
+    <meta name="description" th:content="${pageDescription}">
+    <meta name="keywords" th:content="${pageKeywords}">
+    <meta name="author" th:content="${appAuthor}">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" th:content="${canonicalUrl}">
+    <meta property="og:title" th:content="${pageTitle}">
+    <meta property="og:description" th:content="${pageDescription}">
+    <meta property="og:image" th:content="${appUrl + ogImage}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" th:content="${canonicalUrl}">
+    <meta property="twitter:title" th:content="${pageTitle}">
+    <meta property="twitter:description" th:content="${pageDescription}">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" th:href="${canonicalUrl}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js for calculator visualizations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="/css/theme.css">
+
+    <!-- Custom CSS for specific pages -->
+    <th:block th:if="${customCss}">
+        <link th:each="css : ${customCss}" rel="stylesheet" th:href="${css}">
+    </th:block>
+
+    <!-- Schema.org markup -->
+    <script type="application/ld+json" th:inline="javascript">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "[[${appName}]] Calculator Tools",
+            "url": "[[${appUrl}]]",
+            "description": "[[${appDescription}]]",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            }
+        }
+    </script>
+
+    <!-- Additional head content -->
+    <th:block th:fragment="additional-head"></th:block>
+</head>
+<body>
+<!-- Header -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- Breadcrumb -->
+<div th:replace="~{fragments/breadcrumb :: breadcrumb}"></div>
+
+<!-- Main Layout -->
+<div class="main-layout" th:classappend="${!showLeftSidebar and !showRightSidebar} ? 'no-sidebars' : (${!showLeftSidebar} ? 'no-left-sidebar' : (${!showRightSidebar} ? 'no-right-sidebar' : ''))">
+    <!-- Left Sidebar -->
+    <aside class="sidebar" th:if="${showLeftSidebar}" role="complementary" aria-label="Advertisement sidebar">
+        <div th:replace="~{fragments/sidebar :: left-sidebar}"></div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+        <div th:replace="${content}"></div>
+    </main>
+
+    <!-- Right Sidebar -->
+    <aside class="sidebar" th:if="${showRightSidebar}" role="complementary" aria-label="Featured content sidebar">
+        <div th:replace="~{fragments/sidebar :: right-sidebar}"></div>
+    </aside>
+</div>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- Base JavaScript -->
+<script src="/js/theme.js"></script>
+
+<!-- Custom JavaScript for specific pages -->
+<th:block th:if="${customJs}">
+    <script th:each="js : ${customJs}" th:src="${js}"></script>
+</th:block>
+
+<!-- Additional scripts -->
+<th:block th:fragment="additional-scripts"></th:block>
+</body>
+</html>

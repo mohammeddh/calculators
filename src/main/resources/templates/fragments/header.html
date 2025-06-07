@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="header">
+    <header class="header">
+        <div class="container">
+            <nav class="nav" role="navigation" aria-label="Main navigation">
+                <a href="/" class="logo" th:text="'✨ ' + ${appName}">
+                    ✨ WebSpace
+                </a>
+                <div class="nav-links">
+                    <a href="/" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">Home</a>
+                    <a href="/about" class="nav-link" th:classappend="${activePage == 'about'} ? 'active' : ''">About</a>
+                    <a href="/tools" class="nav-link" th:classappend="${activePage == 'tools'} ? 'active' : ''">Tools</a>
+                    <a href="/contact" class="nav-link" th:classappend="${activePage == 'contact'} ? 'active' : ''">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu">
+                <a href="/" class="mobile-nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">Home</a>
+                <a href="/about" class="mobile-nav-link" th:classappend="${activePage == 'about'} ? 'active' : ''">About</a>
+                <a href="/tools" class="mobile-nav-link" th:classappend="${activePage == 'tools'} ? 'active' : ''">Tools</a>
+                <a href="/contact" class="mobile-nav-link" th:classappend="${activePage == 'contact'} ? 'active' : ''">Contact</a>
+            </div>
+        </div>
+    </header>
+</div>
+
+</html>

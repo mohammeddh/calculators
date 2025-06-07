@@ -1,0 +1,137 @@
+/* Minimal Sidebars */
+.sidebar {
+    background: var(--background-soft);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    height: fit-content;
+    box-shadow: var(--shadow-light);
+    position: sticky;
+    top: 120px;
+    border: 1px solid var(--border);
+}
+
+.ad-header {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--text-light);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.ad-space {
+    height: 250px;
+    background: var(--background-lightest);
+    border: 1px dashed var(--border-light);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-weight: 500;
+    text-align: center;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.ad-space:hover {
+    border-color: var(--primary-light);
+    background: var(--primary-lightest);
+    color: var(--primary);
+}
+
+.ad-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.6;
+}
+
+/* Sidebar Sections */
+.sidebar-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-light);
+}
+
+.sidebar-section h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.sidebar-section p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+/* Quick Links */
+.quick-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.quick-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: var(--transition);
+    background: var(--background-lighter);
+}
+
+.quick-link:hover {
+    background: var(--primary-lightest);
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.quick-link span:first-child {
+    font-size: 1.2rem;
+}
+
+.quick-link span:last-child {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Update List */
+.update-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.update-list li {
+    padding: 0.5rem 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.update-list li:last-child {
+    border-bottom: none;
+}
+
+/* Newsletter Form in Sidebar */
+.sidebar .newsletter-form {
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.sidebar .newsletter-form input {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+}
+
+.sidebar .newsletter-form .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+}
