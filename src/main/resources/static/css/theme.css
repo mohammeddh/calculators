@@ -12,6 +12,7 @@
 @import url('./common/breadcrumb.css');
 @import url('./common/utilities.css');
 @import url('./common/responsive.css');
+@import url('./common/mobile.css');
 
 /* Theme-specific overrides and additional styles */
 body {
