@@ -74,12 +74,12 @@ class CalcHubCore {
     setupBasicForms() {
         // Newsletter forms
         document.addEventListener('submit', (e) => {
-            if (e.target.matches('.newsletter-form')) {
+            if (this.elementMatches(e.target, '.newsletter-form')) {
                 e.preventDefault();
                 this.handleNewsletterSubmit(e.target);
             }
 
-            if (e.target.matches('.contact-form')) {
+            if (this.elementMatches(e.target, '.contact-form')) {
                 e.preventDefault();
                 this.handleContactSubmit(e.target);
             }
@@ -87,18 +87,24 @@ class CalcHubCore {
 
         // Real-time validation
         document.addEventListener('blur', (e) => {
-            if (e.target.matches('input[required], textarea[required]')) {
+            if (this.elementMatches(e.target, 'input[required], textarea[required]')) {
                 this.validateField(e.target);
             }
         }, true);
 
         // Auto-expand textareas
         document.addEventListener('input', (e) => {
-            if (e.target.matches('textarea')) {
+            if (this.elementMatches(e.target, 'textarea')) {
                 e.target.style.height = 'auto';
                 e.target.style.height = e.target.scrollHeight + 'px';
             }
         });
+    }
+
+    // Helper method to safely check element matches
+    elementMatches(element, selector) {
+        if (!element || !element.matches) return false;
+        return element.matches(selector);
     }
 
     async handleNewsletterSubmit(form) {
@@ -230,7 +236,7 @@ class CalcHubCore {
 
         // Copy to clipboard functionality
         document.addEventListener('click', (e) => {
-            if (e.target.matches('.copy-btn')) {
+            if (this.elementMatches(e.target, '.copy-btn')) {
                 const target = document.querySelector(e.target.dataset.target);
                 if (target) {
                     const text = target.tagName === 'INPUT' ? target.value : target.textContent;

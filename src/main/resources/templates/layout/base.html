@@ -39,6 +39,9 @@
     <!-- Modern CSS (single file) -->
     <link rel="stylesheet" href="/css/main.css">
 
+    <!-- Custom CSS if specified -->
+    <link th:each="css : ${customCss}" th:href="${css}" rel="stylesheet">
+
     <!-- Schema.org markup -->
     <script type="application/ld+json" th:inline="javascript">
         {
@@ -112,8 +115,13 @@
 <div class="container">
     <div class="layout" th:classappend="${showLeftSidebar and showRightSidebar} ? 'with-both-sidebars' : (${showLeftSidebar and !showRightSidebar} ? 'with-left-sidebar' : (${!showLeftSidebar and showRightSidebar} ? 'with-right-sidebar' : 'no-sidebars'))">
 
-        <!-- Left Sidebar -->
+        <!-- Left Sidebar - Always show on mobile regardless of page config -->
         <aside th:if="${showLeftSidebar}" class="sidebar sidebar-left" role="complementary" aria-label="Advertisement sidebar">
+            <div th:replace="~{fragments/sidebar :: left-sidebar}"></div>
+        </aside>
+
+        <!-- Mobile-only left sidebar (when hidden on desktop) -->
+        <aside th:unless="${showLeftSidebar}" class="sidebar sidebar-left mobile-only" role="complementary" aria-label="Advertisement sidebar">
             <div th:replace="~{fragments/sidebar :: left-sidebar}"></div>
         </aside>
 
@@ -122,8 +130,13 @@
             <div th:replace="${content}"></div>
         </main>
 
-        <!-- Right Sidebar -->
+        <!-- Right Sidebar - Always show on mobile regardless of page config -->
         <aside th:if="${showRightSidebar}" class="sidebar sidebar-right" role="complementary" aria-label="Featured content sidebar">
+            <div th:replace="~{fragments/sidebar :: right-sidebar}"></div>
+        </aside>
+
+        <!-- Mobile-only right sidebar (when hidden on desktop) -->
+        <aside th:unless="${showRightSidebar}" class="sidebar sidebar-right mobile-only" role="complementary" aria-label="Featured content sidebar">
             <div th:replace="~{fragments/sidebar :: right-sidebar}"></div>
         </aside>
     </div>
@@ -148,5 +161,8 @@
 
 <!-- Modern JavaScript (single file) -->
 <script src="/js/main.js"></script>
+
+<!-- Custom JavaScript if specified -->
+<script th:each="js : ${customJs}" th:src="${js}"></script>
 </body>
 </html>

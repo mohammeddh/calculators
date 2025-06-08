@@ -136,34 +136,64 @@ class MortgageCalculator extends BaseCalculator {
         // Destroy existing chart if it exists
         if (this.chart) {
             this.chart.destroy();
+            this.chart = null;
         }
 
+        // Ensure canvas has proper size constraints
+        const container = canvas.parentElement;
+        const containerWidth = container.clientWidth || 300;
+        const containerHeight = container.clientHeight || 250;
+
+        // Set reasonable canvas dimensions
+        canvas.width = Math.min(containerWidth - 32, 400); // Account for padding
+        canvas.height = Math.min(containerHeight - 60, 200); // Account for title
+        canvas.style.width = canvas.width + 'px';
+        canvas.style.height = canvas.height + 'px';
+
         const ctx = canvas.getContext('2d');
-        this.chart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Principal & Interest', 'Property Tax', 'Insurance', 'PMI'],
-                datasets: [{
-                    data: [results.monthlyPI, results.monthlyTax, results.monthlyInsurance, results.monthlyPMI],
-                    backgroundColor: [
-                        'hsl(210, 70%, 55%)',
-                        'hsl(210, 70%, 65%)',
-                        'hsl(210, 70%, 75%)',
-                        'hsl(210, 70%, 85%)'
-                    ],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
+
+        try {
+            this.chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Principal & Interest', 'Property Tax', 'Insurance', 'PMI'],
+                    datasets: [{
+                        data: [results.monthlyPI, results.monthlyTax, results.monthlyInsurance, results.monthlyPMI],
+                        backgroundColor: [
+                            'hsl(210, 70%, 55%)',
+                            'hsl(210, 70%, 65%)',
+                            'hsl(210, 70%, 75%)',
+                            'hsl(210, 70%, 85%)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: false, // Disable responsive to control size manually
+                    maintainAspectRatio: false,
+                    devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2), // Limit pixel ratio
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 8,
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        }
+                    },
+                    layout: {
+                        padding: 10
                     }
                 }
-            }
-        });
+            });
+        } catch (error) {
+            console.error('Chart creation failed:', error);
+            // Hide chart container if chart fails
+            container.style.display = 'none';
+        }
     }
 }
 

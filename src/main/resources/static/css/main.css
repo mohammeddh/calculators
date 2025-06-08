@@ -60,12 +60,12 @@
     --text-3xl: 1.875rem;
     --text-4xl: 2.25rem;
 
-    /* Radius scale */
-    --radius-sm: 0.5rem;
-    --radius: 0.75rem;
-    --radius-lg: 1rem;
-    --radius-xl: 1.25rem;
-    --radius-2xl: 1.5rem;
+    /* Radius scale - Reduced roundness */
+    --radius-sm: 0.25rem;
+    --radius: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
 
     /* Shadow scale */
     --shadow-sm: 0 1px 2px hsl(0 0% 0% / 0.05);
@@ -117,7 +117,7 @@ p {
     padding: 0 var(--space-md);
 }
 
-/* Layout System */
+/* Layout System - Always show ads on mobile */
 .layout {
     display: grid;
     gap: var(--space-xl);
@@ -129,23 +129,45 @@ p {
 .layout.with-right-sidebar { grid-template-columns: 1fr 250px; }
 .layout.no-sidebars { grid-template-columns: 1fr; }
 
+/* Hide mobile-only sidebars on desktop */
+.mobile-only {
+    display: none;
+}
+
+/* Mobile Layout - ALWAYS show ads regardless of page config */
 @media (max-width: 1024px) {
+    /* Show mobile-only sidebars */
+    .mobile-only {
+        display: block !important;
+    }
+
+    .layout,
     .layout.with-both-sidebars,
     .layout.with-left-sidebar,
-    .layout.with-right-sidebar {
+    .layout.with-right-sidebar,
+    .layout.no-sidebars {
         grid-template-columns: 1fr;
+        grid-template-areas:
+            "main"
+            "sidebar-left"
+            "sidebar-right";
     }
 
     .main-content {
-        order: 2;
-    }
-
-    .sidebar-left {
+        grid-area: main;
         order: 1;
     }
 
+    .sidebar-left {
+        grid-area: sidebar-left;
+        order: 2;
+        display: block !important; /* Force show even if hidden by page config */
+    }
+
     .sidebar-right {
+        grid-area: sidebar-right;
         order: 3;
+        display: block !important; /* Force show even if hidden by page config */
     }
 }
 
@@ -386,7 +408,7 @@ p {
 
 .footer-bottom {
     text-align: center;
-    color: white;
+    color: hsla(0, 0%, 100%, 0.9);
     font-size: var(--text-sm);
     font-weight: 500;
 }
@@ -570,11 +592,20 @@ p {
     height: fit-content;
 }
 
+/* Mobile sidebar improvements - ALWAYS show ads, stack vertically */
 @media (max-width: 1024px) {
     .sidebar {
         position: static;
         width: 100%;
         max-width: 100%;
+    }
+
+    /* Create horizontal stacking for mobile ads */
+    .sidebar-left,
+    .sidebar-right {
+        display: flex !important;
+        flex-direction: column;
+        gap: var(--space-md);
     }
 }
 
@@ -584,15 +615,25 @@ p {
         border-radius: var(--radius);
     }
 
-    /* Make ad spaces horizontal on mobile */
+    /* On small mobile, create 2-column grid for ads */
+    .sidebar-left,
+    .sidebar-right {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-sm);
+        align-items: start;
+    }
+
+    /* Make each ad section stack vertically within its grid cell */
     .ad-space {
         height: 120px;
         width: 100%;
         max-width: 100%;
     }
 
-    /* Stack sidebar sections on mobile */
+    /* Sidebar sections span full width */
     .sidebar-section {
+        grid-column: 1 / -1;
         margin-top: var(--space-lg);
         padding-top: var(--space-md);
     }
@@ -606,6 +647,13 @@ p {
 @media (max-width: 480px) {
     .sidebar {
         padding: var(--space-sm);
+    }
+
+    /* Single column for very small screens */
+    .sidebar-left,
+    .sidebar-right {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-sm);
     }
 
     .ad-space {
