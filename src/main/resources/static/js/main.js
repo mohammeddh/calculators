@@ -1,6 +1,6 @@
 /**
  * CalcHub - Core JavaScript
- * Contains only essential functionality loaded on every page
+ * Optimized for modern browsers (Chrome 88+, Firefox 85+, Safari 14+, Edge 88+)
  */
 
 class CalcHubCore {
@@ -33,12 +33,7 @@ class CalcHubCore {
 
         toggle.addEventListener('click', () => {
             const isOpen = menu.classList.contains('active');
-
-            if (isOpen) {
-                this.closeMobileMenu(toggle, menu);
-            } else {
-                this.openMobileMenu(toggle, menu);
-            }
+            isOpen ? this.closeMobileMenu(toggle, menu) : this.openMobileMenu(toggle, menu);
         });
 
         // Close on outside click
@@ -70,9 +65,8 @@ class CalcHubCore {
         toggle.setAttribute('aria-expanded', 'false');
     }
 
-    // Basic form handling (newsletter, contact)
+    // Form handling
     setupBasicForms() {
-        // Newsletter forms
         document.addEventListener('submit', (e) => {
             if (this.elementMatches(e.target, '.newsletter-form')) {
                 e.preventDefault();
@@ -101,14 +95,13 @@ class CalcHubCore {
         });
     }
 
-    // Helper method to safely check element matches
+    // Safe element matching
     elementMatches(element, selector) {
-        if (!element || !element.matches) return false;
-        return element.matches(selector);
+        return element?.matches?.(selector) ?? false;
     }
 
     async handleNewsletterSubmit(form) {
-        const email = form.querySelector('input[name="email"]').value;
+        const email = form.querySelector('input[name="email"]')?.value;
         const submitBtn = form.querySelector('button[type="submit"]');
 
         if (!this.isValidEmail(email)) {
@@ -119,13 +112,10 @@ class CalcHubCore {
         this.setLoadingState(submitBtn, true);
 
         try {
-            // Simulate API call - replace with your actual endpoint
-            await this.delay(1000);
-
+            await this.delay(1000); // Simulate API call
             this.showMessage('Thank you for subscribing!', 'success');
             form.reset();
             this.trackEvent('newsletter_signup', { email });
-
         } catch (error) {
             this.showMessage('Something went wrong. Please try again.', 'error');
         } finally {
@@ -134,13 +124,10 @@ class CalcHubCore {
     }
 
     async handleContactSubmit(form) {
-        const formData = new FormData(form);
         const submitBtn = form.querySelector('button[type="submit"]');
-
-        // Basic validation
         const requiredFields = form.querySelectorAll('input[required], textarea[required]');
-        let isValid = true;
 
+        let isValid = true;
         requiredFields.forEach(field => {
             if (!field.value.trim()) {
                 this.validateField(field);
@@ -156,13 +143,10 @@ class CalcHubCore {
         this.setLoadingState(submitBtn, true);
 
         try {
-            // Replace with your actual form submission
-            await this.delay(1500);
-
+            await this.delay(1500); // Simulate API call
             this.showMessage('Thank you for your message! We\'ll get back to you soon.', 'success');
             form.reset();
             this.trackEvent('contact_form_submit');
-
         } catch (error) {
             this.showMessage('Failed to send message. Please try again.', 'error');
         } finally {
@@ -170,17 +154,11 @@ class CalcHubCore {
         }
     }
 
-    // Animation setup
+    // Animation setup with Intersection Observer
     setupAnimations() {
-        // Check if user prefers reduced motion
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             return;
         }
-
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -188,18 +166,17 @@ class CalcHubCore {
                     entry.target.classList.add('animate-in');
                 }
             });
-        }, observerOptions);
-
-        // Observe elements that should animate
-        const animateElements = document.querySelectorAll(
-            '.feature-card, .calculator-card, .card'
-        );
-
-        animateElements.forEach((el, index) => {
-            el.style.animationDelay = `${index * 0.1}s`;
-            el.classList.add('animate-on-scroll');
-            observer.observe(el);
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         });
+
+        document.querySelectorAll('.feature-card, .calculator-card, .card')
+            .forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
+                el.classList.add('animate-on-scroll');
+                observer.observe(el);
+            });
     }
 
     // Utility functions
@@ -207,7 +184,6 @@ class CalcHubCore {
         // Ad click handling
         window.handleAdClick = (location) => {
             this.trackEvent('ad_click', { location });
-            console.log('Ad clicked:', location);
         };
 
         // Smooth scrolling for anchor links
@@ -216,12 +192,10 @@ class CalcHubCore {
             if (link) {
                 e.preventDefault();
                 const target = document.querySelector(link.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                target?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         });
 
@@ -255,25 +229,20 @@ class CalcHubCore {
             skipLink.className = 'skip-link';
             skipLink.textContent = 'Skip to main content';
             skipLink.style.cssText = `
-        position: absolute;
-        top: -40px;
-        left: 6px;
-        background: var(--primary);
-        color: white;
-        padding: 8px;
-        text-decoration: none;
-        z-index: 1000;
-        border-radius: 0 0 4px 4px;
-      `;
+                position: absolute;
+                top: -40px;
+                left: 6px;
+                background: var(--primary);
+                color: white;
+                padding: 8px;
+                text-decoration: none;
+                z-index: 1000;
+                border-radius: 0 0 4px 4px;
+            `;
             document.body.insertBefore(skipLink, document.body.firstChild);
 
-            skipLink.addEventListener('focus', () => {
-                skipLink.style.top = '0';
-            });
-
-            skipLink.addEventListener('blur', () => {
-                skipLink.style.top = '-40px';
-            });
+            skipLink.addEventListener('focus', () => skipLink.style.top = '0');
+            skipLink.addEventListener('blur', () => skipLink.style.top = '-40px');
         }
 
         // Add main content ID if it doesn't exist
@@ -290,41 +259,36 @@ class CalcHubCore {
 
     validateField(field) {
         const isValid = field.value.trim() !== '';
-
-        if (!isValid) {
-            field.classList.add('error');
-            field.setAttribute('aria-invalid', 'true');
-        } else {
-            field.classList.remove('error');
-            field.removeAttribute('aria-invalid');
-        }
-
+        field.classList.toggle('error', !isValid);
+        field.setAttribute('aria-invalid', !isValid);
         return isValid;
     }
 
     setLoadingState(element, isLoading) {
-        if (isLoading) {
-            element.classList.add('loading');
-            element.disabled = true;
-            element.setAttribute('aria-busy', 'true');
-        } else {
-            element.classList.remove('loading');
-            element.disabled = false;
-            element.setAttribute('aria-busy', 'false');
-        }
+        if (!element) return;
+
+        element.classList.toggle('loading', isLoading);
+        element.disabled = isLoading;
+        element.setAttribute('aria-busy', isLoading);
     }
 
     showMessage(message, type = 'info') {
         // Remove existing messages
-        const existing = document.querySelectorAll('.app-message');
-        existing.forEach(el => el.remove());
+        document.querySelectorAll('.app-message').forEach(el => el.remove());
 
         const messageEl = document.createElement('div');
         messageEl.className = `app-message app-message--${type}`;
         messageEl.textContent = message;
         messageEl.setAttribute('role', type === 'error' ? 'alert' : 'status');
 
-        // Style the message
+        const colors = {
+            error: { bg: '#fef2f2', text: '#dc2626', border: '#fecaca' },
+            success: { bg: '#f0fdf4', text: '#166534', border: '#bbf7d0' },
+            info: { bg: '#f0f9ff', text: '#1e40af', border: '#bfdbfe' }
+        };
+
+        const color = colors[type] || colors.info;
+
         Object.assign(messageEl.style, {
             position: 'fixed',
             top: '20px',
@@ -332,12 +296,9 @@ class CalcHubCore {
             zIndex: '1000',
             padding: '1rem 1.5rem',
             borderRadius: 'var(--radius)',
-            backgroundColor: type === 'error' ? '#fef2f2' :
-                type === 'success' ? '#f0fdf4' : '#f0f9ff',
-            color: type === 'error' ? '#dc2626' :
-                type === 'success' ? '#166534' : '#1e40af',
-            border: `1px solid ${type === 'error' ? '#fecaca' :
-                type === 'success' ? '#bbf7d0' : '#bfdbfe'}`,
+            backgroundColor: color.bg,
+            color: color.text,
+            border: `1px solid ${color.border}`,
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
             animation: 'slideInRight 0.3s ease',
             cursor: 'pointer'
@@ -346,33 +307,30 @@ class CalcHubCore {
         document.body.appendChild(messageEl);
 
         // Auto remove after 5 seconds
-        setTimeout(() => {
+        const removeMessage = () => {
             if (messageEl.parentNode) {
                 messageEl.style.animation = 'slideOutRight 0.3s ease';
                 setTimeout(() => messageEl.remove(), 300);
             }
-        }, 5000);
+        };
 
-        // Allow manual dismissal
-        messageEl.addEventListener('click', () => {
-            messageEl.style.animation = 'slideOutRight 0.3s ease';
-            setTimeout(() => messageEl.remove(), 300);
-        });
+        setTimeout(removeMessage, 5000);
+        messageEl.addEventListener('click', removeMessage);
 
         // Add animation keyframes if not exists
         if (!document.querySelector('#message-animations')) {
             const style = document.createElement('style');
             style.id = 'message-animations';
             style.textContent = `
-        @keyframes slideInRight {
-          from { transform: translateX(100%); opacity: 0; }
-          to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOutRight {
-          from { transform: translateX(0); opacity: 1; }
-          to { transform: translateX(100%); opacity: 0; }
-        }
-      `;
+                @keyframes slideInRight {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOutRight {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
             document.head.appendChild(style);
         }
     }
@@ -415,18 +373,6 @@ class CalcHubCore {
             timeout = setTimeout(later, wait);
         };
     }
-
-    // Utility: Throttle function
-    throttle(func, limit) {
-        let inThrottle;
-        return function(...args) {
-            if (!inThrottle) {
-                func.apply(this, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    }
 }
 
 // Initialize the core app
@@ -435,6 +381,7 @@ new CalcHubCore();
 // Export utilities for global use
 window.CalcHubUtils = {
     formatNumber: (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+
     formatCurrency: (amount, currency = 'USD') =>
         new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -465,7 +412,5 @@ window.CalcHubUtils = {
         };
     },
 
-    validateEmail: (email) => {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
+    validateEmail: (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 };

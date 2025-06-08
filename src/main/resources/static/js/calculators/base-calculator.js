@@ -1,6 +1,6 @@
 /**
- * Base Calculator Utilities
- * Shared functionality for all calculators
+ * Base Calculator Class
+ * Generic functionality for all calculator types
  */
 
 class BaseCalculator {
@@ -46,7 +46,7 @@ class BaseCalculator {
     setupValidation() {
         // Real-time validation
         this.form.addEventListener('blur', (e) => {
-            if (e.target.matches('input[required]')) {
+            if (e.target.matches?.('input[required]')) {
                 this.validateField(e.target);
             }
         }, true);
@@ -126,13 +126,8 @@ class BaseCalculator {
     }
 
     setLoadingState(isLoading) {
-        if (isLoading) {
-            this.form.classList.add('loading');
-            this.isCalculating = true;
-        } else {
-            this.form.classList.remove('loading');
-            this.isCalculating = false;
-        }
+        this.form.classList.toggle('loading', isLoading);
+        this.isCalculating = isLoading;
     }
 
     updateElement(selector, value) {
@@ -148,8 +143,12 @@ class BaseCalculator {
     }
 
     trackCalculation(calculatorType, inputs = {}) {
-        if (window.CalcHubCore) {
-            window.CalcHubCore.trackEvent(`${calculatorType}_calculation`, inputs);
+        // Track calculation events
+        console.log('Calculation tracked:', calculatorType, inputs);
+
+        // If analytics is available, use it
+        if (typeof gtag !== 'undefined') {
+            gtag('event', `${calculatorType}_calculation`, inputs);
         }
     }
 }

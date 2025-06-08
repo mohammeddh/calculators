@@ -1,4 +1,4 @@
-/* Shared styles for all calculators */
+/* Calculator-specific styles - Generic components only */
 
 .calculator-container {
     display: grid;
@@ -72,7 +72,7 @@
     width: 100%;
 }
 
-/* Results Section */
+/* Results Section - Generic */
 .results-container {
     display: flex;
     flex-direction: column;
@@ -125,7 +125,7 @@
     color: var(--primary);
 }
 
-/* Chart Container */
+/* Chart Container - Generic */
 .chart-container {
     background: var(--bg-lighter);
     padding: var(--space-md);
@@ -150,6 +150,53 @@
     max-height: 250px !important;
     width: auto !important;
     height: auto !important;
+}
+
+/* Generic Summary Styles */
+.summary-section {
+    background: var(--bg-light);
+    padding: var(--space-lg);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-light);
+    margin-top: var(--space-lg);
+}
+
+.summary-section h3 {
+    margin-bottom: var(--space-md);
+    color: var(--text-primary);
+    font-size: var(--text-lg);
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: var(--space-xs);
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-md);
+    background: var(--bg);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-light);
+}
+
+.summary-label {
+    font-size: var(--text-xs);
+    color: var(--text-light);
+    margin-bottom: var(--space-xs);
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.summary-value {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
 /* Loading States */
@@ -214,13 +261,15 @@
     .calculator-results-section {
         padding: var(--space-sm);
         border-radius: var(--radius);
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
     }
 
     .calculator-form {
         gap: var(--space-md);
     }
 
-    /* Keep 2-column layout on mobile for better space usage */
     .form-row {
         grid-template-columns: 1fr 1fr;
         gap: var(--space-xs);
@@ -242,7 +291,7 @@
     .input-group .form-input {
         padding-left: 1.2rem;
         padding-right: 1.2rem;
-        min-height: 44px; /* Better touch target */
+        min-height: 44px;
     }
 
     .payment-item {
@@ -252,16 +301,16 @@
     .btn-calculate {
         padding: var(--space-md) var(--space-lg);
         font-size: var(--text-sm);
-        min-height: 48px; /* Better touch target */
+        min-height: 48px;
     }
 
-    /* Better mobile viewport handling */
-    .calculator-form-section,
-    .calculator-results-section {
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-        overflow: hidden;
+    .summary-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+    }
+
+    .summary-section {
+        padding: var(--space-md);
     }
 }
 
@@ -282,7 +331,6 @@
         gap: var(--space-sm);
     }
 
-    /* Single column for very small screens */
     .form-row {
         grid-template-columns: 1fr;
         gap: var(--space-xs);
@@ -298,7 +346,6 @@
         font-size: var(--text-sm);
         min-height: 44px;
         width: 100%;
-        box-sizing: border-box;
     }
 
     .input-group .form-input {
@@ -328,6 +375,15 @@
         font-size: var(--text-sm);
         min-height: 48px;
         width: 100%;
+        margin-top: var(--space-md);
+    }
+
+    .summary-item {
+        padding: var(--space-sm);
+    }
+
+    .summary-section {
+        padding: var(--space-sm);
         margin-top: var(--space-md);
     }
 }
