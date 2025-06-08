@@ -1,0 +1,65 @@
+/* BMI calculator specific styles */
+
+.bmi-categories {
+    margin-top: var(--space-xl);
+    background: var(--bg-light);
+    padding: var(--space-lg);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-light);
+}
+
+.bmi-categories h4 {
+    margin-bottom: var(--space-md);
+    color: var(--text-primary);
+}
+
+.category-list {
+    display: grid;
+    gap: var(--space-sm);
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-sm);
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+}
+
+.category-item.active {
+    background: var(--primary-lightest);
+    border-color: var(--primary);
+    font-weight: 600;
+}
+
+.bmi-result {
+    text-align: center;
+    padding: var(--space-xl);
+    background: var(--primary-lightest);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--primary);
+    margin-bottom: var(--space-lg);
+}
+
+.bmi-value {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: var(--space-sm);
+}
+
+.bmi-category {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.bmi-advice {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    max-width: 400px;
+    margin: 0 auto;
+}

@@ -7,44 +7,46 @@
         <p>Clean, lightweight calculators for finance, health, math, and everyday use. Simple, fast, and beautifully designed.</p>
     </header>
 
-    <section class="features">
+    <!-- Features -->
+    <section class="grid grid-auto-fit mb-2xl">
         <div class="feature-card">
-            <div class="feature-icon">🎨</div>
+            <div class="text-4xl mb-md">🎨</div>
             <h2>Clean Design</h2>
             <p>Beautifully crafted interfaces that are intuitive and pleasant to use. Every element designed with care and attention to detail.</p>
         </div>
 
         <div class="feature-card">
-            <div class="feature-icon">⚡</div>
+            <div class="text-4xl mb-md">⚡</div>
             <h2>Lightning Fast</h2>
             <p>Ultra-lightweight and optimized for speed. Get instant results with smooth, responsive interactions on any device.</p>
         </div>
 
         <div class="feature-card">
-            <div class="feature-icon">📱</div>
+            <div class="text-4xl mb-md">📱</div>
             <h2>Mobile Perfect</h2>
             <p>Seamlessly responsive design that works flawlessly on desktop, tablet, and mobile. Calculate anywhere, anytime.</p>
         </div>
     </section>
 
     <!-- Featured Calculators -->
-    <section class="featured-calculators" th:if="${featuredCalculators}">
-        <h2>Popular Calculators</h2>
-        <div class="calculator-grid">
+    <section th:if="${featuredCalculators}" class="mb-2xl">
+        <h2 class="text-2xl font-bold text-center mb-xl">Popular Calculators</h2>
+        <div class="grid grid-auto-fit">
             <a th:each="calc : ${featuredCalculators}"
                th:href="${calc.url}"
                class="calculator-card">
-                <div class="calculator-icon" th:text="${calc.icon}">🔢</div>
+                <div class="text-3xl mb-md" th:text="${calc.icon}">🔢</div>
                 <h3 th:text="${calc.name}">Calculator Name</h3>
                 <p>Quick and easy calculations</p>
             </a>
         </div>
     </section>
 
-    <section class="cta">
+    <!-- CTA -->
+    <div class="text-center">
         <a href="/tools" class="btn btn-primary">Explore All Tools</a>
         <a href="/about" class="btn btn-secondary">Learn More</a>
-    </section>
+    </div>
 </div>
 
 </html>

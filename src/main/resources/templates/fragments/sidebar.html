@@ -2,21 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <div th:fragment="left-sidebar">
-    <div class="ad-header">Sponsored</div>
+    <div class="ad-header">SPONSORED</div>
     <div class="ad-space" onclick="handleAdClick('left-sidebar')">
-        <div class="ad-icon">📢</div>
-        <div>Your Ad Here</div>
-        <small>250×250</small>
+        <div class="text-2xl mb-sm">📢</div>
+        <div class="font-medium">Your Ad Here</div>
+        <small class="text-xs">250×250</small>
     </div>
 
     <!-- Calculator Quick Links -->
-    <div class="sidebar-section" th:if="${featuredCalculators}">
+    <div th:if="${featuredCalculators}" class="sidebar-section">
         <h3>Popular Calculators</h3>
         <div class="quick-links">
             <a th:each="calc : ${featuredCalculators}"
                th:href="${calc.url}"
-               class="quick-link"
-               th:title="${calc.name}">
+               class="quick-link">
                 <span th:text="${calc.icon}">🔢</span>
                 <span th:text="${calc.name}">Calculator</span>
             </a>
@@ -25,31 +24,35 @@
 </div>
 
 <div th:fragment="right-sidebar">
-    <div class="ad-header">Featured</div>
+    <div class="ad-header">FEATURED</div>
     <div class="ad-space" onclick="handleAdClick('right-sidebar')">
-        <div class="ad-icon">⭐</div>
-        <div>Premium Space</div>
-        <small>250×250</small>
+        <div class="text-2xl mb-sm">⭐</div>
+        <div class="font-medium">Premium Space</div>
+        <small class="text-xs">250×250</small>
     </div>
 
     <!-- Newsletter Signup -->
     <div class="sidebar-section">
         <h3>Stay Updated</h3>
-        <p>Get notified about new calculators and features.</p>
-        <form class="newsletter-form" action="/newsletter/subscribe" method="post">
-            <input type="email" name="email" placeholder="Your email" required>
-            <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+        <p class="text-sm mb-md">Get notified about new calculators and features.</p>
+        <form class="newsletter-form">
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Your email" class="form-input" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
         </form>
     </div>
 
     <!-- Recent Updates -->
     <div class="sidebar-section">
         <h3>Recent Updates</h3>
-        <ul class="update-list">
-            <li>🔄 Improved mortgage calculator accuracy</li>
-            <li>📱 Better mobile experience</li>
-            <li>⚡ Faster loading times</li>
-        </ul>
+        <div class="space-y-sm text-sm">
+            <div>🔄 Improved mortgage calculator accuracy</div>
+            <div>📱 Better mobile experience</div>
+            <div>⚡ Faster loading times</div>
+            <div>📊 New BMI categories added</div>
+            <div>💰 Enhanced loan calculator</div>
+        </div>
     </div>
 </div>
 

@@ -7,284 +7,157 @@
         <p>Calculate your monthly mortgage payments, total interest, and view detailed amortization schedules.</p>
     </header>
 
-    <div id="mortgage-calculator">
-        <div class="calculator-container">
-            <div class="calculator-form-section">
-                <form class="calculator-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="loan-amount" class="form-label">Loan Amount *</label>
-                            <div class="input-group">
-                                <span class="input-prefix">$</span>
-                                <input type="number" id="loan-amount" name="loanAmount" class="form-input"
-                                       value="300000" min="1000" max="10000000" step="1000" required>
-                            </div>
-                            <small class="form-help">Enter the total purchase price or loan amount</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="interest-rate" class="form-label">Interest Rate *</label>
-                            <div class="input-group">
-                                <input type="number" id="interest-rate" name="interestRate" class="form-input"
-                                       value="6.5" min="0.1" max="30" step="0.01" required>
-                                <span class="input-suffix">%</span>
-                            </div>
-                            <small class="form-help">Annual interest rate (APR)</small>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="loan-term" class="form-label">Loan Term *</label>
-                            <select id="loan-term" name="loanTerm" class="form-select" required>
-                                <option value="15">15 years</option>
-                                <option value="20">20 years</option>
-                                <option value="25">25 years</option>
-                                <option value="30" selected>30 years</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="down-payment" class="form-label">Down Payment</label>
-                            <div class="input-group">
-                                <span class="input-prefix">$</span>
-                                <input type="number" id="down-payment" name="downPayment" class="form-input"
-                                       value="60000" min="0" step="1000">
-                            </div>
-                            <small class="form-help">Amount paid upfront</small>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="property-tax" class="form-label">Annual Property Tax</label>
-                            <div class="input-group">
-                                <span class="input-prefix">$</span>
-                                <input type="number" id="property-tax" name="propertyTax" class="form-input"
-                                       value="3600" min="0" step="100">
-                            </div>
-                            <small class="form-help">Yearly property tax amount</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="home-insurance" class="form-label">Annual Home Insurance</label>
-                            <div class="input-group">
-                                <span class="input-prefix">$</span>
-                                <input type="number" id="home-insurance" name="homeInsurance" class="form-input"
-                                       value="1200" min="0" step="100">
-                            </div>
-                            <small class="form-help">Yearly insurance premium</small>
+    <div class="calculator-container">
+        <div class="calculator-form-section">
+            <form id="mortgage-form" class="calculator-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="loan-amount" class="form-label">Loan Amount</label>
+                        <div class="input-group">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="loan-amount" name="loanAmount" class="form-input"
+                                   value="300000" min="1000" max="10000000" step="1000" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">
-                            <input type="checkbox" id="pmi" name="pmi" checked>
-                            Include PMI (Private Mortgage Insurance)
-                        </label>
-                        <small class="form-help">Usually required when down payment is less than 20%</small>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-calculate">Calculate Payment</button>
-                </form>
-            </div>
-
-            <div class="calculator-results-section" style="display: none;">
-                <div class="results-container">
-                    <div class="results-summary">
-                        <h3>Monthly Payment Breakdown</h3>
-                        <div class="payment-summary">
-                            <div class="payment-item">
-                                <span class="payment-label">Principal & Interest</span>
-                                <span class="payment-value" id="principal-interest">$0</span>
-                            </div>
-                            <div class="payment-item">
-                                <span class="payment-label">Property Tax</span>
-                                <span class="payment-value" id="monthly-tax">$0</span>
-                            </div>
-                            <div class="payment-item">
-                                <span class="payment-label">Home Insurance</span>
-                                <span class="payment-value" id="monthly-insurance">$0</span>
-                            </div>
-                            <div class="payment-item">
-                                <span class="payment-label">PMI</span>
-                                <span class="payment-value" id="monthly-pmi">$0</span>
-                            </div>
-                            <div class="payment-item total">
-                                <span class="payment-label">Total Monthly Payment</span>
-                                <span class="payment-value" id="total-payment">$0</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="loan-summary">
-                        <h3>Loan Summary</h3>
-                        <div class="summary-grid">
-                            <div class="summary-item">
-                                <span class="summary-label">Total Loan Amount</span>
-                                <span class="summary-value" id="total-loan">$0</span>
-                            </div>
-                            <div class="summary-item">
-                                <span class="summary-label">Total Interest Paid</span>
-                                <span class="summary-value" id="total-interest">$0</span>
-                            </div>
-                            <div class="summary-item">
-                                <span class="summary-label">Total Cost</span>
-                                <span class="summary-value" id="total-cost">$0</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Chart Container -->
-                    <div class="chart-container">
-                        <h3>Payment Breakdown</h3>
-                        <div style="position: relative; height: 300px;">
-                            <canvas id="payment-chart"></canvas>
+                        <label for="interest-rate" class="form-label">Interest Rate</label>
+                        <div class="input-group">
+                            <input type="number" id="interest-rate" name="interestRate" class="form-input"
+                                   value="6.5" min="0.1" max="30" step="0.01" required>
+                            <span class="input-suffix">%</span>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="loan-term" class="form-label">Loan Term</label>
+                        <select id="loan-term" name="loanTerm" class="form-select">
+                            <option value="15">15 years</option>
+                            <option value="20">20 years</option>
+                            <option value="25">25 years</option>
+                            <option value="30" selected>30 years</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="down-payment" class="form-label">Down Payment</label>
+                        <div class="input-group">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="down-payment" name="downPayment" class="form-input"
+                                   value="60000" min="0" step="1000">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="property-tax" class="form-label">Annual Property Tax</label>
+                        <div class="input-group">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="property-tax" name="propertyTax" class="form-input"
+                                   value="3600" min="0" step="100">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="home-insurance" class="form-label">Annual Home Insurance</label>
+                        <div class="input-group">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="home-insurance" name="homeInsurance" class="form-input"
+                                   value="1200" min="0" step="100">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <input type="checkbox" id="pmi" name="pmi" checked style="margin-right: 0.5rem;">
+                        Include PMI (Private Mortgage Insurance)
+                    </label>
+                    <small class="form-help">Usually required when down payment is less than 20%</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-calculate">Calculate Payment</button>
+            </form>
         </div>
 
-        <!-- Amortization Schedule -->
-        <div class="amortization-section" style="display: none;">
-            <h3>Amortization Schedule Preview</h3>
-            <div class="table-container">
-                <table id="amortization-table" class="amortization-table">
-                    <thead>
-                    <tr>
-                        <th>Payment #</th>
-                        <th>Payment Date</th>
-                        <th>Payment Amount</th>
-                        <th>Principal</th>
-                        <th>Interest</th>
-                        <th>Remaining Balance</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!-- Populated by JavaScript -->
-                    </tbody>
-                </table>
+        <div class="calculator-results-section">
+            <div id="mortgage-results" class="results-container">
+                <div class="results-summary">
+                    <h3>Monthly Payment Breakdown</h3>
+                    <div class="payment-summary">
+                        <div class="payment-item">
+                            <span class="payment-label">Principal & Interest</span>
+                            <span class="payment-value" id="principal-interest">$1,798</span>
+                        </div>
+                        <div class="payment-item">
+                            <span class="payment-label">Property Tax</span>
+                            <span class="payment-value" id="monthly-tax">$300</span>
+                        </div>
+                        <div class="payment-item">
+                            <span class="payment-label">Home Insurance</span>
+                            <span class="payment-value" id="monthly-insurance">$100</span>
+                        </div>
+                        <div class="payment-item">
+                            <span class="payment-label">PMI</span>
+                            <span class="payment-value" id="monthly-pmi">$150</span>
+                        </div>
+                        <div class="payment-item total">
+                            <span class="payment-label">Total Monthly Payment</span>
+                            <span class="payment-value" id="total-payment">$2,348</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-summary">
+                    <h3>Loan Summary</h3>
+                    <div class="payment-summary">
+                        <div class="payment-item">
+                            <span class="payment-label">Total Loan Amount</span>
+                            <span class="payment-value" id="total-loan">$240,000</span>
+                        </div>
+                        <div class="payment-item">
+                            <span class="payment-label">Total Interest Paid</span>
+                            <span class="payment-value" id="total-interest">$407,280</span>
+                        </div>
+                        <div class="payment-item">
+                            <span class="payment-label">Total Cost</span>
+                            <span class="payment-value" id="total-cost">$647,280</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3>Payment Breakdown</h3>
+                    <canvas id="payment-chart" width="400" height="200"></canvas>
+                </div>
             </div>
-            <p class="text-sm text-light mt-3">
-                <em>Showing first 12 payments and then annual summaries. Full schedule calculated but truncated for display.</em>
-            </p>
+        </div>
+    </div>
+
+    <!-- Amortization Schedule -->
+    <div class="amortization-section">
+        <h3>Amortization Schedule (First 12 Months)</h3>
+        <div class="table-container">
+            <table id="amortization-table" class="amortization-table">
+                <thead>
+                <tr>
+                    <th>Payment #</th>
+                    <th>Payment Date</th>
+                    <th>Payment Amount</th>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>Remaining Balance</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Populated by JavaScript -->
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-
-<!-- Additional CSS for enhanced styles -->
-<th:block th:fragment="additional-head">
-    <style>
-        .calculator-results-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-
-        .calculator-results-section.fade-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .error-messages {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-radius: var(--radius);
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .error {
-            color: #dc2626;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .error:last-child {
-            margin-bottom: 0;
-        }
-
-        .form-help {
-            display: block;
-            margin-top: 0.25rem;
-            font-size: 0.8rem;
-            color: var(--text-light);
-            font-style: italic;
-        }
-
-        .payment-item.total {
-            background: var(--primary-lightest);
-            border-color: var(--primary);
-            margin-top: 0.5rem;
-            font-weight: 600;
-        }
-
-        .payment-item.total .payment-value {
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .chart-container {
-            margin-top: 2rem;
-        }
-
-        .amortization-section {
-            margin-top: 3rem;
-            animation: slideUp 0.5s ease-out;
-        }
-
-        .amortization-table th {
-            position: sticky;
-            top: 0;
-            background: var(--background-lighter);
-            z-index: 1;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        /* Loading state for calculate button */
-        .btn-calculate.loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        .btn-calculate.loading::after {
-            content: '';
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            margin-left: 8px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-top: 2px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
-</th:block>
-
-
 
 </html>

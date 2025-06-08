@@ -1,9 +1,10 @@
 app:
   author: calculators
   description: Beautiful, lightweight online calculators for finance, health, math and more
-  name: WebSpace
+  name: CalcHub
   title: Beautiful Calculator Tools
-  url: https://webspace.com
+  url: https://calchub.com
+
 logging:
   level:
     com:
@@ -11,13 +12,16 @@ logging:
     org:
       springframework:
         web: DEBUG
+
 seo:
   keywords: calculator, online calculator, mortgage calculator, loan calculator, BMI calculator, finance calculator, math calculator
   og-image: /images/og-image.jpg
+
 server:
   port: 8080
   servlet:
     context-path: /
+
 spring:
   thymeleaf:
     cache: false

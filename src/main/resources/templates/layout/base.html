@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${pageTitle}">WebSpace - Beautiful Calculator Tools</title>
+    <title th:text="${pageTitle}">CalcHub - Beautiful Calculator Tools</title>
     <meta name="description" th:content="${pageDescription}">
     <meta name="keywords" th:content="${pageKeywords}">
     <meta name="author" th:content="${appAuthor}">
@@ -36,16 +36,8 @@
     <!-- Chart.js for calculator visualizations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 
-    <!-- jQuery CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-    <!-- Base CSS -->
-    <link rel="stylesheet" href="/css/theme.css">
-
-    <!-- Custom CSS for specific pages -->
-    <th:block th:if="${customCss}">
-        <link th:each="css : ${customCss}" rel="stylesheet" th:href="${css}">
-    </th:block>
+    <!-- Modern CSS (single file) -->
+    <link rel="stylesheet" href="/css/main.css">
 
     <!-- Schema.org markup -->
     <script type="application/ld+json" th:inline="javascript">
@@ -64,47 +56,97 @@
             }
         }
     </script>
-
-    <!-- Additional head content -->
-    <th:block th:fragment="additional-head"></th:block>
 </head>
 <body>
 <!-- Header -->
-<div th:replace="~{fragments/header :: header}"></div>
+<header class="header">
+    <div class="container">
+        <nav class="nav">
+            <a href="/" class="logo">
+                ✨ <span th:text="${appName}">CalcHub</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">Home</a></li>
+                <li><a href="/about" class="nav-link" th:classappend="${activePage == 'about'} ? 'active' : ''">About</a></li>
+                <li><a href="/tools" class="nav-link" th:classappend="${activePage == 'tools'} ? 'active' : ''">Tools</a></li>
+                <li><a href="/contact" class="nav-link" th:classappend="${activePage == 'contact'} ? 'active' : ''">Contact</a></li>
+            </ul>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <nav class="mobile-menu">
+            <a href="/" class="mobile-nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">Home</a>
+            <a href="/about" class="mobile-nav-link" th:classappend="${activePage == 'about'} ? 'active' : ''">About</a>
+            <a href="/tools" class="mobile-nav-link" th:classappend="${activePage == 'tools'} ? 'active' : ''">Tools</a>
+            <a href="/contact" class="mobile-nav-link" th:classappend="${activePage == 'contact'} ? 'active' : ''">Contact</a>
+        </nav>
+    </div>
+</header>
 
 <!-- Breadcrumb -->
-<div th:replace="~{fragments/breadcrumb :: breadcrumb}"></div>
+<div th:if="${breadcrumbs != null and !breadcrumbs.empty}" class="breadcrumb">
+    <div class="container">
+        <nav aria-label="Breadcrumb">
+            <th:block th:each="crumb, iter : ${breadcrumbs}">
+                <th:block th:if="${!iter.last}">
+                    <a href="/" th:if="${crumb == 'Home'}" th:text="${crumb}">Home</a>
+                    <span th:unless="${crumb == 'Home'}" th:text="${crumb}">Breadcrumb</span>
+                    <span class="breadcrumb-separator">›</span>
+                </th:block>
+                <span th:if="${iter.last}" th:text="${crumb}">Current Page</span>
+            </th:block>
+        </nav>
+    </div>
+</div>
 
 <!-- Main Layout -->
-<div class="main-layout" th:classappend="${!showLeftSidebar and !showRightSidebar} ? 'no-sidebars' : (${!showLeftSidebar} ? 'no-left-sidebar' : (${!showRightSidebar} ? 'no-right-sidebar' : ''))">
-    <!-- Left Sidebar -->
-    <aside class="sidebar" th:if="${showLeftSidebar}" role="complementary" aria-label="Advertisement sidebar">
-        <div th:replace="~{fragments/sidebar :: left-sidebar}"></div>
-    </aside>
+<div class="container">
+    <div class="layout" th:classappend="${showLeftSidebar and showRightSidebar} ? 'with-both-sidebars' : (${showLeftSidebar and !showRightSidebar} ? 'with-left-sidebar' : (${!showLeftSidebar and showRightSidebar} ? 'with-right-sidebar' : 'no-sidebars'))">
 
-    <!-- Main Content -->
-    <main class="main-content" role="main">
-        <div th:replace="${content}"></div>
-    </main>
+        <!-- Left Sidebar -->
+        <aside th:if="${showLeftSidebar}" class="sidebar sidebar-left" role="complementary" aria-label="Advertisement sidebar">
+            <div th:replace="~{fragments/sidebar :: left-sidebar}"></div>
+        </aside>
 
-    <!-- Right Sidebar -->
-    <aside class="sidebar" th:if="${showRightSidebar}" role="complementary" aria-label="Featured content sidebar">
-        <div th:replace="~{fragments/sidebar :: right-sidebar}"></div>
-    </aside>
+        <!-- Main Content -->
+        <main class="main-content" role="main">
+            <div th:replace="${content}"></div>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside th:if="${showRightSidebar}" class="sidebar sidebar-right" role="complementary" aria-label="Featured content sidebar">
+            <div th:replace="~{fragments/sidebar :: right-sidebar}"></div>
+        </aside>
+    </div>
 </div>
 
 <!-- Footer -->
-<div th:replace="~{fragments/footer :: footer}"></div>
+<footer class="footer">
+    <div class="container">
+        <nav class="footer-links">
+            <a href="/about">About Us</a>
+            <a href="/tools">Site Map</a>
+            <a href="/terms">Terms of Use</a>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/contact">Contact</a>
+            <a href="/help">Help</a>
+        </nav>
+        <div class="footer-bottom">
+            <p>&copy; 2025 <span th:text="${appName}">CalcHub</span>. Beautiful calculator tools for everyone.</p>
+        </div>
+    </div>
+</footer>
 
-<!-- Base JavaScript -->
-<script src="/js/theme.js"></script>
-
-<!-- Custom JavaScript for specific pages -->
-<th:block th:if="${customJs}">
-    <script th:each="js : ${customJs}" th:src="${js}"></script>
-</th:block>
-
-<!-- Additional scripts -->
-<th:block th:fragment="additional-scripts"></th:block>
+<!-- Modern JavaScript (single file) -->
+<script src="/js/main.js"></script>
 </body>
 </html>

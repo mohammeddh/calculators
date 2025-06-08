@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::content})}">
+
+<div th:fragment="content">
+    <header class="page-header fade-in-down animate-on-scroll">
+        <h1>Loan Calculator</h1>
+        <p>Calculate loan payments, interest rates, and repayment schedules for personal loans, auto loans, and more.</p>
+    </header>
+
+    <div class="calculator-container">
+        <div class="calculator-form-section fade-in-up animate-on-scroll stagger-1">
+            <form id="loan-form" class="calculator-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="loan-amount" class="form-label">Loan Amount</label>
+                        <div class="input-group">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="loan-amount" name="loanAmount" class="form-input"
+                                   value="25000" min="100" max="1000000" step="100" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interest-rate" class="form-label">Annual Interest Rate</label>
+                        <div class="input-group">
+                            <input type="number" id="interest-rate" name="interestRate" class="form-input"
+                                   value="7.5" min="0.1" max="30" step="0.01" required>
+                            <span class="input-suffix">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="loan-term" class="form-label">Loan Term</label>
+                        <select id="loan-term" name="loanTerm" class="form-select">
+                            <option value="1">1 year</option>
+                            <option value="2">2 years</option>
+                            <option value="3">3 years</option>
+                            <option value="4">4 years</option>
+                            <option value="5" selected>5 years</option>
+                            <option value="7">7 years</option>
+                            <option value="10">10 years</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="payment-frequency" class="form-label">Payment Frequency</label>
+                        <select id="payment-frequency" name="paymentFrequency" class="form-select">
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="biweekly">Bi-weekly</option>
+                            <option value="weekly">Weekly</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="loan-type" class="form-label">Loan Type</label>
+                    <select id="loan-type" name="loanType" class="form-select">
+                        <option value="personal">Personal Loan</option>
+                        <option value="auto" selected>Auto Loan</option>
+                        <option value="home-equity">Home Equity Loan</option>
+                        <option value="student">Student Loan</option>
+                        <option value="business">Business Loan</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-calculate ripple-effect hover-scale">
+                    Calculate Payment
+                </button>
+            </form>
+        </div>
+
+        <div class="calculator-results-section fade-in-up animate-on-scroll stagger-2">
+            <div id="loan-results" class="results-container">
+                <div class="results-summary">
+                    <h3>Payment Summary</h3>
+                    <div class="payment-summary">
+                        <div class="payment-item">
+                            <span class="payment-label">Monthly Payment</span>
+                            <span class="payment-value" id="monthly-payment">$503.26</span>
+                        </div>
+                        <div class="payment-item">
+                            <span class="payment-label">Total Interest Paid</span>
+                            <span class="payment-value" id="total-interest">$5,195.60</span>
+                        </div>
+                        <div class="payment-item total">
+                            <span class="payment-label">Total Amount Paid</span>
+                            <span class="payment-value" id="total-amount">$30,195.60</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="loan-summary">
+                    <h3>Loan Details</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <span class="summary-label">Principal Amount</span>
+                            <span class="summary-value" id="principal-amount">$25,000</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Annual Interest Rate</span>
+                            <span class="summary-value" id="annual-rate">7.50%</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Loan Term</span>
+                            <span class="summary-value" id="loan-duration">5 years</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Number of Payments</span>
+                            <span class="summary-value" id="number-payments">60</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart Container -->
+                <div class="chart-container">
+                    <h3>Payment Breakdown</h3>
+                    <canvas id="loan-chart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Schedule -->
+    <div class="amortization-section fade-in-up animate-on-scroll stagger-3">
+        <h3>Payment Schedule</h3>
+        <div class="table-container">
+            <table id="payment-schedule-table" class="amortization-table">
+                <thead>
+                <tr>
+                    <th>Payment #</th>
+                    <th>Payment Date</th>
+                    <th>Payment Amount</th>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>Remaining Balance</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Populated by JavaScript -->
+                <tr>
+                    <td>1</td>
+                    <td>Jan 2025</td>
+                    <td>$503.26</td>
+                    <td>$346.60</td>
+                    <td>$156.66</td>
+                    <td>$24,653.40</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Feb 2025</td>
+                    <td>$503.26</td>
+                    <td>$348.77</td>
+                    <td>$154.49</td>
+                    <td>$24,304.63</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Mar 2025</td>
+                    <td>$503.26</td>
+                    <td>$350.95</td>
+                    <td>$152.31</td>
+                    <td>$23,953.68</td>
+                </tr>
+                <!-- More rows would be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</html>
