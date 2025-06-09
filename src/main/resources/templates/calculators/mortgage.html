@@ -2,48 +2,44 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::content})}">
 
 <div th:fragment="content">
-    <!-- Page Header -->
-    <header class="text-center mb-8 pb-6 border-b border-gray-200">
-        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Mortgage Calculator</h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+    <header class="text-center mb-12 pb-8 border-b border-brand-gray">
+        <h1 class="text-3xl md:text-4xl font-bold text-brand-black mb-4">Mortgage Calculator</h1>
+        <p class="text-lg text-brand-blue max-w-2xl mx-auto">
             Calculate your monthly mortgage payments, total interest, and view detailed amortization schedules.
         </p>
     </header>
 
-    <!-- Calculator Container -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-        <!-- Form Section -->
-        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+    <div class="grid lg:grid-cols-2 gap-8 mb-12">
+        <!-- Calculator Form -->
+        <div class="bg-gray-50 border border-brand-gray rounded-xl p-6">
             <form id="mortgage-form" class="space-y-6">
-                <!-- Loan Amount & Interest Rate -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid md:grid-cols-2 gap-4">
                     <div>
-                        <label for="loan-amount" class="block text-sm font-semibold text-gray-700 mb-2">Loan Amount</label>
+                        <label for="loan-amount" class="block text-sm font-semibold text-brand-black mb-2">Loan Amount</label>
                         <div class="relative">
-                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">$</span>
+                            <span class="absolute left-3 top-3 text-gray-500 text-sm">$</span>
                             <input type="number" id="loan-amount" name="loanAmount"
-                                   class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                                   class="w-full pl-8 pr-4 py-3 border border-brand-gray rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-colors"
                                    value="300000" min="1000" max="10000000" step="1000" required>
                         </div>
                     </div>
 
                     <div>
-                        <label for="interest-rate" class="block text-sm font-semibold text-gray-700 mb-2">Interest Rate</label>
+                        <label for="interest-rate" class="block text-sm font-semibold text-brand-black mb-2">Interest Rate</label>
                         <div class="relative">
                             <input type="number" id="interest-rate" name="interestRate"
-                                   class="w-full pl-4 pr-8 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                                   class="w-full pl-4 pr-8 py-3 border border-brand-gray rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-colors"
                                    value="6.5" min="0.1" max="30" step="0.01" required>
-                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">%</span>
+                            <span class="absolute right-3 top-3 text-gray-500 text-sm">%</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Loan Term & Down Payment -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid md:grid-cols-2 gap-4">
                     <div>
-                        <label for="loan-term" class="block text-sm font-semibold text-gray-700 mb-2">Loan Term</label>
+                        <label for="loan-term" class="block text-sm font-semibold text-brand-black mb-2">Loan Term</label>
                         <select id="loan-term" name="loanTerm"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                class="w-full px-4 py-3 border border-brand-gray rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-colors">
                             <option value="15">15 years</option>
                             <option value="20">20 years</option>
                             <option value="25">25 years</option>
@@ -52,333 +48,131 @@
                     </div>
 
                     <div>
-                        <label for="down-payment" class="block text-sm font-semibold text-gray-700 mb-2">Down Payment</label>
+                        <label for="down-payment" class="block text-sm font-semibold text-brand-black mb-2">Down Payment</label>
                         <div class="relative">
-                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">$</span>
+                            <span class="absolute left-3 top-3 text-gray-500 text-sm">$</span>
                             <input type="number" id="down-payment" name="downPayment"
-                                   class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                                   class="w-full pl-8 pr-4 py-3 border border-brand-gray rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-colors"
                                    value="60000" min="0" step="1000">
                         </div>
                     </div>
                 </div>
 
-                <!-- Property Tax & Home Insurance -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid md:grid-cols-2 gap-4">
                     <div>
-                        <label for="property-tax" class="block text-sm font-semibold text-gray-700 mb-2">Annual Property Tax</label>
+                        <label for="property-tax" class="block text-sm font-semibold text-brand-black mb-2">Annual Property Tax</label>
                         <div class="relative">
-                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">$</span>
+                            <span class="absolute left-3 top-3 text-gray-500 text-sm">$</span>
                             <input type="number" id="property-tax" name="propertyTax"
-                                   class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                                   class="w-full pl-8 pr-4 py-3 border border-brand-gray rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-colors"
                                    value="3600" min="0" step="100">
                         </div>
                     </div>
 
                     <div>
-                        <label for="home-insurance" class="block text-sm font-semibold text-gray-700 mb-2">Annual Home Insurance</label>
+                        <label for="home-insurance" class="block text-sm font-semibold text-brand-black mb-2">Annual Home Insurance</label>
                         <div class="relative">
-                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">$</span>
+                            <span class="absolute left-3 top-3 text-gray-500 text-sm">$</span>
                             <input type="number" id="home-insurance" name="homeInsurance"
-                                   class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                                   class="w-full pl-8 pr-4 py-3 border border-brand-gray rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-colors"
                                    value="1200" min="0" step="100">
                         </div>
                     </div>
                 </div>
 
-                <!-- PMI Checkbox -->
-                <div class="flex items-start space-x-3">
-                    <input type="checkbox" id="pmi" name="pmi" checked
-                           class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                    <div>
-                        <label for="pmi" class="text-sm font-medium text-gray-700">
-                            Include PMI (Private Mortgage Insurance)
-                        </label>
-                        <p class="text-xs text-gray-500 mt-1">Usually required when down payment is less than 20%</p>
-                    </div>
+                <div>
+                    <label class="flex items-center space-x-3">
+                        <input type="checkbox" id="pmi" name="pmi" checked
+                               class="w-4 h-4 text-brand-orange border-brand-gray rounded focus:ring-brand-orange">
+                        <span class="text-sm font-semibold text-brand-black">Include PMI (Private Mortgage Insurance)</span>
+                    </label>
+                    <p class="text-xs text-gray-500 mt-1 ml-7">Usually required when down payment is less than 20%</p>
                 </div>
 
-                <!-- Calculate Button -->
-                <button type="submit"
-                        class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl">
+                <button type="submit" class="w-full bg-brand-orange text-white font-semibold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors duration-200 transform hover:scale-105">
                     Calculate Payment
                 </button>
             </form>
         </div>
 
-        <!-- Results Section -->
-        <div id="mortgage-results" class="space-y-6">
-            <!-- Monthly Payment Breakdown -->
-            <div class="bg-white border border-gray-200 rounded-xl p-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b-2 border-blue-500">
-                    Monthly Payment Breakdown
-                </h3>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                        <span class="text-sm font-medium text-gray-700">Principal & Interest</span>
-                        <span class="text-sm font-semibold text-gray-900" id="principal-interest">$1,798</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                        <span class="text-sm font-medium text-gray-700">Property Tax</span>
-                        <span class="text-sm font-semibold text-gray-900" id="monthly-tax">$300</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                        <span class="text-sm font-medium text-gray-700">Home Insurance</span>
-                        <span class="text-sm font-semibold text-gray-900" id="monthly-insurance">$100</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                        <span class="text-sm font-medium text-gray-700">PMI</span>
-                        <span class="text-sm font-semibold text-gray-900" id="monthly-pmi">$150</span>
-                    </div>
-                    <div class="flex justify-between items-center p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                        <span class="text-sm font-semibold text-blue-900">Total Monthly Payment</span>
-                        <span class="text-lg font-bold text-blue-600" id="total-payment">$2,348</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Loan Summary -->
-            <div class="bg-white border border-gray-200 rounded-xl p-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b-2 border-blue-500">
-                    Loan Summary
-                </h3>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                        <span class="text-sm font-medium text-gray-700">Total Loan Amount</span>
-                        <span class="text-sm font-semibold text-gray-900" id="total-loan">$240,000</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                        <span class="text-sm font-medium text-gray-700">Total Interest Paid</span>
-                        <span class="text-sm font-semibold text-gray-900" id="total-interest">$407,280</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                        <span class="text-sm font-medium text-gray-700">Total Cost</span>
-                        <span class="text-sm font-semibold text-gray-900" id="total-cost">$647,280</span>
+        <!-- Results -->
+        <div class="bg-white border border-brand-gray rounded-xl p-6">
+            <div id="mortgage-results" class="space-y-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-brand-black mb-4 pb-2 border-b-2 border-brand-orange">Monthly Payment Breakdown</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-brand-gray">
+                            <span class="text-sm font-medium text-brand-blue">Principal & Interest</span>
+                            <span class="text-sm font-semibold text-brand-black" id="principal-interest">$1,798</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-brand-gray">
+                            <span class="text-sm font-medium text-brand-blue">Property Tax</span>
+                            <span class="text-sm font-semibold text-brand-black" id="monthly-tax">$300</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-brand-gray">
+                            <span class="text-sm font-medium text-brand-blue">Home Insurance</span>
+                            <span class="text-sm font-semibold text-brand-black" id="monthly-insurance">$100</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-brand-gray">
+                            <span class="text-sm font-medium text-brand-blue">PMI</span>
+                            <span class="text-sm font-semibold text-brand-black" id="monthly-pmi">$150</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-brand-orange/10 rounded-lg border border-brand-orange">
+                            <span class="text-sm font-semibold text-brand-orange">Total Monthly Payment</span>
+                            <span class="text-sm font-bold text-brand-orange" id="total-payment">$2,348</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Chart Container -->
-            <div class="bg-white border border-gray-200 rounded-xl p-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4 text-center">Payment Breakdown</h3>
-                <div class="relative h-64">
-                    <canvas id="payment-chart" class="w-full h-full"></canvas>
+                <div>
+                    <h3 class="text-lg font-semibold text-brand-black mb-4">Loan Summary</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-brand-gray">
+                            <span class="text-sm font-medium text-brand-blue">Total Loan Amount</span>
+                            <span class="text-sm font-semibold text-brand-black" id="total-loan">$240,000</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-brand-gray">
+                            <span class="text-sm font-medium text-brand-blue">Total Interest Paid</span>
+                            <span class="text-sm font-semibold text-brand-black" id="total-interest">$407,280</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-brand-gray">
+                            <span class="text-sm font-medium text-brand-blue">Total Cost</span>
+                            <span class="text-sm font-semibold text-brand-black" id="total-cost">$647,280</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 border border-brand-gray rounded-lg p-4">
+                    <h3 class="text-base font-semibold text-brand-black mb-3 text-center">Payment Breakdown</h3>
+                    <canvas id="payment-chart" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Amortization Schedule -->
-    <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
-        <h3 class="text-xl font-semibold text-gray-900 mb-6 pb-3 border-b-2 border-blue-500">
+    <div class="bg-gray-50 border border-brand-gray rounded-xl p-6">
+        <h3 class="text-lg font-semibold text-brand-black mb-6 pb-2 border-b-2 border-brand-orange">
             Amortization Schedule (First 12 Months)
         </h3>
         <div class="overflow-x-auto">
-            <table id="amortization-table" class="w-full bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200">
-                <thead class="bg-gray-100">
-                <tr>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Payment #</th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Payment Date</th>
-                    <th class="px-4 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">Payment Amount</th>
-                    <th class="px-4 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">Principal</th>
-                    <th class="px-4 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">Interest</th>
-                    <th class="px-4 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">Remaining Balance</th>
+            <table id="amortization-table" class="w-full bg-white rounded-lg border border-brand-gray">
+                <thead>
+                <tr class="bg-gray-100">
+                    <th class="px-4 py-3 text-center text-xs font-semibold text-brand-black border-b border-brand-gray">Payment #</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-brand-black border-b border-brand-gray">Payment Date</th>
+                    <th class="px-4 py-3 text-right text-xs font-semibold text-brand-black border-b border-brand-gray">Payment Amount</th>
+                    <th class="px-4 py-3 text-right text-xs font-semibold text-brand-black border-b border-brand-gray">Principal</th>
+                    <th class="px-4 py-3 text-right text-xs font-semibold text-brand-black border-b border-brand-gray">Interest</th>
+                    <th class="px-4 py-3 text-right text-xs font-semibold text-brand-black border-b border-brand-gray">Remaining Balance</th>
                 </tr>
                 </thead>
-                <tbody id="amortization-tbody" class="divide-y divide-gray-200">
+                <tbody>
                 <!-- Populated by JavaScript -->
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
-<script>
-    // Mortgage Calculator JavaScript with Tailwind
-    class MortgageCalculator {
-        constructor() {
-            this.form = document.querySelector('#mortgage-form');
-            this.chart = null;
-            this.init();
-        }
-
-        init() {
-            if (this.form) {
-                this.form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.calculate();
-                });
-
-                // Real-time calculation
-                this.form.addEventListener('input', () => {
-                    this.calculate();
-                });
-
-                // Initial calculation
-                this.calculate();
-            }
-        }
-
-        calculate() {
-            try {
-                const inputs = this.getInputValues();
-                const results = this.calculateMortgage(inputs);
-                this.updateResults(results);
-                this.generateAmortizationSchedule(results);
-                this.createChart(results);
-            } catch (error) {
-                console.error('Mortgage calculation error:', error);
-            }
-        }
-
-        getInputValues() {
-            return {
-                loanAmount: parseFloat(this.form.querySelector('#loan-amount').value) || 0,
-                downPayment: parseFloat(this.form.querySelector('#down-payment').value) || 0,
-                interestRate: parseFloat(this.form.querySelector('#interest-rate').value) || 0,
-                loanTerm: parseInt(this.form.querySelector('#loan-term').value) || 30,
-                propertyTax: parseFloat(this.form.querySelector('#property-tax').value) || 0,
-                homeInsurance: parseFloat(this.form.querySelector('#home-insurance').value) || 0,
-                includePMI: this.form.querySelector('#pmi').checked
-            };
-        }
-
-        calculateMortgage(inputs) {
-            const principal = inputs.loanAmount - inputs.downPayment;
-            const monthlyRate = inputs.interestRate / 100 / 12;
-            const numPayments = inputs.loanTerm * 12;
-
-            // Calculate monthly payment (principal and interest)
-            let monthlyPI = 0;
-            if (monthlyRate > 0) {
-                monthlyPI = principal * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
-                    (Math.pow(1 + monthlyRate, numPayments) - 1);
-            } else {
-                monthlyPI = principal / numPayments;
-            }
-
-            // Calculate other monthly costs
-            const monthlyTax = inputs.propertyTax / 12;
-            const monthlyInsurance = inputs.homeInsurance / 12;
-            let monthlyPMI = 0;
-
-            if (inputs.includePMI && inputs.downPayment < inputs.loanAmount * 0.2) {
-                monthlyPMI = principal * 0.005 / 12; // 0.5% annually
-            }
-
-            const totalMonthly = monthlyPI + monthlyTax + monthlyInsurance + monthlyPMI;
-            const totalInterest = (monthlyPI * numPayments) - principal;
-            const totalCost = principal + totalInterest;
-
-            return {
-                principal,
-                monthlyPI,
-                monthlyTax,
-                monthlyInsurance,
-                monthlyPMI,
-                totalMonthly,
-                totalInterest,
-                totalCost,
-                numPayments,
-                monthlyRate
-            };
-        }
-
-        updateResults(results) {
-            document.querySelector('#principal-interest').textContent = this.formatCurrency(results.monthlyPI);
-            document.querySelector('#monthly-tax').textContent = this.formatCurrency(results.monthlyTax);
-            document.querySelector('#monthly-insurance').textContent = this.formatCurrency(results.monthlyInsurance);
-            document.querySelector('#monthly-pmi').textContent = this.formatCurrency(results.monthlyPMI);
-            document.querySelector('#total-payment').textContent = this.formatCurrency(results.totalMonthly);
-            document.querySelector('#total-loan').textContent = this.formatCurrency(results.principal);
-            document.querySelector('#total-interest').textContent = this.formatCurrency(results.totalInterest);
-            document.querySelector('#total-cost').textContent = this.formatCurrency(results.totalCost);
-        }
-
-        generateAmortizationSchedule(results) {
-            const tbody = document.querySelector('#amortization-tbody');
-            if (!tbody) return;
-
-            tbody.innerHTML = '';
-            let balance = results.principal;
-            const currentDate = new Date();
-
-            // Show first 12 months
-            for (let i = 1; i <= Math.min(12, results.numPayments); i++) {
-                const interestPayment = balance * results.monthlyRate;
-                const principalPayment = results.monthlyPI - interestPayment;
-                balance -= principalPayment;
-
-                const paymentDate = new Date(currentDate);
-                paymentDate.setMonth(paymentDate.getMonth() + i);
-
-                const row = document.createElement('tr');
-                row.className = 'hover:bg-gray-50';
-                row.innerHTML = `
-                <td class="px-4 py-3 text-sm text-center text-gray-900">${i}</td>
-                <td class="px-4 py-3 text-sm text-gray-900">${paymentDate.toLocaleDateString()}</td>
-                <td class="px-4 py-3 text-sm text-right text-gray-900">${this.formatCurrency(results.monthlyPI)}</td>
-                <td class="px-4 py-3 text-sm text-right text-gray-900">${this.formatCurrency(principalPayment)}</td>
-                <td class="px-4 py-3 text-sm text-right text-gray-900">${this.formatCurrency(interestPayment)}</td>
-                <td class="px-4 py-3 text-sm text-right text-gray-900">${this.formatCurrency(Math.max(0, balance))}</td>
-            `;
-                tbody.appendChild(row);
-            }
-        }
-
-        createChart(results) {
-            const canvas = document.querySelector('#payment-chart');
-            if (!canvas || typeof Chart === 'undefined') return;
-
-            // Destroy existing chart if it exists
-            if (this.chart) {
-                this.chart.destroy();
-            }
-
-            const ctx = canvas.getContext('2d');
-            this.chart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Principal & Interest', 'Property Tax', 'Insurance', 'PMI'],
-                    datasets: [{
-                        data: [results.monthlyPI, results.monthlyTax, results.monthlyInsurance, results.monthlyPMI],
-                        backgroundColor: [
-                            '#3b82f6',
-                            '#60a5fa',
-                            '#93c5fd',
-                            '#bfdbfe'
-                        ],
-                        borderWidth: 2,
-                        borderColor: '#ffffff'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 20,
-                                usePointStyle: true
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        formatCurrency(amount) {
-            return new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD'
-            }).format(amount);
-        }
-    }
-
-    // Initialize calculator when DOM is ready
-    document.addEventListener('DOMContentLoaded', () => {
-        new MortgageCalculator();
-    });
-</script>
 
 </html>
