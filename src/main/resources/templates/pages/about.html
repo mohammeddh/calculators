@@ -2,105 +2,57 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::content})}">
 
 <div th:fragment="content">
-    <header class="text-center mb-12 pb-8 border-b border-brand-gray">
-        <h1 class="text-3xl md:text-4xl font-bold text-brand-black mb-4">About CalcHub</h1>
-        <p class="text-lg text-brand-blue max-w-2xl mx-auto leading-relaxed">
-            We're passionate about creating beautiful, accessible calculator tools that make complex calculations simple and enjoyable.
-        </p>
+    <header class="text-center mb-8 lg:mb-12 pb-6 border-b border-gray-200">
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-primary mb-3 lg:mb-4 px-4">About CalcHub</h1>
+        <p class="text-base lg:text-lg text-text-secondary max-w-2xl mx-auto px-4">We're passionate about creating beautiful, accessible calculator tools that make complex calculations simple and enjoyable.</p>
     </header>
 
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold text-brand-black mb-6">Our Mission</h2>
-        <p class="text-brand-blue leading-relaxed mb-6">
-            At CalcHub, we believe that powerful calculation tools shouldn't be complicated or ugly. We're dedicated to creating calculator applications that are not only functionally excellent but also visually appealing and user-friendly.
-        </p>
+    <section class="mb-8 lg:mb-12 px-4">
+        <h2 class="text-xl lg:text-2xl font-semibold text-text-primary mb-4 lg:mb-6">Our Mission</h2>
+        <p class="text-text-secondary mb-6 leading-relaxed text-sm lg:text-base">At CalcHub, we believe that powerful calculation tools shouldn't be complicated or ugly. We're dedicated to creating calculator applications that are not only functionally excellent but also visually appealing and user-friendly.</p>
 
-        <h2 class="text-2xl font-bold text-brand-black mb-6 mt-12">What We Offer</h2>
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-white border border-brand-gray rounded-xl p-8 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-brand-orange group">
-                <div class="text-3xl mb-4 group-hover:scale-110 transition-transform duration-300">💰</div>
-                <h3 class="text-xl font-semibold text-brand-black mb-3">Financial Calculators</h3>
-                <p class="text-brand-blue leading-relaxed">
-                    Mortgage, loan, investment, and budgeting calculators to help you make informed financial decisions.
-                </p>
+        <h2 class="text-xl lg:text-2xl font-semibold text-text-primary mb-4 lg:mb-6 mt-8 lg:mt-12">What We Offer</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
+            <div class="bg-white border border-gray-200 rounded-xl p-6 lg:p-8 text-center transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-primary-500">
+                <div class="text-2xl lg:text-3xl mb-3 lg:mb-4">💰</div>
+                <h3 class="text-base lg:text-lg font-semibold text-text-primary mb-2 lg:mb-3">Financial Calculators</h3>
+                <p class="text-text-secondary text-sm lg:text-base leading-relaxed">Mortgage, loan, investment, and budgeting calculators to help you make informed financial decisions.</p>
             </div>
 
-            <div class="bg-white border border-brand-gray rounded-xl p-8 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-brand-orange group">
-                <div class="text-3xl mb-4 group-hover:scale-110 transition-transform duration-300">❤️</div>
-                <h3 class="text-xl font-semibold text-brand-black mb-3">Health & Fitness</h3>
-                <p class="text-brand-blue leading-relaxed">
-                    BMI, calorie, body fat, and fitness calculators to support your health and wellness journey.
-                </p>
+            <div class="bg-white border border-gray-200 rounded-xl p-6 lg:p-8 text-center transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-primary-500">
+                <div class="text-2xl lg:text-3xl mb-3 lg:mb-4">❤️</div>
+                <h3 class="text-base lg:text-lg font-semibold text-text-primary mb-2 lg:mb-3">Health & Fitness</h3>
+                <p class="text-text-secondary text-sm lg:text-base leading-relaxed">BMI, calorie, body fat, and fitness calculators to support your health and wellness journey.</p>
             </div>
 
-            <div class="bg-white border border-brand-gray rounded-xl p-8 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-brand-orange group">
-                <div class="text-3xl mb-4 group-hover:scale-110 transition-transform duration-300">🔢</div>
-                <h3 class="text-xl font-semibold text-brand-black mb-3">Math & Science</h3>
-                <p class="text-brand-blue leading-relaxed">
-                    Advanced mathematical and scientific calculators for students, professionals, and enthusiasts.
-                </p>
+            <div class="bg-white border border-gray-200 rounded-xl p-6 lg:p-8 text-center transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-primary-500">
+                <div class="text-2xl lg:text-3xl mb-3 lg:mb-4">🔢</div>
+                <h3 class="text-base lg:text-lg font-semibold text-text-primary mb-2 lg:mb-3">Math & Science</h3>
+                <p class="text-text-secondary text-sm lg:text-base leading-relaxed">Advanced mathematical and scientific calculators for students, professionals, and enthusiasts.</p>
             </div>
 
-            <div class="bg-white border border-brand-gray rounded-xl p-8 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-brand-orange group">
-                <div class="text-3xl mb-4 group-hover:scale-110 transition-transform duration-300">🏠</div>
-                <h3 class="text-xl font-semibold text-brand-black mb-3">Everyday Tools</h3>
-                <p class="text-brand-blue leading-relaxed">
-                    Unit converters, date calculators, and other practical tools for daily use.
-                </p>
+            <div class="bg-white border border-gray-200 rounded-xl p-6 lg:p-8 text-center transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-primary-500">
+                <div class="text-2xl lg:text-3xl mb-3 lg:mb-4">🏠</div>
+                <h3 class="text-base lg:text-lg font-semibold text-text-primary mb-2 lg:mb-3">Everyday Tools</h3>
+                <p class="text-text-secondary text-sm lg:text-base leading-relaxed">Unit converters, date calculators, and other practical tools for daily use.</p>
             </div>
         </div>
 
-        <h2 class="text-2xl font-bold text-brand-black mb-6 mt-12">Our Values</h2>
-        <div class="bg-gray-50 border border-brand-gray rounded-xl p-8">
-            <div class="space-y-6">
-                <div class="flex items-start gap-4">
-                    <div class="w-2 h-2 bg-brand-orange rounded-full mt-3 flex-shrink-0"></div>
-                    <div>
-                        <h4 class="font-semibold text-brand-black mb-2">Simplicity</h4>
-                        <p class="text-brand-blue">Complex calculations made simple and intuitive</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start gap-4">
-                    <div class="w-2 h-2 bg-brand-orange rounded-full mt-3 flex-shrink-0"></div>
-                    <div>
-                        <h4 class="font-semibold text-brand-black mb-2">Beauty</h4>
-                        <p class="text-brand-blue">Every tool designed with care and attention to aesthetics</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start gap-4">
-                    <div class="w-2 h-2 bg-brand-orange rounded-full mt-3 flex-shrink-0"></div>
-                    <div>
-                        <h4 class="font-semibold text-brand-black mb-2">Accuracy</h4>
-                        <p class="text-brand-blue">Reliable calculations you can trust</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start gap-4">
-                    <div class="w-2 h-2 bg-brand-orange rounded-full mt-3 flex-shrink-0"></div>
-                    <div>
-                        <h4 class="font-semibold text-brand-black mb-2">Accessibility</h4>
-                        <p class="text-brand-blue">Tools that work for everyone, everywhere</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start gap-4">
-                    <div class="w-2 h-2 bg-brand-orange rounded-full mt-3 flex-shrink-0"></div>
-                    <div>
-                        <h4 class="font-semibold text-brand-black mb-2">Privacy</h4>
-                        <p class="text-brand-blue">Your data stays with you - we don't track or store personal information</p>
-                    </div>
-                </div>
-            </div>
+        <h2 class="text-xl lg:text-2xl font-semibold text-text-primary mb-4 lg:mb-6 mt-8 lg:mt-12">Our Values</h2>
+        <div class="space-y-3 lg:space-y-4">
+            <p class="text-text-secondary text-sm lg:text-base"><span class="font-semibold text-text-primary">Simplicity:</span> Complex calculations made simple and intuitive</p>
+            <p class="text-text-secondary text-sm lg:text-base"><span class="font-semibold text-text-primary">Beauty:</span> Every tool designed with care and attention to aesthetics</p>
+            <p class="text-text-secondary text-sm lg:text-base"><span class="font-semibold text-text-primary">Accuracy:</span> Reliable calculations you can trust</p>
+            <p class="text-text-secondary text-sm lg:text-base"><span class="font-semibold text-text-primary">Accessibility:</span> Tools that work for everyone, everywhere</p>
+            <p class="text-text-secondary text-sm lg:text-base"><span class="font-semibold text-text-primary">Privacy:</span> Your data stays with you - we don't track or store personal information</p>
         </div>
     </section>
 
-    <div class="text-center space-x-4">
-        <a href="/tools" class="inline-flex items-center px-6 py-3 bg-brand-orange text-white font-semibold rounded-lg hover:bg-yellow-500 transition-colors duration-200 transform hover:scale-105">
+    <div class="text-center space-y-4 sm:space-y-0 sm:space-x-4 px-4">
+        <a href="/tools" class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-primary-500 text-white font-medium rounded-lg transition-all duration-200 hover:bg-primary-600 hover:-translate-y-0.5 hover:shadow-md hover:no-underline">
             Explore Our Tools
         </a>
-        <a href="/contact" class="inline-flex items-center px-6 py-3 bg-transparent text-brand-orange border-2 border-brand-orange font-semibold rounded-lg hover:bg-brand-orange hover:text-white transition-all duration-200">
+        <a href="/contact" class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-transparent text-primary-500 font-medium rounded-lg border border-primary-200 transition-all duration-200 hover:bg-primary-50 hover:border-primary-500 hover:no-underline">
             Get in Touch
         </a>
     </div>

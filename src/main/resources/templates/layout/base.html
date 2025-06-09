@@ -33,25 +33,72 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS -->
+    <!-- Chart.js for calculator visualizations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+    <!-- Tailwind CSS with custom configuration -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'brand-black': '#000000',
-                        'brand-blue': '#1e293b',
-                        'brand-orange': '#f59e0b',
-                        'brand-gray': '#e5e7eb',
-                    }
+                        // Primary color scheme - Soft orange (#E67E22)
+                        primary: {
+                            50: '#FEF9F3',
+                            100: '#FDF2E9',
+                            200: '#FCE4CE',
+                            300: '#F9D5B3',
+                            400: '#F5B584',
+                            500: '#E67E22',
+                            600: '#D35400',
+                            700: '#A04000',
+                            800: '#7E3300',
+                            900: '#5C2600',
+                        },
+                        // Secondary color scheme - Blue (#3498DB)
+                        secondary: {
+                            50: '#F8FCFE',
+                            100: '#EBF5FB',
+                            200: '#D5E8F7',
+                            300: '#AEDCF2',
+                            400: '#85C1E9',
+                            500: '#3498DB',
+                            600: '#2E86C1',
+                            700: '#2874A6',
+                            800: '#21618C',
+                            900: '#1B4F72',
+                        },
+                        // Accent color scheme - Dark blue-gray (#2C3E50)
+                        accent: {
+                            50: '#F8F9FA',
+                            100: '#ECF0F1',
+                            200: '#D5DBDB',
+                            300: '#BDC3C7',
+                            400: '#85929E',
+                            500: '#2C3E50',
+                            600: '#273746',
+                            700: '#212F3D',
+                            800: '#1C2833',
+                            900: '#17202A',
+                        },
+                        // Background color - Off-white (#FAF9F6)
+                        background: '#FAF9F6',
+                        // Text color - Slate gray (#2D3436)
+                        'text-primary': '#2D3436',
+                        'text-secondary': '#636E72',
+                        'text-muted': '#74B9FF',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    screens: {
+                        'xs': '475px',
+                    },
                 }
             }
         }
     </script>
-
-    <!-- Chart.js for calculator visualizations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 
     <!-- Schema.org markup -->
     <script type="application/ld+json" th:inline="javascript">
@@ -71,114 +118,173 @@
         }
     </script>
 </head>
-<body class="bg-gray-50 text-brand-black font-inter">
+<body class="bg-background text-text-primary font-sans min-h-screen">
 <!-- Header -->
-<header class="bg-gradient-to-r from-brand-blue to-brand-black text-white sticky top-0 z-50 shadow-lg">
-    <div class="max-w-6xl mx-auto px-4">
-        <nav class="flex justify-between items-center min-h-16">
-            <a href="/" class="text-xl font-semibold text-white hover:text-brand-orange transition-colors">
+<header class="bg-gradient-to-r from-accent-500 to-accent-600 text-white sticky top-0 z-50 shadow-lg">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <nav class="flex justify-between items-center h-16">
+            <a href="/" class="text-lg sm:text-xl font-semibold text-white hover:opacity-90 transition-opacity">
                 ✨ <span th:text="${appName}">CalcHub</span>
             </a>
 
             <!-- Desktop Navigation -->
-            <ul class="hidden md:flex space-x-8">
-                <li><a href="/" class="text-white/90 hover:text-brand-orange font-medium py-2 transition-colors border-b-2 border-transparent hover:border-brand-orange" th:classappend="${activePage == 'home'} ? 'border-brand-orange text-brand-orange' : ''">Home</a></li>
-                <li><a href="/about" class="text-white/90 hover:text-brand-orange font-medium py-2 transition-colors border-b-2 border-transparent hover:border-brand-orange" th:classappend="${activePage == 'about'} ? 'border-brand-orange text-brand-orange' : ''">About</a></li>
-                <li><a href="/tools" class="text-white/90 hover:text-brand-orange font-medium py-2 transition-colors border-b-2 border-transparent hover:border-brand-orange" th:classappend="${activePage == 'tools'} ? 'border-brand-orange text-brand-orange' : ''">Tools</a></li>
-                <li><a href="/contact" class="text-white/90 hover:text-brand-orange font-medium py-2 transition-colors border-b-2 border-transparent hover:border-brand-orange" th:classappend="${activePage == 'contact'} ? 'border-brand-orange text-brand-orange' : ''">Contact</a></li>
+            <ul class="hidden md:flex space-x-6 lg:space-x-8">
+                <li><a href="/" class="text-white/90 hover:text-white font-medium py-2 px-1 transition-colors relative"
+                       th:classappend="${activePage == 'home'} ? 'border-b-2 border-white' : ''">Home</a></li>
+                <li><a href="/about" class="text-white/90 hover:text-white font-medium py-2 px-1 transition-colors relative"
+                       th:classappend="${activePage == 'about'} ? 'border-b-2 border-white' : ''">About</a></li>
+                <li><a href="/tools" class="text-white/90 hover:text-white font-medium py-2 px-1 transition-colors relative"
+                       th:classappend="${activePage == 'tools'} ? 'border-b-2 border-white' : ''">Tools</a></li>
+                <li><a href="/contact" class="text-white/90 hover:text-white font-medium py-2 px-1 transition-colors relative"
+                       th:classappend="${activePage == 'contact'} ? 'border-b-2 border-white' : ''">Contact</a></li>
             </ul>
 
             <!-- Mobile Menu Toggle -->
-            <button class="md:hidden flex flex-col justify-center items-center w-10 h-10 space-y-1" aria-label="Toggle navigation menu" aria-expanded="false" id="mobile-menu-toggle">
-                <span class="w-6 h-0.5 bg-white transition-all"></span>
-                <span class="w-6 h-0.5 bg-white transition-all"></span>
-                <span class="w-6 h-0.5 bg-white transition-all"></span>
+            <button id="mobile-menu-toggle" class="md:hidden flex flex-col justify-center gap-1 w-8 h-8 p-1" aria-label="Toggle navigation menu">
+                <span class="w-full h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
+                <span class="w-full h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
+                <span class="w-full h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
             </button>
         </nav>
 
         <!-- Mobile Menu -->
-        <nav class="md:hidden hidden py-4 border-t border-white/10" id="mobile-menu">
-            <a href="/" class="block text-white/90 hover:text-brand-orange font-medium py-3 px-4 border-l-4 border-transparent hover:border-brand-orange" th:classappend="${activePage == 'home'} ? 'border-brand-orange text-brand-orange bg-white/10' : ''">Home</a>
-            <a href="/about" class="block text-white/90 hover:text-brand-orange font-medium py-3 px-4 border-l-4 border-transparent hover:border-brand-orange" th:classappend="${activePage == 'about'} ? 'border-brand-orange text-brand-orange bg-white/10' : ''">About</a>
-            <a href="/tools" class="block text-white/90 hover:text-brand-orange font-medium py-3 px-4 border-l-4 border-transparent hover:border-brand-orange" th:classappend="${activePage == 'tools'} ? 'border-brand-orange text-brand-orange bg-white/10' : ''">Tools</a>
-            <a href="/contact" class="block text-white/90 hover:text-brand-orange font-medium py-3 px-4 border-l-4 border-transparent hover:border-brand-orange" th:classappend="${activePage == 'contact'} ? 'border-brand-orange text-brand-orange bg-white/10' : ''">Contact</a>
+        <nav id="mobile-menu" class="md:hidden pb-4 hidden">
+            <a href="/" class="block py-3 px-4 text-white/90 hover:text-white font-medium border-l-4 transition-colors"
+               th:classappend="${activePage == 'home'} ? 'border-white bg-white/10' : 'border-transparent'">Home</a>
+            <a href="/about" class="block py-3 px-4 text-white/90 hover:text-white font-medium border-l-4 transition-colors"
+               th:classappend="${activePage == 'about'} ? 'border-white bg-white/10' : 'border-transparent'">About</a>
+            <a href="/tools" class="block py-3 px-4 text-white/90 hover:text-white font-medium border-l-4 transition-colors"
+               th:classappend="${activePage == 'tools'} ? 'border-white bg-white/10' : 'border-transparent'">Tools</a>
+            <a href="/contact" class="block py-3 px-4 text-white/90 hover:text-white font-medium border-l-4 transition-colors"
+               th:classappend="${activePage == 'contact'} ? 'border-white bg-white/10' : 'border-transparent'">Contact</a>
         </nav>
     </div>
 </header>
 
 <!-- Breadcrumb -->
-<div th:if="${breadcrumbs != null and !breadcrumbs.empty}" class="bg-white border-b border-brand-gray">
-    <div class="max-w-6xl mx-auto px-4 py-3">
-        <nav aria-label="Breadcrumb" class="flex items-center space-x-2 text-sm text-gray-600">
+<div th:if="${breadcrumbs != null and !breadcrumbs.empty}" class="bg-white border-b border-gray-200 py-3">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <nav aria-label="Breadcrumb" class="text-sm text-text-secondary flex items-center space-x-2 overflow-x-auto">
             <th:block th:each="crumb, iter : ${breadcrumbs}">
                 <th:block th:if="${!iter.last}">
-                    <a href="/" th:if="${crumb == 'Home'}" th:text="${crumb}" class="text-brand-blue hover:text-brand-orange transition-colors">Home</a>
-                    <span th:unless="${crumb == 'Home'}" th:text="${crumb}" class="text-gray-500">Breadcrumb</span>
-                    <span class="text-gray-300">›</span>
+                    <a href="/" th:if="${crumb == 'Home'}" th:text="${crumb}"
+                       class="text-text-secondary hover:text-primary-500 transition-colors whitespace-nowrap">Home</a>
+                    <span th:unless="${crumb == 'Home'}" th:text="${crumb}" class="whitespace-nowrap">Breadcrumb</span>
+                    <span class="text-gray-300 flex-shrink-0">›</span>
                 </th:block>
-                <span th:if="${iter.last}" th:text="${crumb}" class="text-brand-black font-medium">Current Page</span>
+                <span th:if="${iter.last}" th:text="${crumb}" class="text-text-primary font-medium whitespace-nowrap">Current Page</span>
             </th:block>
         </nav>
     </div>
 </div>
 
 <!-- Main Layout -->
-<div class="max-w-6xl mx-auto px-4">
-    <div class="grid gap-6 py-6" th:classappend="${showLeftSidebar and showRightSidebar} ? 'lg:grid-cols-[250px_1fr_250px]' : (${showLeftSidebar and !showRightSidebar} ? 'lg:grid-cols-[250px_1fr]' : (${!showLeftSidebar and showRightSidebar} ? 'lg:grid-cols-[1fr_250px]' : 'lg:grid-cols-1'))">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+    <div class="py-6 lg:py-8">
+        <!-- Dynamic Layout Based on Sidebar Configuration -->
+        <div th:if="${showLeftSidebar and showRightSidebar}" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Sidebar -->
+            <aside class="lg:col-span-3 order-2 lg:order-1">
+                <div class="bg-white/50 rounded-xl p-4 lg:p-6 border border-gray-200 h-fit sticky top-24">
+                    <div th:replace="~{fragments/sidebar :: left-sidebar}"></div>
+                </div>
+            </aside>
+            <!-- Main Content -->
+            <main class="lg:col-span-6 order-1 lg:order-2">
+                <div class="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm border border-gray-200">
+                    <div th:replace="${content}"></div>
+                </div>
+            </main>
+            <!-- Right Sidebar -->
+            <aside class="lg:col-span-3 order-3">
+                <div class="bg-white/50 rounded-xl p-4 lg:p-6 border border-gray-200 h-fit sticky top-24">
+                    <div th:replace="~{fragments/sidebar :: right-sidebar}"></div>
+                </div>
+            </aside>
+        </div>
 
-        <!-- Left Sidebar -->
-        <aside th:if="${showLeftSidebar}" class="bg-white rounded-xl p-6 border border-brand-gray h-fit sticky top-20" role="complementary" aria-label="Advertisement sidebar">
-            <div th:replace="~{fragments/sidebar :: left-sidebar}"></div>
-        </aside>
+        <div th:if="${showLeftSidebar and !showRightSidebar}" class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <!-- Left Sidebar -->
+            <aside class="order-2 lg:order-1">
+                <div class="bg-white/50 rounded-xl p-4 lg:p-6 border border-gray-200 h-fit sticky top-24">
+                    <div th:replace="~{fragments/sidebar :: left-sidebar}"></div>
+                </div>
+            </aside>
+            <!-- Main Content -->
+            <main class="lg:col-span-3 order-1 lg:order-2">
+                <div class="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm border border-gray-200">
+                    <div th:replace="${content}"></div>
+                </div>
+            </main>
+        </div>
 
-        <!-- Main Content -->
-        <main class="bg-white rounded-xl p-8 border border-brand-gray" role="main">
-            <div th:replace="${content}"></div>
-        </main>
+        <div th:if="${!showLeftSidebar and showRightSidebar}" class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <!-- Main Content -->
+            <main class="lg:col-span-3 order-1">
+                <div class="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm border border-gray-200">
+                    <div th:replace="${content}"></div>
+                </div>
+            </main>
+            <!-- Right Sidebar -->
+            <aside class="order-2">
+                <div class="bg-white/50 rounded-xl p-4 lg:p-6 border border-gray-200 h-fit sticky top-24">
+                    <div th:replace="~{fragments/sidebar :: right-sidebar}"></div>
+                </div>
+            </aside>
+        </div>
 
-        <!-- Right Sidebar -->
-        <aside th:if="${showRightSidebar}" class="bg-white rounded-xl p-6 border border-brand-gray h-fit sticky top-20" role="complementary" aria-label="Featured content sidebar">
-            <div th:replace="~{fragments/sidebar :: right-sidebar}"></div>
-        </aside>
+        <div th:if="${!showLeftSidebar and !showRightSidebar}">
+            <!-- Main Content Only -->
+            <main>
+                <div class="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm border border-gray-200">
+                    <div th:replace="${content}"></div>
+                </div>
+            </main>
+        </div>
     </div>
 </div>
 
 <!-- Footer -->
-<footer class="bg-gradient-to-r from-brand-blue to-brand-black text-white mt-12">
-    <div class="max-w-6xl mx-auto px-4 py-8">
-        <nav class="flex flex-wrap justify-center gap-6 mb-6">
-            <a href="/about" class="text-white/80 hover:text-brand-orange transition-colors">About Us</a>
-            <a href="/tools" class="text-white/80 hover:text-brand-orange transition-colors">Site Map</a>
-            <a href="/terms" class="text-white/80 hover:text-brand-orange transition-colors">Terms of Use</a>
-            <a href="/privacy" class="text-white/80 hover:text-brand-orange transition-colors">Privacy Policy</a>
-            <a href="/contact" class="text-white/80 hover:text-brand-orange transition-colors">Contact</a>
-            <a href="/help" class="text-white/80 hover:text-brand-orange transition-colors">Help</a>
+<footer class="bg-gradient-to-r from-accent-500 to-accent-600 text-white mt-12" role="contentinfo">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-12">
+        <nav class="flex flex-wrap justify-center gap-4 lg:gap-6 mb-6" role="navigation">
+            <a href="/about" class="text-white/80 hover:text-white transition-colors text-sm lg:text-base">About Us</a>
+            <a href="/tools" class="text-white/80 hover:text-white transition-colors text-sm lg:text-base">Site Map</a>
+            <a href="/terms" class="text-white/80 hover:text-white transition-colors text-sm lg:text-base">Terms of Use</a>
+            <a href="/privacy" class="text-white/80 hover:text-white transition-colors text-sm lg:text-base">Privacy Policy</a>
+            <a href="/contact" class="text-white/80 hover:text-white transition-colors text-sm lg:text-base">Contact</a>
+            <a href="/help" class="text-white/80 hover:text-white transition-colors text-sm lg:text-base">Help</a>
         </nav>
-        <div class="text-center">
-            <p class="text-white font-medium">&copy; 2025 <span th:text="${appName}">CalcHub</span>. Beautiful calculator tools for everyone.</p>
+        <div class="text-center text-white text-sm font-medium">
+            <p>&copy; 2025 <span th:text="${appName}">CalcHub</span>. Beautiful calculator tools for everyone.</p>
         </div>
     </div>
 </footer>
+
+<!-- JavaScript for mobile menu -->
 <script>
-    // Mobile menu toggle
-    document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
-        const menu = document.getElementById('mobile-menu');
-        const toggle = this;
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-        menu.classList.toggle('hidden');
-
-        // Animate hamburger to X
-        const spans = toggle.querySelectorAll('span');
-        if (menu.classList.contains('hidden')) {
-            spans[0].style.transform = 'rotate(0)';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'rotate(0)';
-        } else {
-            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-            spans[1].style.opacity = '0';
-            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+        if (mobileMenuToggle && mobileMenu) {
+            mobileMenuToggle.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                // Animate hamburger
+                const spans = mobileMenuToggle.querySelectorAll('span');
+                if (mobileMenu.classList.contains('hidden')) {
+                    spans[0].style.transform = 'rotate(0) translateY(0)';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'rotate(0) translateY(0)';
+                } else {
+                    spans[0].style.transform = 'rotate(45deg) translateY(4px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translateY(-4px)';
+                }
+            });
         }
     });
 </script>
+
 </body>
 </html>

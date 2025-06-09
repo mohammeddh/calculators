@@ -2,36 +2,34 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::content})}">
 
 <div th:fragment="content">
-    <header class="text-center mb-12 pb-8 border-b border-brand-gray">
-        <h1 class="text-3xl md:text-4xl font-bold text-brand-black mb-4">Contact Us</h1>
-        <p class="text-lg text-brand-blue max-w-2xl mx-auto leading-relaxed">
-            We'd love to hear from you! Get in touch with any questions, suggestions, or feedback about our calculator tools.
-        </p>
+    <header class="text-center mb-8 lg:mb-12 pb-6 border-b border-gray-200">
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-primary mb-3 lg:mb-4 px-4">Contact Us</h1>
+        <p class="text-base lg:text-lg text-text-secondary max-w-2xl mx-auto px-4">We'd love to hear from you! Get in touch with any questions, suggestions, or feedback about our calculator tools.</p>
     </header>
 
-    <div class="grid lg:grid-cols-2 gap-8 mb-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-8 lg:mb-12">
         <!-- Contact Form -->
-        <div class="bg-white border border-brand-gray rounded-xl p-8">
-            <h2 class="text-xl font-bold text-brand-black mb-6">Send us a Message</h2>
-            <form class="contact-form space-y-6">
+        <div class="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 order-2 lg:order-1">
+            <h2 class="text-lg lg:text-xl font-semibold text-text-primary mb-4 lg:mb-6">Send us a Message</h2>
+            <form class="contact-form space-y-4">
                 <div>
-                    <label for="name" class="block text-sm font-semibold text-brand-black mb-2">Full Name *</label>
+                    <label for="name" class="block text-sm font-semibold text-text-primary mb-2">Full Name *</label>
                     <input type="text" id="name" name="name"
-                           class="w-full px-4 py-3 border border-brand-gray rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-colors"
+                           class="w-full px-3 lg:px-4 py-2.5 lg:py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                            required>
                 </div>
 
                 <div>
-                    <label for="email" class="block text-sm font-semibold text-brand-black mb-2">Email Address *</label>
+                    <label for="email" class="block text-sm font-semibold text-text-primary mb-2">Email Address *</label>
                     <input type="email" id="email" name="email"
-                           class="w-full px-4 py-3 border border-brand-gray rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-colors"
+                           class="w-full px-3 lg:px-4 py-2.5 lg:py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                            required>
                 </div>
 
                 <div>
-                    <label for="subject" class="block text-sm font-semibold text-brand-black mb-2">Subject</label>
+                    <label for="subject" class="block text-sm font-semibold text-text-primary mb-2">Subject</label>
                     <select id="subject" name="subject"
-                            class="w-full px-4 py-3 border border-brand-gray rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-colors">
+                            class="w-full px-3 lg:px-4 py-2.5 lg:py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
                         <option value="">Select a topic</option>
                         <option value="general">General Inquiry</option>
                         <option value="calculator-request">Calculator Request</option>
@@ -43,69 +41,69 @@
                 </div>
 
                 <div>
-                    <label for="message" class="block text-sm font-semibold text-brand-black mb-2">Message *</label>
-                    <textarea id="message" name="message" rows="6"
-                              class="w-full px-4 py-3 border border-brand-gray rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-colors resize-vertical"
+                    <label for="message" class="block text-sm font-semibold text-text-primary mb-2">Message *</label>
+                    <textarea id="message" name="message" rows="4"
+                              class="w-full px-3 lg:px-4 py-2.5 lg:py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-vertical"
                               placeholder="Tell us how we can help you..." required></textarea>
                 </div>
 
-                <button type="submit" class="w-full bg-brand-orange text-white font-semibold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors duration-200 transform hover:scale-105">
+                <button type="submit" class="w-full px-6 py-3 bg-primary-500 text-white font-medium rounded-lg transition-all duration-200 hover:bg-primary-600">
                     Send Message
                 </button>
             </form>
         </div>
 
         <!-- Contact Information -->
-        <div class="bg-white border border-brand-gray rounded-xl p-8">
-            <h2 class="text-xl font-bold text-brand-black mb-6">Get in Touch</h2>
+        <div class="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 order-1 lg:order-2">
+            <h2 class="text-lg lg:text-xl font-semibold text-text-primary mb-4 lg:mb-6">Get in Touch</h2>
 
-            <div class="space-y-8">
-                <div class="flex items-start gap-4">
-                    <div class="text-2xl">📧</div>
+            <div class="space-y-4 lg:space-y-6">
+                <div class="flex items-start gap-3 lg:gap-4">
+                    <div class="text-xl lg:text-2xl flex-shrink-0">📧</div>
                     <div>
-                        <h3 class="font-semibold text-brand-black mb-1">Email Us</h3>
-                        <p class="text-brand-blue text-sm mb-1">hello@calchub.com</p>
-                        <small class="text-gray-500 text-xs">We'll respond within 24 hours</small>
+                        <h3 class="font-semibold text-text-primary text-sm lg:text-base">Email Us</h3>
+                        <p class="text-sm text-text-secondary">hello@calchub.com</p>
+                        <small class="text-xs text-text-muted">We'll respond within 24 hours</small>
                     </div>
                 </div>
 
-                <div class="flex items-start gap-4">
-                    <div class="text-2xl">💬</div>
+                <div class="flex items-start gap-3 lg:gap-4">
+                    <div class="text-xl lg:text-2xl flex-shrink-0">💬</div>
                     <div>
-                        <h3 class="font-semibold text-brand-black mb-1">Live Chat</h3>
-                        <p class="text-brand-blue text-sm mb-1">Available Mon-Fri</p>
-                        <small class="text-gray-500 text-xs">9 AM - 5 PM EST</small>
+                        <h3 class="font-semibold text-text-primary text-sm lg:text-base">Live Chat</h3>
+                        <p class="text-sm text-text-secondary">Available Mon-Fri</p>
+                        <small class="text-xs text-text-muted">9 AM - 5 PM EST</small>
                     </div>
                 </div>
 
-                <div class="flex items-start gap-4">
-                    <div class="text-2xl">📱</div>
+                <div class="flex items-start gap-3 lg:gap-4">
+                    <div class="text-xl lg:text-2xl flex-shrink-0">📱</div>
                     <div>
-                        <h3 class="font-semibold text-brand-black mb-1">Follow Us</h3>
-                        <div class="space-y-2">
-                            <a href="#" class="block text-sm text-brand-orange hover:text-yellow-500 transition-colors">Twitter</a>
-                            <a href="#" class="block text-sm text-brand-orange hover:text-yellow-500 transition-colors">LinkedIn</a>
-                            <a href="#" class="block text-sm text-brand-orange hover:text-yellow-500 transition-colors">GitHub</a>
+                        <h3 class="font-semibold text-text-primary text-sm lg:text-base">Follow Us</h3>
+                        <div class="space-y-1">
+                            <a href="#" class="block text-sm text-primary-500 hover:text-primary-600 transition-colors">Twitter</a>
+                            <a href="#" class="block text-sm text-primary-500 hover:text-primary-600 transition-colors">LinkedIn</a>
+                            <a href="#" class="block text-sm text-primary-500 hover:text-primary-600 transition-colors">GitHub</a>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- FAQ Section -->
-            <div class="mt-12 pt-8 border-t border-brand-gray">
-                <h3 class="font-semibold text-brand-black mb-4">Frequently Asked Questions</h3>
-                <div class="space-y-6">
+            <div class="mt-6 lg:mt-8 pt-4 lg:pt-6 border-t border-gray-200">
+                <h3 class="font-semibold text-text-primary mb-3 lg:mb-4 text-sm lg:text-base">Frequently Asked Questions</h3>
+                <div class="space-y-3 lg:space-y-4">
                     <div>
-                        <h4 class="font-medium text-brand-black mb-2">How accurate are your calculators?</h4>
-                        <p class="text-sm text-brand-blue leading-relaxed">Our calculators use industry-standard formulas and are regularly updated for accuracy.</p>
+                        <h4 class="font-medium text-text-primary mb-1 text-sm">How accurate are your calculators?</h4>
+                        <p class="text-xs lg:text-sm text-text-secondary">Our calculators use industry-standard formulas and are regularly updated for accuracy.</p>
                     </div>
                     <div>
-                        <h4 class="font-medium text-brand-black mb-2">Can I request a new calculator?</h4>
-                        <p class="text-sm text-brand-blue leading-relaxed">Absolutely! We love hearing suggestions for new tools that would be helpful.</p>
+                        <h4 class="font-medium text-text-primary mb-1 text-sm">Can I request a new calculator?</h4>
+                        <p class="text-xs lg:text-sm text-text-secondary">Absolutely! We love hearing suggestions for new tools that would be helpful.</p>
                     </div>
                     <div>
-                        <h4 class="font-medium text-brand-black mb-2">Are your tools free to use?</h4>
-                        <p class="text-sm text-brand-blue leading-relaxed">Yes, all our basic calculator tools are completely free to use.</p>
+                        <h4 class="font-medium text-text-primary mb-1 text-sm">Are your tools free to use?</h4>
+                        <p class="text-xs lg:text-sm text-text-secondary">Yes, all our basic calculator tools are completely free to use.</p>
                     </div>
                 </div>
             </div>

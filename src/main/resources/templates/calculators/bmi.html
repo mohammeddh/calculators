@@ -2,110 +2,83 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::content})}">
 
 <div th:fragment="content">
-    <header class="text-center mb-12 pb-8 border-b border-brand-gray">
-        <h1 class="text-3xl md:text-4xl font-bold text-brand-black mb-4">BMI Calculator</h1>
-        <p class="text-lg text-brand-blue max-w-2xl mx-auto">
-            Calculate your Body Mass Index (BMI) and understand your weight status with our easy-to-use calculator.
-        </p>
+    <header class="text-center mb-8 lg:mb-12 pb-6 border-b border-gray-200">
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-primary mb-3 lg:mb-4 px-4">BMI Calculator</h1>
+        <p class="text-base lg:text-lg text-text-secondary max-w-2xl mx-auto px-4">Calculate your Body Mass Index (BMI) and understand your weight status with our easy-to-use calculator.</p>
     </header>
 
-    <div class="grid lg:grid-cols-2 gap-8 mb-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-8">
         <!-- Calculator Form -->
-        <div class="bg-gray-50 border border-brand-gray rounded-xl p-6">
-            <form id="bmi-form" class="space-y-6">
+        <div class="bg-white/50 p-4 sm:p-6 rounded-xl border border-gray-200 order-2 lg:order-1">
+            <h2 class="text-lg font-semibold text-text-primary mb-4 lg:mb-6">Calculate Your BMI</h2>
+            <form id="bmi-form" class="space-y-4 lg:space-y-6">
                 <div>
-                    <label for="unit" class="block text-sm font-semibold text-brand-black mb-2">Unit System</label>
+                    <label for="unit" class="block text-sm font-semibold text-text-primary mb-2">Unit System</label>
                     <select id="unit" name="unit"
-                            class="w-full px-4 py-3 border border-brand-gray rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-colors">
+                            class="w-full px-4 py-2.5 lg:py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
                         <option value="metric">Metric (kg, cm)</option>
                         <option value="imperial">Imperial (lbs, inches)</option>
                     </select>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label for="weight" class="block text-sm font-semibold text-brand-black mb-2">Weight</label>
+                        <label for="weight" class="block text-sm font-semibold text-text-primary mb-2">Weight</label>
                         <div class="relative">
                             <input type="number" id="weight" name="weight"
-                                   class="w-full pl-4 pr-12 py-3 border border-brand-gray rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-colors"
+                                   class="w-full px-4 py-2.5 lg:py-3 pr-12 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                                    value="70" min="1" max="1000" step="0.1" required>
-                            <span class="absolute right-3 top-3 text-gray-500 text-sm" id="weight-unit">kg</span>
+                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-text-muted text-sm font-medium pointer-events-none" id="weight-unit">kg</span>
                         </div>
                     </div>
 
                     <div>
-                        <label for="height" class="block text-sm font-semibold text-brand-black mb-2">Height</label>
+                        <label for="height" class="block text-sm font-semibold text-text-primary mb-2">Height</label>
                         <div class="relative">
                             <input type="number" id="height" name="height"
-                                   class="w-full pl-4 pr-12 py-3 border border-brand-gray rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-colors"
+                                   class="w-full px-4 py-2.5 lg:py-3 pr-12 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                                    value="175" min="1" max="300" step="0.1" required>
-                            <span class="absolute right-3 top-3 text-gray-500 text-sm" id="height-unit">cm</span>
+                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-text-muted text-sm font-medium pointer-events-none" id="height-unit">cm</span>
                         </div>
                     </div>
                 </div>
 
-                <button type="submit" class="w-full bg-brand-orange text-white font-semibold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors duration-200 transform hover:scale-105">
+                <button type="submit" class="w-full px-6 py-3 bg-primary-500 text-white font-semibold rounded-lg transition-all duration-200 hover:bg-primary-600 hover:-translate-y-0.5 hover:shadow-md">
                     Calculate BMI
                 </button>
             </form>
         </div>
 
         <!-- Results -->
-        <div class="bg-white border border-brand-gray rounded-xl p-6">
-            <div id="bmi-results" class="space-y-6">
-                <!-- BMI Result Display -->
-                <div class="text-center p-8 bg-brand-orange/10 border-2 border-brand-orange rounded-xl">
-                    <div class="text-4xl md:text-5xl font-bold text-brand-orange mb-2" id="bmi-result">22.9</div>
-                    <div class="text-xl font-semibold text-brand-black mb-3" id="bmi-category">Normal weight</div>
-                    <div class="text-sm text-brand-blue max-w-md mx-auto leading-relaxed" id="bmi-advice">
-                        Maintain your healthy lifestyle with balanced diet and regular exercise.
-                    </div>
+        <div class="bg-white/50 p-4 sm:p-6 rounded-xl border border-gray-200 order-1 lg:order-2">
+            <h2 class="text-lg font-semibold text-text-primary mb-4 lg:mb-6">Your Results</h2>
+            <div id="bmi-results">
+                <div class="text-center p-6 lg:p-8 bg-primary-50 rounded-xl border-2 border-primary-500 mb-4 lg:mb-6">
+                    <div class="text-3xl lg:text-4xl font-bold text-primary-500 mb-2" id="bmi-result">22.9</div>
+                    <div class="text-lg lg:text-xl font-semibold text-text-primary mb-2" id="bmi-category">Normal weight</div>
+                    <div class="text-xs lg:text-sm text-text-secondary max-w-sm mx-auto leading-relaxed" id="bmi-advice">Maintain your healthy lifestyle with balanced diet and regular exercise.</div>
                 </div>
 
-                <!-- BMI Categories -->
-                <div class="bg-gray-50 border border-brand-gray rounded-lg p-6">
-                    <h4 class="font-semibold text-brand-black mb-4">BMI Categories</h4>
-                    <div class="space-y-3" id="category-list">
-                        <div class="flex justify-between items-center p-3 bg-white rounded-lg border border-brand-gray">
-                            <span class="font-medium text-brand-blue">Underweight</span>
-                            <span class="text-sm text-brand-black">< 18.5</span>
+                <div class="bg-gray-100 p-3 lg:p-4 rounded-lg border border-gray-200">
+                    <h4 class="font-semibold text-text-primary mb-3 lg:mb-4 text-sm lg:text-base">BMI Categories</h4>
+                    <div class="category-list space-y-2">
+                        <div class="flex justify-between items-center p-2 lg:p-2.5 bg-white rounded border border-gray-200">
+                            <span class="text-xs lg:text-sm font-medium text-text-primary">Underweight</span>
+                            <span class="text-xs lg:text-sm text-text-secondary">Below 18.5</span>
                         </div>
-                        <div class="flex justify-between items-center p-3 bg-brand-orange/10 rounded-lg border border-brand-orange">
-                            <span class="font-semibold text-brand-orange">Normal weight</span>
-                            <span class="text-sm font-semibold text-brand-orange">18.5 - 25</span>
+                        <div class="flex justify-between items-center p-2 lg:p-2.5 bg-white rounded border border-gray-200">
+                            <span class="text-xs lg:text-sm font-medium text-text-primary">Normal weight</span>
+                            <span class="text-xs lg:text-sm text-text-secondary">18.5 - 24.9</span>
                         </div>
-                        <div class="flex justify-between items-center p-3 bg-white rounded-lg border border-brand-gray">
-                            <span class="font-medium text-brand-blue">Overweight</span>
-                            <span class="text-sm text-brand-black">25 - 30</span>
+                        <div class="flex justify-between items-center p-2 lg:p-2.5 bg-white rounded border border-gray-200">
+                            <span class="text-xs lg:text-sm font-medium text-text-primary">Overweight</span>
+                            <span class="text-xs lg:text-sm text-text-secondary">25.0 - 29.9</span>
                         </div>
-                        <div class="flex justify-between items-center p-3 bg-white rounded-lg border border-brand-gray">
-                            <span class="font-medium text-brand-blue">Obese</span>
-                            <span class="text-sm text-brand-black">≥ 30</span>
+                        <div class="flex justify-between items-center p-2 lg:p-2.5 bg-white rounded border border-gray-200">
+                            <span class="text-xs lg:text-sm font-medium text-text-primary">Obese</span>
+                            <span class="text-xs lg:text-sm text-text-secondary">30.0 and above</span>
                         </div>
                     </div>
-                </div>
-
-                <!-- Health Tips -->
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                    <h4 class="font-semibold text-brand-black mb-3">💡 Health Tips</h4>
-                    <ul class="space-y-2 text-sm text-brand-blue">
-                        <li class="flex items-start gap-2">
-                            <span class="text-brand-orange mt-0.5">•</span>
-                            <span>BMI is a screening tool, not a diagnostic tool</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-brand-orange mt-0.5">•</span>
-                            <span>Consult healthcare professionals for personalized advice</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-brand-orange mt-0.5">•</span>
-                            <span>Consider other factors like muscle mass and body composition</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-brand-orange mt-0.5">•</span>
-                            <span>Maintain a balanced diet and regular physical activity</span>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -121,19 +94,21 @@
         const weightInput = document.querySelector('#weight');
         const heightInput = document.querySelector('#height');
 
-        unitSelect.addEventListener('change', (e) => {
-            if (e.target.value === 'metric') {
-                weightUnit.textContent = 'kg';
-                heightUnit.textContent = 'cm';
-                weightInput.value = '70';
-                heightInput.value = '175';
-            } else {
-                weightUnit.textContent = 'lbs';
-                heightUnit.textContent = 'in';
-                weightInput.value = '154';
-                heightInput.value = '69';
-            }
-        });
+        if (unitSelect && weightUnit && heightUnit && weightInput && heightInput) {
+            unitSelect.addEventListener('change', (e) => {
+                if (e.target.value === 'metric') {
+                    weightUnit.textContent = 'kg';
+                    heightUnit.textContent = 'cm';
+                    weightInput.value = '70';
+                    heightInput.value = '175';
+                } else {
+                    weightUnit.textContent = 'lbs';
+                    heightUnit.textContent = 'in';
+                    weightInput.value = '154';
+                    heightInput.value = '69';
+                }
+            });
+        }
     });
 </script>
 
