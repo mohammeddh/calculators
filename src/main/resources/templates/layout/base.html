@@ -25,65 +25,134 @@
     <!-- Chart.js for calculator visualizations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 
-    <!-- Tailwind Config -->
+    <!-- Tailwind Config with Custom Theme -->
     <script>
         tailwind.config = {
             theme: {
-                fontFamily: {
-                    'sans': ['Inter', 'system-ui', 'sans-serif']
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        accent: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    }
                 }
             }
         }
     </script>
+
+    <!-- Minimal CSS fixes -->
+    <style>
+        * {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="bg-secondary-50 font-sans min-h-screen">
 <!-- Header -->
-<header class="bg-blue-600 text-white">
-    <div class="max-w-7xl mx-auto px-4 py-4">
+<header class="bg-primary-700 text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3">
         <nav class="flex justify-between items-center">
-            <a href="/" class="text-xl font-semibold">
-                ✨ <span th:text="${appName}">CalcHub</span>
+            <a href="/" class="text-lg font-semibold hover:opacity-90 transition-opacity">
+                <span class="bg-white text-primary-700 px-2 py-1 rounded mr-2">🧮</span>
+                <span th:text="${appName}">CalcHub</span>
             </a>
 
             <!-- Desktop Navigation -->
-            <div class="hidden md:flex space-x-6">
-                <a href="/" class="hover:text-blue-200" th:classappend="${activePage == 'home'} ? 'border-b-2 border-white' : ''">Home</a>
-                <a href="/about" class="hover:text-blue-200" th:classappend="${activePage == 'about'} ? 'border-b-2 border-white' : ''">About</a>
-                <a href="/tools" class="hover:text-blue-200" th:classappend="${activePage == 'tools'} ? 'border-b-2 border-white' : ''">Tools</a>
-                <a href="/contact" class="hover:text-blue-200" th:classappend="${activePage == 'contact'} ? 'border-b-2 border-white' : ''">Contact</a>
+            <div class="hidden md:flex space-x-1">
+                <a href="/" class="px-3 py-2 rounded hover:bg-primary-600 transition-colors text-sm font-medium"
+                   th:classappend="${activePage == 'home'} ? 'bg-primary-600' : ''">Home</a>
+                <a href="/about" class="px-3 py-2 rounded hover:bg-primary-600 transition-colors text-sm font-medium"
+                   th:classappend="${activePage == 'about'} ? 'bg-primary-600' : ''">About</a>
+                <a href="/tools" class="px-3 py-2 rounded hover:bg-primary-600 transition-colors text-sm font-medium"
+                   th:classappend="${activePage == 'tools'} ? 'bg-primary-600' : ''">Tools</a>
+                <a href="/contact" class="px-3 py-2 rounded hover:bg-primary-600 transition-colors text-sm font-medium"
+                   th:classappend="${activePage == 'contact'} ? 'bg-primary-600' : ''">Contact</a>
             </div>
 
             <!-- Mobile Menu Toggle -->
-            <button id="mobile-menu-btn" class="md:hidden">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button id="mobile-menu-btn" class="md:hidden p-2 rounded hover:bg-primary-600 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
         </nav>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="md:hidden mt-4 hidden">
-            <div class="space-y-2">
-                <a href="/" class="block py-2 hover:text-blue-200" th:classappend="${activePage == 'home'} ? 'font-semibold' : ''">Home</a>
-                <a href="/about" class="block py-2 hover:text-blue-200" th:classappend="${activePage == 'about'} ? 'font-semibold' : ''">About</a>
-                <a href="/tools" class="block py-2 hover:text-blue-200" th:classappend="${activePage == 'tools'} ? 'font-semibold' : ''">Tools</a>
-                <a href="/contact" class="block py-2 hover:text-blue-200" th:classappend="${activePage == 'contact'} ? 'font-semibold' : ''">Contact</a>
+        <div id="mobile-menu" class="md:hidden mt-3 hidden">
+            <div class="bg-primary-600 rounded p-3 space-y-1">
+                <a href="/" class="block py-2 px-3 rounded hover:bg-primary-500 transition-colors text-sm"
+                   th:classappend="${activePage == 'home'} ? 'bg-primary-500' : ''">Home</a>
+                <a href="/about" class="block py-2 px-3 rounded hover:bg-primary-500 transition-colors text-sm"
+                   th:classappend="${activePage == 'about'} ? 'bg-primary-500' : ''">About</a>
+                <a href="/tools" class="block py-2 px-3 rounded hover:bg-primary-500 transition-colors text-sm"
+                   th:classappend="${activePage == 'tools'} ? 'bg-primary-500' : ''">Tools</a>
+                <a href="/contact" class="block py-2 px-3 rounded hover:bg-primary-500 transition-colors text-sm"
+                   th:classappend="${activePage == 'contact'} ? 'bg-primary-500' : ''">Contact</a>
             </div>
         </div>
     </div>
 </header>
 
 <!-- Breadcrumb -->
-<div th:if="${breadcrumbs != null and !breadcrumbs.empty}" class="bg-white border-b">
-    <div class="max-w-7xl mx-auto px-4 py-3">
-        <nav class="flex space-x-2 text-sm text-gray-600" aria-label="Breadcrumb">
+<div th:if="${breadcrumbs != null and !breadcrumbs.empty}" class="bg-white border-b border-secondary-200">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+        <nav class="flex items-center space-x-2 text-sm" aria-label="Breadcrumb">
+            <svg class="w-4 h-4 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+            </svg>
             <th:block th:each="crumb, iter : ${breadcrumbs}">
                 <th:block th:if="${!iter.last}">
-                    <a href="/" th:if="${crumb == 'Home'}" th:text="${crumb}" class="hover:text-blue-600">Home</a>
-                    <span th:unless="${crumb == 'Home'}" th:text="${crumb}">Breadcrumb</span>
-                    <span class="text-gray-400 mx-2">›</span>
+                    <a href="/" th:if="${crumb == 'Home'}" th:text="${crumb}"
+                       class="text-primary-600 hover:text-primary-700 font-medium transition-colors">Home</a>
+                    <span th:unless="${crumb == 'Home'}" th:text="${crumb}"
+                          class="text-secondary-600 font-medium">Breadcrumb</span>
+                    <svg class="w-4 h-4 text-secondary-300 mx-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                    </svg>
                 </th:block>
-                <span th:if="${iter.last}" th:text="${crumb}" class="text-gray-900 font-medium">Current Page</span>
+                <span th:if="${iter.last}" th:text="${crumb}" class="text-secondary-900 font-semibold">Current Page</span>
             </th:block>
         </nav>
     </div>
@@ -99,7 +168,7 @@
         </aside>
 
         <!-- Main Content (2 cols when both sidebars) -->
-        <main class="lg:col-span-2 bg-white rounded-lg shadow-sm border p-6">
+        <main class="lg:col-span-2 bg-white rounded-lg shadow border border-gray-200 p-6">
             <div th:replace="${content}"></div>
         </main>
 
@@ -117,7 +186,7 @@
         </aside>
 
         <!-- Main Content (3 cols when left sidebar only) -->
-        <main class="lg:col-span-3 bg-white rounded-lg shadow-sm border p-6">
+        <main class="lg:col-span-3 bg-white rounded-lg shadow border border-gray-200 p-6">
             <div th:replace="${content}"></div>
         </main>
     </div>
@@ -125,7 +194,7 @@
     <!-- Layout with right sidebar only -->
     <div th:if="${!showLeftSidebar and showRightSidebar}" class="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <!-- Main Content (3 cols when right sidebar only) -->
-        <main class="lg:col-span-3 bg-white rounded-lg shadow-sm border p-6">
+        <main class="lg:col-span-3 bg-white rounded-lg shadow border border-gray-200 p-6">
             <div th:replace="${content}"></div>
         </main>
 
@@ -138,25 +207,88 @@
     <!-- Layout with no sidebars -->
     <div th:if="${!showLeftSidebar and !showRightSidebar}" class="grid grid-cols-1">
         <!-- Main Content (full width when no sidebars) -->
-        <main class="bg-white rounded-lg shadow-sm border p-6">
+        <main class="bg-white rounded-lg shadow border border-gray-200 p-6">
             <div th:replace="${content}"></div>
         </main>
     </div>
 </div>
 
 <!-- Footer -->
-<footer class="bg-gray-800 text-white mt-16">
+<footer class="bg-primary-700 text-white mt-20">
     <div class="max-w-7xl mx-auto px-4 py-12">
-        <div class="flex flex-wrap justify-center gap-6 mb-8">
-            <a href="/about" class="hover:text-gray-300">About Us</a>
-            <a href="/tools" class="hover:text-gray-300">Site Map</a>
-            <a href="/terms" class="hover:text-gray-300">Terms of Use</a>
-            <a href="/privacy" class="hover:text-gray-300">Privacy Policy</a>
-            <a href="/contact" class="hover:text-gray-300">Contact</a>
-            <a href="/help" class="hover:text-gray-300">Help</a>
+        <!-- Footer Content -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <!-- Brand -->
+            <div class="md:col-span-1">
+                <div class="flex items-center mb-4">
+                    <span class="bg-white text-primary-700 px-2 py-1 rounded mr-2 text-lg">🧮</span>
+                    <span th:text="${appName}" class="text-lg font-bold">CalcHub</span>
+                </div>
+                <p class="text-primary-100 text-sm leading-relaxed">
+                    Beautiful, lightweight calculators for finance, health, math, and everyday use.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="font-semibold mb-4 text-white">Quick Links</h3>
+                <div class="space-y-2">
+                    <a href="/tools" class="block text-primary-100 hover:text-white transition-colors text-sm">All Calculators</a>
+                    <a href="/calculators/mortgage" class="block text-primary-100 hover:text-white transition-colors text-sm">Mortgage Calculator</a>
+                    <a href="/calculators/bmi" class="block text-primary-100 hover:text-white transition-colors text-sm">BMI Calculator</a>
+                    <a href="/calculators/loan" class="block text-primary-100 hover:text-white transition-colors text-sm">Loan Calculator</a>
+                </div>
+            </div>
+
+            <!-- Company -->
+            <div>
+                <h3 class="font-semibold mb-4 text-white">Company</h3>
+                <div class="space-y-2">
+                    <a href="/about" class="block text-primary-100 hover:text-white transition-colors text-sm">About Us</a>
+                    <a href="/contact" class="block text-primary-100 hover:text-white transition-colors text-sm">Contact</a>
+                    <a href="/terms" class="block text-primary-100 hover:text-white transition-colors text-sm">Terms of Use</a>
+                    <a href="/privacy" class="block text-primary-100 hover:text-white transition-colors text-sm">Privacy Policy</a>
+                </div>
+            </div>
+
+            <!-- Support -->
+            <div>
+                <h3 class="font-semibold mb-4 text-white">Support</h3>
+                <div class="space-y-2">
+                    <a href="/help" class="block text-primary-100 hover:text-white transition-colors text-sm">Help Center</a>
+                    <a href="/contact" class="block text-primary-100 hover:text-white transition-colors text-sm">Get Support</a>
+                    <a href="/tools" class="block text-primary-100 hover:text-white transition-colors text-sm">Site Map</a>
+                </div>
+            </div>
         </div>
-        <div class="text-center">
-            <p>&copy; 2025 <span th:text="${appName}">CalcHub</span>. Beautiful calculator tools for everyone.</p>
+
+        <!-- Footer Bottom -->
+        <div class="border-t border-primary-600 pt-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-primary-100 text-sm">
+                    &copy; 2025 <span th:text="${appName}">CalcHub</span>. Beautiful calculator tools for everyone.
+                </p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-primary-200 hover:text-white transition-colors">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-primary-200 hover:text-white transition-colors">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-primary-200 hover:text-white transition-colors">
+                        <span class="sr-only">LinkedIn</span>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </footer>
