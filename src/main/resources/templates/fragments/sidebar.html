@@ -2,58 +2,126 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <div th:fragment="left-sidebar">
-    <div class="ad-header">SPONSORED</div>
-    <div class="ad-space" onclick="handleAdClick('left-sidebar')">
-        <div class="text-2xl mb-sm">📢</div>
-        <div class="font-medium">Your Ad Here</div>
-        <small class="text-xs">250×250</small>
+    <!-- Ad Space -->
+    <div class="bg-white rounded-lg border border-gray-200 p-4">
+        <div class="text-xs text-gray-500 text-center mb-3 uppercase tracking-wide font-medium">SPONSORED</div>
+        <div class="h-64 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-500 font-medium text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200"
+             onclick="handleAdClick('left-sidebar')">
+            <div class="text-2xl mb-2">📢</div>
+            <div class="font-medium">Your Ad Here</div>
+            <small class="text-xs">250×250</small>
+        </div>
     </div>
 
     <!-- Calculator Quick Links -->
-    <div th:if="${featuredCalculators}" class="sidebar-section">
-        <h3>Popular Calculators</h3>
-        <div class="quick-links">
+    <div th:if="${featuredCalculators}" class="bg-white rounded-lg border border-gray-200 p-4">
+        <h3 class="font-semibold text-gray-900 mb-4">Popular Calculators</h3>
+        <div class="space-y-2">
             <a th:each="calc : ${featuredCalculators}"
                th:href="${calc.url}"
-               class="quick-link">
-                <span th:text="${calc.icon}">🔢</span>
-                <span th:text="${calc.name}">Calculator</span>
+               class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-all duration-200 group">
+                <span th:text="${calc.icon}" class="text-lg">🔢</span>
+                <span th:text="${calc.name}" class="text-sm font-medium group-hover:text-blue-600">Calculator</span>
             </a>
         </div>
     </div>
 </div>
 
 <div th:fragment="right-sidebar">
-    <div class="ad-header">FEATURED</div>
-    <div class="ad-space" onclick="handleAdClick('right-sidebar')">
-        <div class="text-2xl mb-sm">⭐</div>
-        <div class="font-medium">Premium Space</div>
-        <small class="text-xs">250×250</small>
+    <!-- Featured Ad Space -->
+    <div class="bg-white rounded-lg border border-gray-200 p-4">
+        <div class="text-xs text-gray-500 text-center mb-3 uppercase tracking-wide font-medium">FEATURED</div>
+        <div class="h-64 bg-gradient-to-br from-yellow-50 to-yellow-100 border-2 border-dashed border-yellow-300 rounded-lg flex flex-col items-center justify-center text-yellow-700 font-medium text-center cursor-pointer hover:border-yellow-400 hover:bg-yellow-200 transition-all duration-200"
+             onclick="handleAdClick('right-sidebar')">
+            <div class="text-2xl mb-2">⭐</div>
+            <div class="font-medium">Premium Space</div>
+            <small class="text-xs">250×250</small>
+        </div>
     </div>
 
     <!-- Newsletter Signup -->
-    <div class="sidebar-section">
-        <h3>Stay Updated</h3>
-        <p class="text-sm mb-md">Get notified about new calculators and features.</p>
-        <form class="newsletter-form">
-            <div class="form-group">
-                <input type="email" name="email" placeholder="Your email" class="form-input" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Subscribe</button>
+    <div class="bg-white rounded-lg border border-gray-200 p-4">
+        <h3 class="font-semibold text-gray-900 mb-2">Stay Updated</h3>
+        <p class="text-sm text-gray-600 mb-4">Get notified about new calculators and features.</p>
+        <form class="newsletter-form space-y-3">
+            <input type="email" name="email" placeholder="Your email"
+                   class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+            <button type="submit"
+                    class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200">
+                Subscribe
+            </button>
         </form>
     </div>
 
     <!-- Recent Updates -->
-    <div class="sidebar-section">
-        <h3>Recent Updates</h3>
-        <div class="space-y-sm text-sm">
-            <div>🔄 Improved mortgage calculator accuracy</div>
-            <div>📱 Better mobile experience</div>
-            <div>⚡ Faster loading times</div>
-            <div>📊 New BMI categories added</div>
-            <div>💰 Enhanced loan calculator</div>
+    <div class="bg-white rounded-lg border border-gray-200 p-4">
+        <h3 class="font-semibold text-gray-900 mb-4">Recent Updates</h3>
+        <div class="space-y-3 text-sm text-gray-600">
+            <div class="flex items-start space-x-2">
+                <span class="text-base">🔄</span>
+                <span>Improved mortgage calculator accuracy</span>
+            </div>
+            <div class="flex items-start space-x-2">
+                <span class="text-base">📱</span>
+                <span>Better mobile experience</span>
+            </div>
+            <div class="flex items-start space-x-2">
+                <span class="text-base">⚡</span>
+                <span>Faster loading times</span>
+            </div>
+            <div class="flex items-start space-x-2">
+                <span class="text-base">📊</span>
+                <span>New BMI categories added</span>
+            </div>
+            <div class="flex items-start space-x-2">
+                <span class="text-base">💰</span>
+                <span>Enhanced loan calculator</span>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    // Global ad click handler
+    window.handleAdClick = function(location) {
+        console.log('Ad clicked:', location);
+        // Add your analytics tracking here
+    };
+
+    // Newsletter form handler
+    document.addEventListener('DOMContentLoaded', function() {
+        const forms = document.querySelectorAll('.newsletter-form');
+        forms.forEach(form => {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const button = form.querySelector('button[type="submit"]');
+                const email = form.querySelector('input[name="email"]').value;
+
+                // Simple email validation
+                if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+
+                // Show loading state
+                button.disabled = true;
+                button.textContent = 'Subscribing...';
+
+                try {
+                    // Simulate API call
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+
+                    alert('Thank you for subscribing!');
+                    form.reset();
+                } catch (error) {
+                    alert('Something went wrong. Please try again.');
+                } finally {
+                    button.disabled = false;
+                    button.textContent = 'Subscribe';
+                }
+            });
+        });
+    });
+</script>
 
 </html>

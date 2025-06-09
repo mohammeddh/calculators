@@ -2,29 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::content})}">
 
 <div th:fragment="content">
-    <header class="page-header">
-        <h1>Contact Us</h1>
-        <p>We'd love to hear from you! Get in touch with any questions, suggestions, or feedback about our calculator tools.</p>
+    <!-- Page Header -->
+    <header class="text-center mb-8 pb-6 border-b border-gray-200">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Contact Us</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            We'd love to hear from you! Get in touch with any questions, suggestions, or feedback about our calculator tools.
+        </p>
     </header>
 
-    <div class="grid grid-2 mb-2xl">
+    <!-- Contact Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Contact Form -->
-        <div class="card">
-            <h2 class="mb-lg">Send us a Message</h2>
-            <form class="contact-form">
-                <div class="form-group">
-                    <label for="name" class="form-label">Full Name *</label>
-                    <input type="text" id="name" name="name" class="form-input" required>
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6">Send us a Message</h2>
+            <form class="contact-form space-y-6">
+                <div>
+                    <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
+                    <input type="text" id="name" name="name"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                           required>
                 </div>
 
-                <div class="form-group">
-                    <label for="email" class="form-label">Email Address *</label>
-                    <input type="email" id="email" name="email" class="form-input" required>
+                <div>
+                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
+                    <input type="email" id="email" name="email"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                           required>
                 </div>
 
-                <div class="form-group">
-                    <label for="subject" class="form-label">Subject</label>
-                    <select id="subject" name="subject" class="form-select">
+                <div>
+                    <label for="subject" class="block text-sm font-semibold text-gray-700 mb-2">Subject</label>
+                    <select id="subject" name="subject"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
                         <option value="">Select a topic</option>
                         <option value="general">General Inquiry</option>
                         <option value="calculator-request">Calculator Request</option>
@@ -35,72 +44,173 @@
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="message" class="form-label">Message *</label>
-                    <textarea id="message" name="message" class="form-textarea"
+                <div>
+                    <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">Message *</label>
+                    <textarea id="message" name="message" rows="5"
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm resize-vertical"
                               placeholder="Tell us how we can help you..." required></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Send Message</button>
+                <button type="submit"
+                        class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl">
+                    Send Message
+                </button>
             </form>
         </div>
 
         <!-- Contact Information -->
-        <div class="card">
-            <h2 class="mb-lg">Get in Touch</h2>
+        <div class="space-y-6">
+            <!-- Get in Touch -->
+            <div class="bg-white rounded-xl p-6 border border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-900 mb-6">Get in Touch</h2>
 
-            <div class="space-y-lg">
-                <div class="flex items-start gap-md">
-                    <div class="text-2xl">📧</div>
-                    <div>
-                        <h3 class="font-semibold">Email Us</h3>
-                        <p class="text-sm">hello@calchub.com</p>
-                        <small class="text-xs">We'll respond within 24 hours</small>
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="text-2xl">📧</div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Email Us</h3>
+                            <p class="text-sm text-gray-600">hello@calchub.com</p>
+                            <small class="text-xs text-gray-500">We'll respond within 24 hours</small>
+                        </div>
                     </div>
-                </div>
 
-                <div class="flex items-start gap-md">
-                    <div class="text-2xl">💬</div>
-                    <div>
-                        <h3 class="font-semibold">Live Chat</h3>
-                        <p class="text-sm">Available Mon-Fri</p>
-                        <small class="text-xs">9 AM - 5 PM EST</small>
+                    <div class="flex items-start space-x-4">
+                        <div class="text-2xl">💬</div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Live Chat</h3>
+                            <p class="text-sm text-gray-600">Available Mon-Fri</p>
+                            <small class="text-xs text-gray-500">9 AM - 5 PM EST</small>
+                        </div>
                     </div>
-                </div>
 
-                <div class="flex items-start gap-md">
-                    <div class="text-2xl">📱</div>
-                    <div>
-                        <h3 class="font-semibold">Follow Us</h3>
-                        <div class="space-y-sm">
-                            <a href="#" class="text-sm text-primary">Twitter</a>
-                            <a href="#" class="text-sm text-primary">LinkedIn</a>
-                            <a href="#" class="text-sm text-primary">GitHub</a>
+                    <div class="flex items-start space-x-4">
+                        <div class="text-2xl">📱</div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Follow Us</h3>
+                            <div class="space-y-1">
+                                <a href="#" class="block text-sm text-blue-600 hover:text-blue-700 transition-colors">Twitter</a>
+                                <a href="#" class="block text-sm text-blue-600 hover:text-blue-700 transition-colors">LinkedIn</a>
+                                <a href="#" class="block text-sm text-blue-600 hover:text-blue-700 transition-colors">GitHub</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- FAQ Section -->
-            <div class="mt-xl pt-lg border-t">
-                <h3 class="font-semibold mb-md">Frequently Asked Questions</h3>
-                <div class="space-y-md">
+            <div class="bg-white rounded-xl p-6 border border-gray-200">
+                <h3 class="font-semibold text-gray-900 mb-4">Frequently Asked Questions</h3>
+                <div class="space-y-4">
                     <div>
-                        <h4 class="font-medium mb-sm">How accurate are your calculators?</h4>
-                        <p class="text-sm">Our calculators use industry-standard formulas and are regularly updated for accuracy.</p>
+                        <h4 class="font-medium text-gray-900 mb-2">How accurate are your calculators?</h4>
+                        <p class="text-sm text-gray-600">Our calculators use industry-standard formulas and are regularly updated for accuracy.</p>
                     </div>
                     <div>
-                        <h4 class="font-medium mb-sm">Can I request a new calculator?</h4>
-                        <p class="text-sm">Absolutely! We love hearing suggestions for new tools that would be helpful.</p>
+                        <h4 class="font-medium text-gray-900 mb-2">Can I request a new calculator?</h4>
+                        <p class="text-sm text-gray-600">Absolutely! We love hearing suggestions for new tools that would be helpful.</p>
                     </div>
                     <div>
-                        <h4 class="font-medium mb-sm">Are your tools free to use?</h4>
-                        <p class="text-sm">Yes, all our basic calculator tools are completely free to use.</p>
+                        <h4 class="font-medium text-gray-900 mb-2">Are your tools free to use?</h4>
+                        <p class="text-sm text-gray-600">Yes, all our basic calculator tools are completely free to use.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    // Contact Form Handler
+    document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.querySelector('.contact-form');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(contactForm);
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+
+                // Basic validation
+                const requiredFields = contactForm.querySelectorAll('input[required], textarea[required]');
+                let isValid = true;
+
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.classList.add('border-red-500', 'bg-red-50');
+                        isValid = false;
+                    } else {
+                        field.classList.remove('border-red-500', 'bg-red-50');
+                    }
+                });
+
+                if (!isValid) {
+                    showMessage('Please fill in all required fields.', 'error');
+                    return;
+                }
+
+                // Email validation
+                const email = formData.get('email');
+                if (email && !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                    showMessage('Please enter a valid email address.', 'error');
+                    return;
+                }
+
+                // Show loading state
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+                submitBtn.classList.add('opacity-75');
+
+                try {
+                    // Simulate API call
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+
+                    showMessage('Thank you for your message! We\'ll get back to you soon.', 'success');
+                    contactForm.reset();
+
+                } catch (error) {
+                    showMessage('Failed to send message. Please try again.', 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Message';
+                    submitBtn.classList.remove('opacity-75');
+                }
+            });
+        }
+    });
+
+    // Simple message display function
+    function showMessage(message, type = 'info') {
+        // Remove existing messages
+        const existing = document.querySelectorAll('.app-message');
+        existing.forEach(el => el.remove());
+
+        const messageEl = document.createElement('div');
+        messageEl.className = 'app-message fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm';
+        messageEl.textContent = message;
+
+        if (type === 'error') {
+            messageEl.classList.add('bg-red-100', 'border', 'border-red-300', 'text-red-800');
+        } else if (type === 'success') {
+            messageEl.classList.add('bg-green-100', 'border', 'border-green-300', 'text-green-800');
+        } else {
+            messageEl.classList.add('bg-blue-100', 'border', 'border-blue-300', 'text-blue-800');
+        }
+
+        document.body.appendChild(messageEl);
+
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            if (messageEl.parentNode) {
+                messageEl.remove();
+            }
+        }, 5000);
+
+        // Allow manual dismissal
+        messageEl.addEventListener('click', () => {
+            messageEl.remove();
+        });
+    }
+</script>
 
 </html>

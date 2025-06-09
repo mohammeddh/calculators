@@ -7,20 +7,6 @@
     <meta name="description" th:content="${pageDescription}">
     <meta name="keywords" th:content="${pageKeywords}">
     <meta name="author" th:content="${appAuthor}">
-    <meta name="robots" content="index, follow">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" th:content="${canonicalUrl}">
-    <meta property="og:title" th:content="${pageTitle}">
-    <meta property="og:description" th:content="${pageDescription}">
-    <meta property="og:image" th:content="${appUrl + ogImage}">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" th:content="${canonicalUrl}">
-    <meta property="twitter:title" th:content="${pageTitle}">
-    <meta property="twitter:description" th:content="${pageDescription}">
 
     <!-- Canonical URL -->
     <link rel="canonical" th:href="${canonicalUrl}">
@@ -33,138 +19,160 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <!-- Chart.js for calculator visualizations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 
-    <!-- Modern CSS (single file) -->
-    <link rel="stylesheet" href="/css/main.css">
-
-    <!-- Custom CSS if specified -->
-    <link th:each="css : ${customCss}" th:href="${css}" rel="stylesheet">
-
-    <!-- Schema.org markup -->
-    <script type="application/ld+json" th:inline="javascript">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebApplication",
-            "name": "[[${appName}]] Calculator Tools",
-            "url": "[[${appUrl}]]",
-            "description": "[[${appDescription}]]",
-            "applicationCategory": "UtilitiesApplication",
-            "operatingSystem": "Any",
-            "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD"
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    'sans': ['Inter', 'system-ui', 'sans-serif']
+                }
             }
         }
     </script>
 </head>
-<body>
+<body class="bg-gray-50 font-sans">
 <!-- Header -->
-<header class="header">
-    <div class="container">
-        <nav class="nav">
-            <a href="/" class="logo">
+<header class="bg-blue-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+        <nav class="flex justify-between items-center">
+            <a href="/" class="text-xl font-semibold">
                 ✨ <span th:text="${appName}">CalcHub</span>
             </a>
 
             <!-- Desktop Navigation -->
-            <ul class="nav-links">
-                <li><a href="/" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">Home</a></li>
-                <li><a href="/about" class="nav-link" th:classappend="${activePage == 'about'} ? 'active' : ''">About</a></li>
-                <li><a href="/tools" class="nav-link" th:classappend="${activePage == 'tools'} ? 'active' : ''">Tools</a></li>
-                <li><a href="/contact" class="nav-link" th:classappend="${activePage == 'contact'} ? 'active' : ''">Contact</a></li>
-            </ul>
+            <div class="hidden md:flex space-x-6">
+                <a href="/" class="hover:text-blue-200" th:classappend="${activePage == 'home'} ? 'border-b-2 border-white' : ''">Home</a>
+                <a href="/about" class="hover:text-blue-200" th:classappend="${activePage == 'about'} ? 'border-b-2 border-white' : ''">About</a>
+                <a href="/tools" class="hover:text-blue-200" th:classappend="${activePage == 'tools'} ? 'border-b-2 border-white' : ''">Tools</a>
+                <a href="/contact" class="hover:text-blue-200" th:classappend="${activePage == 'contact'} ? 'border-b-2 border-white' : ''">Contact</a>
+            </div>
 
             <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
+            <button id="mobile-menu-btn" class="md:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
             </button>
         </nav>
 
         <!-- Mobile Menu -->
-        <nav class="mobile-menu">
-            <a href="/" class="mobile-nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">Home</a>
-            <a href="/about" class="mobile-nav-link" th:classappend="${activePage == 'about'} ? 'active' : ''">About</a>
-            <a href="/tools" class="mobile-nav-link" th:classappend="${activePage == 'tools'} ? 'active' : ''">Tools</a>
-            <a href="/contact" class="mobile-nav-link" th:classappend="${activePage == 'contact'} ? 'active' : ''">Contact</a>
-        </nav>
+        <div id="mobile-menu" class="md:hidden mt-4 hidden">
+            <div class="space-y-2">
+                <a href="/" class="block py-2 hover:text-blue-200" th:classappend="${activePage == 'home'} ? 'font-semibold' : ''">Home</a>
+                <a href="/about" class="block py-2 hover:text-blue-200" th:classappend="${activePage == 'about'} ? 'font-semibold' : ''">About</a>
+                <a href="/tools" class="block py-2 hover:text-blue-200" th:classappend="${activePage == 'tools'} ? 'font-semibold' : ''">Tools</a>
+                <a href="/contact" class="block py-2 hover:text-blue-200" th:classappend="${activePage == 'contact'} ? 'font-semibold' : ''">Contact</a>
+            </div>
+        </div>
     </div>
 </header>
 
 <!-- Breadcrumb -->
-<div th:if="${breadcrumbs != null and !breadcrumbs.empty}" class="breadcrumb">
-    <div class="container">
-        <nav aria-label="Breadcrumb">
+<div th:if="${breadcrumbs != null and !breadcrumbs.empty}" class="bg-white border-b">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+        <nav class="flex space-x-2 text-sm text-gray-600" aria-label="Breadcrumb">
             <th:block th:each="crumb, iter : ${breadcrumbs}">
                 <th:block th:if="${!iter.last}">
-                    <a href="/" th:if="${crumb == 'Home'}" th:text="${crumb}">Home</a>
-                    <a href="/tools" th:if="${crumb == 'Tools'}" th:text="${crumb}">Tools</a>
-                    <a href="/calculators" th:if="${crumb == 'Calculators'}" th:text="${crumb}">Calculators</a>
-                    <span th:unless="${crumb == 'Home' or crumb == 'Tools' or crumb == 'Calculators'}" th:text="${crumb}">Breadcrumb</span>
-                    <span class="breadcrumb-separator">›</span>
+                    <a href="/" th:if="${crumb == 'Home'}" th:text="${crumb}" class="hover:text-blue-600">Home</a>
+                    <span th:unless="${crumb == 'Home'}" th:text="${crumb}">Breadcrumb</span>
+                    <span class="text-gray-400 mx-2">›</span>
                 </th:block>
-                <span th:if="${iter.last}" th:text="${crumb}">Current Page</span>
+                <span th:if="${iter.last}" th:text="${crumb}" class="text-gray-900 font-medium">Current Page</span>
             </th:block>
         </nav>
     </div>
 </div>
 
-<!-- Main Layout -->
-<div class="container">
-    <div class="layout" th:classappend="${showLeftSidebar and showRightSidebar} ? 'with-both-sidebars' : (${showLeftSidebar and !showRightSidebar} ? 'with-left-sidebar' : (${!showLeftSidebar and showRightSidebar} ? 'with-right-sidebar' : 'no-sidebars'))">
-
-        <!-- Left Sidebar - Always show on mobile regardless of page config -->
-        <aside th:if="${showLeftSidebar}" class="sidebar sidebar-left" role="complementary" aria-label="Advertisement sidebar">
+<!-- Main Content Container -->
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Layout with both sidebars -->
+    <div th:if="${showLeftSidebar and showRightSidebar}" class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Left Sidebar -->
+        <aside class="lg:col-span-1">
             <div th:replace="~{fragments/sidebar :: left-sidebar}"></div>
         </aside>
 
-        <!-- Mobile-only left sidebar (when hidden on desktop) -->
-        <aside th:unless="${showLeftSidebar}" class="sidebar sidebar-left mobile-only" role="complementary" aria-label="Advertisement sidebar">
-            <div th:replace="~{fragments/sidebar :: left-sidebar}"></div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content" role="main">
+        <!-- Main Content (2 cols when both sidebars) -->
+        <main class="lg:col-span-2 bg-white rounded-lg shadow-sm border p-6">
             <div th:replace="${content}"></div>
         </main>
 
-        <!-- Right Sidebar - Always show on mobile regardless of page config -->
-        <aside th:if="${showRightSidebar}" class="sidebar sidebar-right" role="complementary" aria-label="Featured content sidebar">
+        <!-- Right Sidebar -->
+        <aside class="lg:col-span-1">
             <div th:replace="~{fragments/sidebar :: right-sidebar}"></div>
+        </aside>
+    </div>
+
+    <!-- Layout with left sidebar only -->
+    <div th:if="${showLeftSidebar and !showRightSidebar}" class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Left Sidebar -->
+        <aside class="lg:col-span-1">
+            <div th:replace="~{fragments/sidebar :: left-sidebar}"></div>
         </aside>
 
-        <!-- Mobile-only right sidebar (when hidden on desktop) -->
-        <aside th:unless="${showRightSidebar}" class="sidebar sidebar-right mobile-only" role="complementary" aria-label="Featured content sidebar">
+        <!-- Main Content (3 cols when left sidebar only) -->
+        <main class="lg:col-span-3 bg-white rounded-lg shadow-sm border p-6">
+            <div th:replace="${content}"></div>
+        </main>
+    </div>
+
+    <!-- Layout with right sidebar only -->
+    <div th:if="${!showLeftSidebar and showRightSidebar}" class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Main Content (3 cols when right sidebar only) -->
+        <main class="lg:col-span-3 bg-white rounded-lg shadow-sm border p-6">
+            <div th:replace="${content}"></div>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="lg:col-span-1">
             <div th:replace="~{fragments/sidebar :: right-sidebar}"></div>
         </aside>
+    </div>
+
+    <!-- Layout with no sidebars -->
+    <div th:if="${!showLeftSidebar and !showRightSidebar}" class="grid grid-cols-1">
+        <!-- Main Content (full width when no sidebars) -->
+        <main class="bg-white rounded-lg shadow-sm border p-6">
+            <div th:replace="${content}"></div>
+        </main>
     </div>
 </div>
 
 <!-- Footer -->
-<footer class="footer">
-    <div class="container">
-        <nav class="footer-links">
-            <a href="/about">About Us</a>
-            <a href="/tools">Site Map</a>
-            <a href="/terms">Terms of Use</a>
-            <a href="/privacy">Privacy Policy</a>
-            <a href="/contact">Contact</a>
-            <a href="/help">Help</a>
-        </nav>
-        <div class="footer-bottom">
+<footer class="bg-gray-800 text-white mt-16">
+    <div class="max-w-7xl mx-auto px-4 py-12">
+        <div class="flex flex-wrap justify-center gap-6 mb-8">
+            <a href="/about" class="hover:text-gray-300">About Us</a>
+            <a href="/tools" class="hover:text-gray-300">Site Map</a>
+            <a href="/terms" class="hover:text-gray-300">Terms of Use</a>
+            <a href="/privacy" class="hover:text-gray-300">Privacy Policy</a>
+            <a href="/contact" class="hover:text-gray-300">Contact</a>
+            <a href="/help" class="hover:text-gray-300">Help</a>
+        </div>
+        <div class="text-center">
             <p>&copy; 2025 <span th:text="${appName}">CalcHub</span>. Beautiful calculator tools for everyone.</p>
         </div>
     </div>
 </footer>
 
-<!-- Modern JavaScript (single file) -->
-<script src="/js/main.js"></script>
+<!-- Simple Mobile Menu Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-<!-- Custom JavaScript if specified -->
-<script th:each="js : ${customJs}" th:src="${js}"></script>
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    });
+</script>
 </body>
 </html>

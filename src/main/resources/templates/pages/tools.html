@@ -2,100 +2,189 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::content})}">
 
 <div th:fragment="content">
-    <header class="page-header">
-        <h1>Calculator Tools</h1>
-        <p>Browse our complete collection of calculator tools for finance, health, math, and more.</p>
+    <!-- Page Header -->
+    <header class="text-center mb-8 pb-6 border-b border-gray-200">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Calculator Tools</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            Browse our complete collection of calculator tools for finance, health, math, and more.
+        </p>
     </header>
 
     <!-- Calculator Categories -->
-    <section class="mb-2xl">
-        <h2 class="text-2xl font-bold mb-lg">Financial Calculators</h2>
-        <div class="grid grid-auto-fit">
-            <a href="/calculators/mortgage" class="calculator-card">
-                <div class="text-3xl mb-md">🏠</div>
-                <h3>Mortgage Calculator</h3>
-                <p>Calculate monthly payments and amortization schedules</p>
-            </a>
+    <div class="space-y-12">
+        <!-- Financial Calculators -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                <span class="text-3xl mr-3">💰</span>
+                Financial Calculators
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <a href="/calculators/mortgage"
+                   class="group bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg hover:border-blue-300 transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🏠</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">Mortgage Calculator</h3>
+                    <p class="text-gray-600 text-sm">Calculate monthly payments and amortization schedules</p>
+                    <div class="mt-4 inline-flex items-center text-blue-600 text-sm font-medium group-hover:text-blue-700">
+                        Try it now
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </a>
 
-            <a href="/calculators/loan" class="calculator-card">
-                <div class="text-3xl mb-md">💰</div>
-                <h3>Loan Calculator</h3>
-                <p>Calculate loan payments and total interest costs</p>
-            </a>
+                <a href="/calculators/loan"
+                   class="group bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg hover:border-blue-300 transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">💰</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">Loan Calculator</h3>
+                    <p class="text-gray-600 text-sm">Calculate loan payments and total interest costs</p>
+                    <div class="mt-4 inline-flex items-center text-blue-600 text-sm font-medium group-hover:text-blue-700">
+                        Try it now
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </a>
 
-            <a href="/calculators/tax" class="calculator-card">
-                <div class="text-3xl mb-md">📊</div>
-                <h3>Tax Calculator</h3>
-                <p>Estimate your tax liability and refunds</p>
-            </a>
+                <a href="/calculators/tax"
+                   class="group bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg hover:border-blue-300 transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">📊</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">Tax Calculator</h3>
+                    <p class="text-gray-600 text-sm">Estimate your tax liability and refunds</p>
+                    <div class="mt-4 inline-flex items-center text-gray-500 text-sm font-medium">
+                        Coming soon
+                    </div>
+                </a>
 
-            <a href="/calculators/investment" class="calculator-card">
-                <div class="text-3xl mb-md">📈</div>
-                <h3>Investment Calculator</h3>
-                <p>Calculate investment returns and compound growth</p>
+                <a href="/calculators/investment"
+                   class="group bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg hover:border-blue-300 transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">📈</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">Investment Calculator</h3>
+                    <p class="text-gray-600 text-sm">Calculate investment returns and compound growth</p>
+                    <div class="mt-4 inline-flex items-center text-gray-500 text-sm font-medium">
+                        Coming soon
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Health & Fitness -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                <span class="text-3xl mr-3">❤️</span>
+                Health & Fitness
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <a href="/calculators/bmi"
+                   class="group bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg hover:border-blue-300 transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">⚖️</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">BMI Calculator</h3>
+                    <p class="text-gray-600 text-sm">Calculate your Body Mass Index and health status</p>
+                    <div class="mt-4 inline-flex items-center text-blue-600 text-sm font-medium group-hover:text-blue-700">
+                        Try it now
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </a>
+
+                <a href="/calculators/calorie"
+                   class="group bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg hover:border-blue-300 transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🍎</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">Calorie Calculator</h3>
+                    <p class="text-gray-600 text-sm">Calculate daily calorie needs and weight goals</p>
+                    <div class="mt-4 inline-flex items-center text-gray-500 text-sm font-medium">
+                        Coming soon
+                    </div>
+                </a>
+
+                <a href="/calculators/body-fat"
+                   class="group bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg hover:border-blue-300 transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">💪</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">Body Fat Calculator</h3>
+                    <p class="text-gray-600 text-sm">Estimate body fat percentage and composition</p>
+                    <div class="mt-4 inline-flex items-center text-gray-500 text-sm font-medium">
+                        Coming soon
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Math & Science -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                <span class="text-3xl mr-3">🔢</span>
+                Math & Science
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <a href="/calculators/percentage"
+                   class="group bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg hover:border-blue-300 transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">📊</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">Percentage Calculator</h3>
+                    <p class="text-gray-600 text-sm">Calculate percentages, increases, and decreases</p>
+                    <div class="mt-4 inline-flex items-center text-gray-500 text-sm font-medium">
+                        Coming soon
+                    </div>
+                </a>
+
+                <a href="/calculators/compound-interest"
+                   class="group bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg hover:border-blue-300 transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">📈</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">Compound Interest</h3>
+                    <p class="text-gray-600 text-sm">Calculate compound interest and growth over time</p>
+                    <div class="mt-4 inline-flex items-center text-gray-500 text-sm font-medium">
+                        Coming soon
+                    </div>
+                </a>
+
+                <a href="/calculators/unit-converter"
+                   class="group bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg hover:border-blue-300 transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🔄</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">Unit Converter</h3>
+                    <p class="text-gray-600 text-sm">Convert between different units of measurement</p>
+                    <div class="mt-4 inline-flex items-center text-gray-500 text-sm font-medium">
+                        Coming soon
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Featured/Popular Section -->
+        <section th:if="${allCalculators}" class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-8 border border-blue-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">All Available Calculators</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <a th:each="calc : ${allCalculators}"
+                   th:href="${calc.url}"
+                   class="group bg-white p-6 rounded-xl border border-white/50 text-center hover:shadow-lg hover:border-blue-300 transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300" th:text="${calc.icon}">🔢</div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors" th:text="${calc.name}">Calculator Name</h3>
+                    <p class="text-gray-600 text-sm" th:text="${calc.description}">Calculator description</p>
+                    <div class="mt-4 inline-flex items-center text-blue-600 text-sm font-medium group-hover:text-blue-700">
+                        Try it now
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center mt-16 pt-8 border-t border-gray-200">
+        <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl p-8">
+            <h3 class="text-2xl font-bold mb-4">Need a Calculator We Don't Have?</h3>
+            <p class="text-blue-100 mb-6 max-w-2xl mx-auto">
+                We're always adding new tools! Let us know what calculator would help you most.
+            </p>
+            <a href="/contact"
+               class="inline-flex items-center px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors duration-200 shadow-lg">
+                <span>Request a Calculator</span>
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                </svg>
             </a>
         </div>
-    </section>
-
-    <section class="mb-2xl">
-        <h2 class="text-2xl font-bold mb-lg">Health & Fitness</h2>
-        <div class="grid grid-auto-fit">
-            <a href="/calculators/bmi" class="calculator-card">
-                <div class="text-3xl mb-md">⚖️</div>
-                <h3>BMI Calculator</h3>
-                <p>Calculate your Body Mass Index and health status</p>
-            </a>
-
-            <a href="/calculators/calorie" class="calculator-card">
-                <div class="text-3xl mb-md">🍎</div>
-                <h3>Calorie Calculator</h3>
-                <p>Calculate daily calorie needs and weight goals</p>
-            </a>
-
-            <a href="/calculators/body-fat" class="calculator-card">
-                <div class="text-3xl mb-md">💪</div>
-                <h3>Body Fat Calculator</h3>
-                <p>Estimate body fat percentage and composition</p>
-            </a>
-        </div>
-    </section>
-
-    <section class="mb-2xl">
-        <h2 class="text-2xl font-bold mb-lg">Math & Science</h2>
-        <div class="grid grid-auto-fit">
-            <a href="/calculators/percentage" class="calculator-card">
-                <div class="text-3xl mb-md">📊</div>
-                <h3>Percentage Calculator</h3>
-                <p>Calculate percentages, increases, and decreases</p>
-            </a>
-
-            <a href="/calculators/compound-interest" class="calculator-card">
-                <div class="text-3xl mb-md">📈</div>
-                <h3>Compound Interest</h3>
-                <p>Calculate compound interest and growth over time</p>
-            </a>
-
-            <a href="/calculators/unit-converter" class="calculator-card">
-                <div class="text-3xl mb-md">🔄</div>
-                <h3>Unit Converter</h3>
-                <p>Convert between different units of measurement</p>
-            </a>
-        </div>
-    </section>
-
-    <!-- All Calculators (if you want a comprehensive list) -->
-    <section th:if="${allCalculators}" class="mb-2xl">
-        <h2 class="text-2xl font-bold mb-lg">All Calculators</h2>
-        <div class="grid grid-auto-fit">
-            <a th:each="calc : ${allCalculators}"
-               th:href="${calc.url}"
-               class="calculator-card">
-                <div class="text-3xl mb-md" th:text="${calc.icon}">🔢</div>
-                <h3 th:text="${calc.name}">Calculator Name</h3>
-                <p th:text="${calc.description}">Calculator description</p>
-            </a>
-        </div>
-    </section>
+    </div>
 </div>
 
 </html>
