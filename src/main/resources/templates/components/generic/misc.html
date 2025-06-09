@@ -1,0 +1,169 @@
+<!--
+===================================
+COMPONENTS/GENERIC/MISC.HTML - Other Useful Components
+===================================
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Generic Modal/Dialog -->
+<div th:fragment="modal(id, title, content, size)">
+    <div th:attr="'x-show'=${id} + 'Open'"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-50 overflow-y-auto"
+         style="display: none;">
+
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-black bg-opacity-50" th:attr="'@click'=${id} + 'Open = false'"></div>
+
+        <!-- Modal -->
+        <div class="flex min-h-screen items-center justify-center p-4">
+            <div th:class="'relative bg-white rounded-lg shadow-xl ' +
+                          (${size} == 'sm' ? 'max-w-md' :
+                           ${size} == 'lg' ? 'max-w-4xl' :
+                           ${size} == 'xl' ? 'max-w-6xl' : 'max-w-2xl') +
+                          ' w-full'"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+
+                <!-- Header -->
+                <div th:if="${title}" class="flex items-center justify-between p-6 border-b border-slate-200">
+                    <h3 class="text-lg font-semibold text-slate-900" th:text="${title}">Modal Title</h3>
+                    <button th:attr="'@click'=${id} + 'Open = false'" class="text-slate-400 hover:text-slate-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Content -->
+                <div class="p-6">
+                    <div th:replace="${content}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Generic Accordion -->
+<div th:fragment="accordion(items, allowMultiple)">
+    <div th:attr="'x-data'='{ openItems: ' + (${allowMultiple} ? '[]' : 'null') + ' }'" class="space-y-2">
+        <div th:each="item, itemStat : ${items}" class="card">
+            <!-- Accordion Header -->
+            <button class="w-full card-body flex items-center justify-between text-left"
+                    th:attr="'@click'=(${allowMultiple} ?
+                            'openItems.includes(' + ${itemStat.index} + ') ?
+                             openItems = openItems.filter(i => i !== ' + ${itemStat.index} + ') :
+                             openItems.push(' + ${itemStat.index} + ')' :
+                            'openItems = openItems === ' + ${itemStat.index} + ' ? null : ' + ${itemStat.index})">
+                <div>
+                    <h3 class="heading-tertiary" th:text="${item.title}">Accordion Title</h3>
+                    <p th:if="${item.subtitle}" class="text-small text-muted" th:text="${item.subtitle}">Subtitle</p>
+                </div>
+                <svg class="w-5 h-5 transition-transform"
+                     th:attr="':class'=(${allowMultiple} ?
+                             'openItems.includes(' + ${itemStat.index} + ') ? \'rotate-180\' : \'\'':
+                             'openItems === ' + ${itemStat.index} + ' ? \'rotate-180\' : \'\'')"
+                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+
+            <!-- Accordion Content -->
+            <div th:attr="'x-show'=(${allowMultiple} ?
+                         'openItems.includes(' + ${itemStat.index} + ')' :
+                         'openItems === ' + ${itemStat.index})"
+                 x-transition class="border-t border-slate-200">
+                <div class="card-body">
+                    <div th:replace="${item.content}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Generic Progress Bar -->
+<div th:fragment="progress-bar(value, max, label, color, showPercent)">
+    <div class="space-y-2">
+        <div th:if="${label or showPercent}" class="flex justify-between text-sm">
+            <span th:if="${label}" class="font-medium text-slate-700" th:text="${label}">Progress</span>
+            <span th:if="${showPercent}"
+                  class="text-slate-500"
+                  th:attr="'x-text'='Math.round((' + ${value} + ' / ' + ${max} + ') * 100) + \\'%\\''">50%</span>
+        </div>
+        <div class="w-full bg-slate-200 rounded-full h-2">
+            <div th:class="'h-2 rounded-full transition-all duration-300 ' +
+                          (${color} == 'green' ? 'bg-green-500' :
+                           ${color} == 'red' ? 'bg-red-500' :
+                           ${color} == 'yellow' ? 'bg-yellow-500' : 'bg-blue-500')"
+                 th:attr="':style'='\'width: \' + Math.min((' + ${value} + ' / ' + ${max} + ') * 100, 100) + \'%\''"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Generic Stats Grid -->
+<div th:fragment="stats-grid(stats, columns)">
+    <div th:class="'grid grid-cols-1 gap-6 ' +
+                  (${columns} == 2 ? 'md:grid-cols-2' :
+                   ${columns} == 3 ? 'md:grid-cols-3' :
+                   ${columns} == 4 ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-3')">
+        <div th:each="stat : ${stats}" class="card">
+            <div class="card-body text-center">
+                <div th:if="${stat.icon}" class="w-12 h-12 mx-auto mb-4 rounded-lg flex items-center justify-center"
+                     th:class="${stat.iconBg} ?: 'bg-blue-100'">
+                    <span class="text-2xl" th:text="${stat.icon}">📊</span>
+                </div>
+                <div class="text-2xl font-bold text-slate-800"
+                     th:attr="'x-text'=${stat.currency} ? 'formatCurrency(' + ${stat.value} + ')' : ${stat.value}"
+                     th:text="${stat.displayValue}">$1,234</div>
+                <div class="text-sm text-muted" th:text="${stat.label}">Stat Label</div>
+                <div th:if="${stat.change}"
+                     th:class="'text-xs mt-1 ' + (${stat.changePositive} ? 'text-green-600' : 'text-red-600')">
+                    <span th:text="${stat.changePositive} ? '↑' : '↓'">↑</span>
+                    <span th:text="${stat.change}">5%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Generic Alert/Banner -->
+<div th:fragment="alert-banner(type, title, message, dismissible, icon)">
+    <div th:class="'alert alert-' + (${type} ?: 'info') + (${dismissible} ? ' relative' : '')"
+         th:attr="'x-data'=${dismissible} ? '{ show: true }' : null"
+         th:attr="'x-show'=${dismissible} ? 'show' : null"
+         x-transition>
+        <div class="flex items-start">
+            <div th:if="${icon}" class="flex-shrink-0 mr-3">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <!-- Icon path based on type -->
+                    <path th:if="${type == 'success'}" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path>
+                    <path th:if="${type == 'error'}" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"></path>
+                    <path th:if="${type == 'warning'}" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"></path>
+                </svg>
+            </div>
+            <div class="flex-1">
+                <h4 th:if="${title}" class="font-medium mb-1" th:text="${title}">Alert Title</h4>
+                <p th:text="${message}">Alert message</p>
+            </div>
+            <button th:if="${dismissible}"
+                    @click="show = false"
+                    class="flex-shrink-0 ml-4 text-slate-400 hover:text-slate-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+</html>

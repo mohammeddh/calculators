@@ -1,0 +1,170 @@
+<!--
+===================================
+COMPONENTS/GENERIC/FORMS.HTML - Generic Form Components
+===================================
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Generic Text Input -->
+<div th:fragment="text-input(id, label, model, placeholder, required, helpText)">
+    <div class="form-group">
+        <label th:if="${label}" th:for="${id}" class="form-label" th:text="${label}">Label</label>
+        <input th:id="${id}"
+               th:name="${id}"
+               type="text"
+               th:placeholder="${placeholder}"
+               th:required="${required}"
+               th:attr="x-model=${model}"
+               class="form-input">
+        <p th:if="${helpText}" class="text-small mt-1" th:text="${helpText}">Help text</p>
+    </div>
+</div>
+
+<!-- Generic Number Input -->
+<div th:fragment="number-input(id, label, model, placeholder, min, max, step, required)">
+    <div class="form-group">
+        <label th:if="${label}" th:for="${id}" class="form-label" th:text="${label}">Label</label>
+        <input th:id="${id}"
+               th:name="${id}"
+               type="number"
+               th:placeholder="${placeholder}"
+               th:min="${min}"
+               th:max="${max}"
+               th:step="${step}"
+               th:required="${required}"
+               th:attr="x-model=${model}"
+               class="form-input">
+    </div>
+</div>
+
+<!-- Generic Number Input with Prefix -->
+<div th:fragment="number-input-prefix(id, label, model, prefix, placeholder, min, max, step, required)">
+    <div class="form-group">
+        <label th:if="${label}" th:for="${id}" class="form-label" th:text="${label}">Label</label>
+        <div class="input-group">
+            <span class="input-prefix" th:text="${prefix}">$</span>
+            <input th:id="${id}"
+                   th:name="${id}"
+                   type="number"
+                   th:placeholder="${placeholder}"
+                   th:min="${min}"
+                   th:max="${max}"
+                   th:step="${step}"
+                   th:required="${required}"
+                   th:attr="x-model=${model}"
+                   class="form-input input-group-start">
+        </div>
+    </div>
+</div>
+
+<!-- Generic Number Input with Suffix -->
+<div th:fragment="number-input-suffix(id, label, model, suffix, placeholder, min, max, step, required)">
+    <div class="form-group">
+        <label th:if="${label}" th:for="${id}" class="form-label" th:text="${label}">Label</label>
+        <div class="input-group">
+            <input th:id="${id}"
+                   th:name="${id}"
+                   type="number"
+                   th:placeholder="${placeholder}"
+                   th:min="${min}"
+                   th:max="${max}"
+                   th:step="${step}"
+                   th:required="${required}"
+                   th:attr="x-model=${model}"
+                   class="form-input input-group-end">
+            <span class="input-suffix" th:text="${suffix}">%</span>
+        </div>
+    </div>
+</div>
+
+<!-- Generic Select -->
+<div th:fragment="select(id, label, model, options, required)">
+    <div class="form-group">
+        <label th:if="${label}" th:for="${id}" class="form-label" th:text="${label}">Label</label>
+        <select th:id="${id}"
+                th:name="${id}"
+                th:required="${required}"
+                th:attr="x-model=${model}"
+                class="form-select">
+            <option th:each="option : ${options}"
+                    th:value="${option.value}"
+                    th:text="${option.text}">Option</option>
+        </select>
+    </div>
+</div>
+
+<!-- Generic Checkbox -->
+<div th:fragment="checkbox(id, label, model, description)">
+    <div class="flex items-start space-x-3">
+        <input th:id="${id}"
+               th:name="${id}"
+               type="checkbox"
+               th:attr="x-model=${model}"
+               class="form-checkbox mt-1">
+        <div>
+            <label th:for="${id}" class="form-label" th:text="${label}">Checkbox Label</label>
+            <p th:if="${description}" class="text-small" th:text="${description}">Description</p>
+        </div>
+    </div>
+</div>
+
+<!-- Generic Submit Button -->
+<div th:fragment="submit-button(text, loadingText, loadingModel, styleClass)">
+    <button type="submit"
+            th:attr="':disabled'=${loadingModel}"
+            th:class="'btn btn-block ' + (${styleClass} ?: 'btn-primary btn-lg')">
+        <span th:attr="'x-show'='!' + ${loadingModel}" th:text="${text} ?: 'Calculate'">Calculate</span>
+        <span th:if="${loadingText}" th:attr="'x-show'=${loadingModel}" class="flex items-center justify-center">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span th:text="${loadingText} ?: 'Calculating...'">Calculating...</span>
+        </span>
+    </button>
+</div>
+
+<!-- Generic Form Row (2 columns) -->
+<div th:fragment="form-row-2(leftContent, rightContent)">
+    <div class="form-row">
+        <div th:replace="${leftContent}"></div>
+        <div th:replace="${rightContent}"></div>
+    </div>
+</div>
+
+<!-- Generic Form Row (3 columns) -->
+<div th:fragment="form-row-3(leftContent, centerContent, rightContent)">
+    <div class="form-row-3">
+        <div th:replace="${leftContent}"></div>
+        <div th:replace="${centerContent}"></div>
+        <div th:replace="${rightContent}"></div>
+    </div>
+</div>
+
+<!-- Generic Section with Title -->
+<div th:fragment="form-section(title, content, collapsible, expanded)">
+    <div th:class="'space-y-4' + (${collapsible} ? ' border-t border-slate-200 pt-6' : '')">
+        <div th:if="${title}"
+             th:class="'flex items-center' + (${collapsible} ? ' cursor-pointer' : '')"
+             th:attr="'@click'=${collapsible} ? 'expanded = !expanded' : null">
+            <h3 class="heading-tertiary" th:text="${title}">Section Title</h3>
+            <svg th:if="${collapsible}"
+                 class="w-5 h-5 ml-2 transition-transform"
+                 th:attr="':class'='expanded ? \'rotate-180\' : \'\''"
+                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </div>
+
+        <div th:if="${collapsible}"
+             th:attr="'x-show'=${expanded} ?: 'expanded'"
+             x-transition>
+            <div th:replace="${content}"></div>
+        </div>
+
+        <div th:unless="${collapsible}" th:replace="${content}"></div>
+    </div>
+</div>
+
+</html>

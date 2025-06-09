@@ -1,0 +1,68 @@
+<!--
+===================================
+COMPONENTS/GENERIC/CONTAINERS.HTML - Responsive Containers & Layouts
+===================================
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Generic 2-Column Container (stacks on mobile) -->
+<div th:fragment="two-col-container(leftContent, rightContent, gap, reverse)">
+    <div th:class="'grid grid-cols-1 lg:grid-cols-2 ' +
+                  (${gap} ?: 'gap-8') +
+                  (${reverse} ? ' lg:grid-flow-col-dense' : '')">
+        <div th:class="${reverse} ? 'lg:col-start-2' : ''" th:replace="${leftContent}"></div>
+        <div th:class="${reverse} ? 'lg:col-start-1' : ''" th:replace="${rightContent}"></div>
+    </div>
+</div>
+
+<!-- Generic 3-Column Container (stacks on mobile) -->
+<div th:fragment="three-col-container(leftContent, centerContent, rightContent, gap)">
+    <div th:class="'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ' + (${gap} ?: 'gap-6')">
+        <div th:replace="${leftContent}"></div>
+        <div th:replace="${centerContent}"></div>
+        <div th:replace="${rightContent}"></div>
+    </div>
+</div>
+
+<!-- Generic Grid Container (auto-fit responsive) -->
+<div th:fragment="grid-container(content, minWidth, gap)">
+    <div th:class="'grid gap-' + (${gap} ?: '6')"
+         th:style="'grid-template-columns: repeat(auto-fit, minmax(' + (${minWidth} ?: '280px') + ', 1fr))'">
+        <div th:replace="${content}"></div>
+    </div>
+</div>
+
+<!-- Responsive Card Container -->
+<div th:fragment="card-container(content, padding, shadow, hover)">
+    <div th:class="'card ' +
+                  (${hover} ? 'card-hover ' : '') +
+                  (${shadow} ?: '') +
+                  (${padding} ? 'card-body-' + ${padding} : 'card-body')">
+        <div th:replace="${content}"></div>
+    </div>
+</div>
+
+<!-- Stack Container (mobile-first, then horizontal) -->
+<div th:fragment="stack-container(content, direction, gap, breakpoint)">
+    <div th:class="'flex flex-col ' +
+                  (${breakpoint} ?: 'md') + ':flex-' + (${direction} ?: 'row') + ' ' +
+                  (${gap} ? 'gap-' + ${gap} : 'gap-4')">
+        <div th:replace="${content}"></div>
+    </div>
+</div>
+
+<!-- Sidebar Layout Container -->
+<div th:fragment="sidebar-layout(sidebarContent, mainContent, sidebarPosition, sidebarWidth)">
+    <div th:class="'grid grid-cols-1 lg:grid-cols-' +
+                  (${sidebarWidth} ?: '4') + ' gap-8'">
+        <aside th:class="'lg:col-span-1' + (${sidebarPosition} == 'right' ? ' lg:order-2' : '')">
+            <div th:replace="${sidebarContent}"></div>
+        </aside>
+        <main th:class="'lg:col-span-3' + (${sidebarPosition} == 'right' ? ' lg:order-1' : '')">
+            <div th:replace="${mainContent}"></div>
+        </main>
+    </div>
+</div>
+
+</html>

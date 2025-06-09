@@ -1,0 +1,172 @@
+<!--
+===================================
+COMPONENTS/GENERIC/TABLES.HTML - Table Components
+===================================
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Generic Responsive Table -->
+<div th:fragment="table(title, headers, rows, striped, hover, compact, searchable)">
+    <div class="card">
+        <!-- Table Header -->
+        <div th:if="${title or searchable}" class="card-body border-b border-slate-200">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <h3 th:if="${title}" class="heading-tertiary" th:text="${title}">Table Title</h3>
+
+                <!-- Search Input -->
+                <div th:if="${searchable}" class="relative">
+                    <input type="text"
+                           placeholder="Search..."
+                           class="form-input pl-10 pr-4 py-2 w-full md:w-64"
+                           x-model="searchTerm"
+                           @input="filterTable()">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                        <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container">
+            <table th:class="'table' +
+                            (${striped} ? ' table-striped' : '') +
+                            (${hover} ? ' table-hover' : '') +
+                            (${compact} ? ' table-compact' : '')">
+                <!-- Headers -->
+                <thead class="table-header">
+                <tr>
+                    <th th:each="header : ${headers}"
+                        class="table-th"
+                        th:text="${header.text}"
+                        th:class="${header.sortable} ? 'cursor-pointer select-none' : ''"
+                        th:attr="@click=${header.sortable} ? 'sortTable(\'' + ${header.key} + '\')' : null">
+                        Header
+                        <svg th:if="${header.sortable}" class="inline w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                        </svg>
+                    </th>
+                </tr>
+                </thead>
+
+                <!-- Rows -->
+                <tbody>
+                <tr th:each="row : ${rows}"
+                    class="table-row-hover"
+                    th:attr="'x-show'=${searchable} ? 'showRow(row)' : null">
+                    <td th:each="cell, cellStat : ${row}"
+                        class="table-td"
+                        th:class="${headers[cellStat.index].align} ? 'text-' + ${headers[cellStat.index].align} : ''"
+                        th:text="${cell}">Cell</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Table Footer (Pagination) -->
+        <div th:if="${rows.size() > 10}" class="card-body border-t border-slate-200">
+            <div class="flex items-center justify-between">
+                <div class="text-sm text-muted">
+                    Showing <span x-text="visibleRows"></span> of <span th:text="${rows.size()}"></span> entries
+                </div>
+                <div class="flex space-x-2">
+                    <button class="btn btn-outline btn-sm" @click="previousPage()" :disabled="currentPage === 1">Previous</button>
+                    <button class="btn btn-outline btn-sm" @click="nextPage()" :disabled="currentPage === totalPages">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Simple Data Table (no features) -->
+<div th:fragment="simple-table(headers, rows, caption)">
+    <div class="table-container">
+        <table class="table">
+            <caption th:if="${caption}" class="sr-only" th:text="${caption}">Table Caption</caption>
+            <thead class="table-header">
+            <tr>
+                <th th:each="header : ${headers}" class="table-th" th:text="${header}">Header</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="row : ${rows}">
+                <td th:each="cell : ${row}" class="table-td" th:text="${cell}">Cell</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Comparison Table (for calculator results) -->
+<div th:fragment="comparison-table(title, scenarios, metrics)">
+    <div class="card">
+        <div th:if="${title}" class="card-body border-b border-slate-200">
+            <h3 class="heading-tertiary" th:text="${title}">Comparison</h3>
+        </div>
+
+        <div class="table-container">
+            <table class="table">
+                <thead class="table-header">
+                <tr>
+                    <th class="table-th">Metric</th>
+                    <th th:each="scenario : ${scenarios}" class="table-th text-center" th:text="${scenario.name}">Scenario</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="metric : ${metrics}">
+                    <td class="table-td font-medium" th:text="${metric.label}">Metric</td>
+                    <td th:each="scenario : ${scenarios}"
+                        class="table-td text-center"
+                        th:text="${metric.values[scenario.key]}">Value</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Amortization/Schedule Table -->
+<div th:fragment="schedule-table(title, schedule, showAll)">
+    <div class="card" x-data="{ showAll: false }">
+        <div class="card-body border-b border-slate-200">
+            <div class="flex items-center justify-between">
+                <h3 class="heading-tertiary" th:text="${title} ?: 'Payment Schedule'">Payment Schedule</h3>
+                <button @click="showAll = !showAll" class="btn btn-outline btn-sm">
+                    <span x-text="showAll ? 'Show Less' : 'Show All'">Show All</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead class="table-header">
+                <tr>
+                    <th class="table-th">Payment #</th>
+                    <th class="table-th">Date</th>
+                    <th class="table-th text-right">Payment</th>
+                    <th class="table-th text-right">Principal</th>
+                    <th class="table-th text-right">Interest</th>
+                    <th class="table-th text-right">Balance</th>
+                </tr>
+                </thead>
+                <tbody>
+                <template x-for="(payment, index) in schedule" :key="index">
+                    <tr x-show="showAll || index < 12" class="table-row-hover">
+                        <td class="table-td text-center" x-text="payment.number">1</td>
+                        <td class="table-td" x-text="payment.date">Jan 2025</td>
+                        <td class="table-td text-right" x-text="formatCurrency(payment.amount)">$2,069.56</td>
+                        <td class="table-td text-right" x-text="formatCurrency(payment.principal)">$1,500.00</td>
+                        <td class="table-td text-right" x-text="formatCurrency(payment.interest)">$569.56</td>
+                        <td class="table-td text-right" x-text="formatCurrency(payment.balance)">$298,500.00</td>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</html>

@@ -1,0 +1,102 @@
+<!--
+===================================
+COMPONENTS/GENERIC/TABS.HTML - Tab Components
+===================================
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Generic Tab Container -->
+<div th:fragment="tabs(tabs, defaultTab)">
+    <div x-data="{ activeTab: '${defaultTab}' }" class="space-y-6">
+        <!-- Tab Navigation -->
+        <div class="border-b border-slate-200">
+            <nav class="-mb-px flex space-x-8 overflow-x-auto">
+                <button th:each="tab : ${tabs}"
+                        th:attr="'@click'='activeTab = \'' + ${tab.id} + '\'',"
+                        th:class="'whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-colors ' +
+                                'hover:text-slate-700 hover:border-slate-300'"
+                        :class="activeTab === '${tab.id}' ?
+                               'border-blue-500 text-blue-600' :
+                               'border-transparent text-slate-500'">
+                    <span th:text="${tab.label}">Tab Label</span>
+                    <span th:if="${tab.count}"
+                          class="ml-2 py-0.5 px-2 rounded-full text-xs"
+                          :class="activeTab === '${tab.id}' ?
+                                 'bg-blue-100 text-blue-600' :
+                                 'bg-slate-100 text-slate-600'"
+                          th:text="${tab.count}">0</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <div th:each="tab : ${tabs}"
+                 th:attr="'x-show'='activeTab === \'' + ${tab.id} + '\'',"
+                 x-transition>
+                <div th:replace="${tab.content}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Vertical Tabs (sidebar style) -->
+<div th:fragment="vertical-tabs(tabs, defaultTab)">
+    <div x-data="{ activeTab: '${defaultTab}' }" class="flex flex-col md:flex-row gap-6">
+        <!-- Tab Navigation -->
+        <div class="md:w-64 flex-shrink-0">
+            <nav class="space-y-1">
+                <button th:each="tab : ${tabs}"
+                        th:attr="'@click'='activeTab = \'' + ${tab.id} + '\'',"
+                        class="w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                        :class="activeTab === '${tab.id}' ?
+                               'bg-blue-50 text-blue-700 border-l-4 border-blue-500' :
+                               'text-slate-600 hover:text-slate-900 hover:bg-slate-50'">
+                    <div class="flex items-center justify-between">
+                        <span th:text="${tab.label}">Tab Label</span>
+                        <span th:if="${tab.badge}"
+                              class="ml-2 py-0.5 px-2 rounded-full text-xs bg-slate-100 text-slate-600"
+                              th:text="${tab.badge}">New</span>
+                    </div>
+                    <p th:if="${tab.description}" class="text-xs text-slate-500 mt-1" th:text="${tab.description}">Description</p>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="flex-1 min-w-0">
+            <div th:each="tab : ${tabs}"
+                 th:attr="'x-show'='activeTab === \'' + ${tab.id} + '\'',"
+                 x-transition>
+                <div th:replace="${tab.content}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pill Tabs (rounded style) -->
+<div th:fragment="pill-tabs(tabs, defaultTab, centered)">
+    <div x-data="{ activeTab: '${defaultTab}' }" class="space-y-6">
+        <!-- Tab Navigation -->
+        <div th:class="'flex flex-wrap gap-2 ' + (${centered} ? 'justify-center' : '')">
+            <button th:each="tab : ${tabs}"
+                    th:attr="'@click'='activeTab = \'' + ${tab.id} + '\'',"
+                    class="px-4 py-2 rounded-full text-sm font-medium transition-all"
+                    :class="activeTab === '${tab.id}' ?
+                           'bg-blue-600 text-white shadow-md' :
+                           'bg-slate-100 text-slate-700 hover:bg-slate-200'">
+                <span th:text="${tab.label}">Tab Label</span>
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div th:each="tab : ${tabs}"
+             th:attr="'x-show'='activeTab === \'' + ${tab.id} + '\'',"
+             x-transition>
+            <div th:replace="${tab.content}"></div>
+        </div>
+    </div>
+</div>
+
+</html>

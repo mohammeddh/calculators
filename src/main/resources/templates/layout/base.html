@@ -1,26 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout (content)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout (title, content)">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${pageTitle}">CalcHub - Beautiful Calculator Tools</title>
-    <meta name="description" th:content="${pageDescription}">
-    <meta name="keywords" th:content="${pageKeywords}">
-    <meta name="author" th:content="${appAuthor}">
+    <title th:text="${title} ?: 'CalcHub - Beautiful Calculator Tools'">CalcHub</title>
+
+    <!-- Meta tags -->
+    <meta name="description" th:content="${pageDescription} ?: 'Beautiful calculator tools for finance, health, math, and more'">
+    <meta name="keywords" th:content="${pageKeywords} ?: 'calculator, online calculator, mortgage, BMI, loan calculator'">
+    <meta name="author" th:content="${appAuthor} ?: 'CalcHub'">
     <meta name="robots" content="index, follow">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" th:content="${canonicalUrl}">
-    <meta property="og:title" th:content="${pageTitle}">
+    <!-- Open Graph -->
+    <meta property="og:title" th:content="${title}">
     <meta property="og:description" th:content="${pageDescription}">
-    <meta property="og:image" th:content="${appUrl + ogImage}">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" th:content="${canonicalUrl}">
-    <meta property="twitter:title" th:content="${pageTitle}">
-    <meta property="twitter:description" th:content="${pageDescription}">
+    <meta property="og:image" th:content="${ogImage} ?: '/images/og-default.jpg'">
+    <meta property="og:url" th:content="${canonicalUrl}">
+    <meta property="og:type" content="website">
 
     <!-- Canonical URL -->
     <link rel="canonical" th:href="${canonicalUrl}">
@@ -28,263 +24,195 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-    <!-- Google Fonts -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Chart.js for calculator visualizations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-
-    <!-- Tailwind CSS with custom configuration -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        // Primary color scheme - Soft orange (#E67E22)
-                        primary: {
-                            50: '#FEF9F3',
-                            100: '#FDF2E9',
-                            200: '#FCE4CE',
-                            300: '#F9D5B3',
-                            400: '#F5B584',
-                            500: '#E67E22',
-                            600: '#D35400',
-                            700: '#A04000',
-                            800: '#7E3300',
-                            900: '#5C2600',
-                        },
-                        // Secondary color scheme - Blue (#3498DB)
-                        secondary: {
-                            50: '#F8FCFE',
-                            100: '#EBF5FB',
-                            200: '#D5E8F7',
-                            300: '#AEDCF2',
-                            400: '#85C1E9',
-                            500: '#3498DB',
-                            600: '#2E86C1',
-                            700: '#2874A6',
-                            800: '#21618C',
-                            900: '#1B4F72',
-                        },
-                        // Accent color scheme - Dark blue-gray (#2C3E50)
-                        accent: {
-                            50: '#F8F9FA',
-                            100: '#ECF0F1',
-                            200: '#D5DBDB',
-                            300: '#BDC3C7',
-                            400: '#85929E',
-                            500: '#2C3E50',
-                            600: '#273746',
-                            700: '#212F3D',
-                            800: '#1C2833',
-                            900: '#17202A',
-                        },
-                        // Background color - Off-white (#FAF9F6)
-                        background: '#FAF9F6',
-                        // Text color - Slate gray (#2D3436)
-                        'text-primary': '#2D3436',
-                        'text-secondary': '#636E72',
-                        'text-muted': '#74B9FF',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-                    },
-                    screens: {
-                        'xs': '475px',
-                    },
-                }
-            }
-        }
-    </script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- Schema.org markup -->
-    <script type="application/ld+json" th:inline="javascript">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebApplication",
-            "name": "[[${appName}]] Calculator Tools",
-            "url": "[[${appUrl}]]",
-            "description": "[[${appDescription}]]",
-            "applicationCategory": "UtilitiesApplication",
-            "operatingSystem": "Any",
-            "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD"
-            }
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* ==============================================
+           CUSTOM THEME USING @APPLY
+           ============================================== */
+
+        /* Base Typography */
+        .heading-primary { @apply text-2xl md:text-3xl font-bold text-slate-800 mb-6; }
+        .heading-secondary { @apply text-xl font-semibold text-slate-700 mb-4; }
+        .heading-tertiary { @apply text-lg font-medium text-slate-700 mb-3; }
+        .text-body { @apply text-slate-600 leading-relaxed; }
+        .text-small { @apply text-sm text-slate-500; }
+
+        /* Layout Components */
+        .container-main { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+        .container-narrow { @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8; }
+
+        /* Header */
+        .header { @apply bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm; }
+        .nav { @apply flex justify-between items-center h-16; }
+        .nav-brand { @apply flex items-center space-x-3 text-xl font-bold text-slate-800; }
+        .nav-links { @apply hidden md:flex space-x-8; }
+        .nav-link { @apply text-slate-600 hover:text-blue-600 font-medium transition-colors duration-200; }
+        .nav-link-active { @apply text-blue-600 border-b-2 border-blue-600; }
+        .mobile-menu-btn { @apply md:hidden p-2 rounded-md text-slate-600 hover:bg-slate-100; }
+
+        /* Cards & Containers */
+        .card { @apply bg-white rounded-lg border border-slate-200 shadow-sm; }
+        .card-hover { @apply hover:shadow-md transition-shadow duration-200; }
+        .card-body { @apply p-6; }
+        .card-body-sm { @apply p-4; }
+        .card-body-lg { @apply p-8; }
+
+        /* Calculator Specific */
+        .calc-container { @apply grid grid-cols-1 lg:grid-cols-2 gap-8; }
+        .calc-form-section { @apply card; }
+        .calc-results-section { @apply card; }
+        .calc-highlight-box { @apply bg-green-50 border border-green-200 rounded-lg p-4; }
+
+        /* Form Components */
+        .form-group { @apply space-y-2; }
+        .form-label { @apply block text-sm font-medium text-slate-700; }
+        .form-input { @apply w-full px-3 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors; }
+        .form-select { @apply w-full px-3 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white; }
+        .form-checkbox { @apply w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-2 focus:ring-blue-500; }
+        .form-row { @apply grid grid-cols-1 md:grid-cols-2 gap-4; }
+        .form-row-3 { @apply grid grid-cols-1 md:grid-cols-3 gap-4; }
+
+        /* Input Groups */
+        .input-group { @apply relative flex; }
+        .input-prefix { @apply inline-flex items-center px-3 text-sm text-slate-500 bg-slate-50 border border-r-0 border-slate-300 rounded-l-md; }
+        .input-suffix { @apply inline-flex items-center px-3 text-sm text-slate-500 bg-slate-50 border border-l-0 border-slate-300 rounded-r-md; }
+        .input-group .form-input { @apply rounded-none; }
+        .input-group-start .form-input { @apply rounded-r-md; }
+        .input-group-end .form-input { @apply rounded-l-md; }
+
+        /* Buttons */
+        .btn { @apply inline-flex items-center justify-center px-4 py-2 font-medium rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2; }
+        .btn-primary { @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500; }
+        .btn-secondary { @apply bg-slate-600 text-white hover:bg-slate-700 focus:ring-slate-500; }
+        .btn-success { @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-500; }
+        .btn-outline { @apply border border-slate-300 text-slate-700 hover:bg-slate-50 focus:ring-slate-500; }
+        .btn-lg { @apply px-6 py-3 text-lg; }
+        .btn-sm { @apply px-3 py-1.5 text-sm; }
+        .btn-block { @apply w-full; }
+
+        /* Tables */
+        .table-container { @apply overflow-x-auto; }
+        .table { @apply min-w-full divide-y divide-slate-200; }
+        .table-header { @apply bg-slate-50; }
+        .table-th { @apply px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider; }
+        .table-td { @apply px-6 py-4 whitespace-nowrap text-sm text-slate-900; }
+        .table-row-hover { @apply hover:bg-slate-50; }
+        .table-striped tbody tr:nth-child(even) { @apply bg-slate-50; }
+
+        /* Results Display */
+        .result-grid { @apply grid grid-cols-1 md:grid-cols-2 gap-4; }
+        .result-item { @apply flex justify-between items-center py-3 px-4 border-b border-slate-100 last:border-b-0; }
+        .result-label { @apply text-slate-600 font-medium; }
+        .result-value { @apply text-slate-900 font-semibold; }
+        .result-highlight { @apply bg-blue-50 rounded-lg px-4 py-3; }
+        .result-highlight .result-label { @apply text-blue-800; }
+        .result-highlight .result-value { @apply text-blue-900 text-lg; }
+
+        /* Chart Container */
+        .chart-container { @apply bg-slate-50 rounded-lg p-6 border border-slate-200; }
+        .chart-title { @apply text-center font-medium text-slate-700 mb-4; }
+
+        /* Alerts & Messages */
+        .alert { @apply rounded-md p-4 mb-4; }
+        .alert-info { @apply bg-blue-50 border border-blue-200 text-blue-800; }
+        .alert-success { @apply bg-green-50 border border-green-200 text-green-800; }
+        .alert-warning { @apply bg-yellow-50 border border-yellow-200 text-yellow-800; }
+        .alert-error { @apply bg-red-50 border border-red-200 text-red-800; }
+
+        /* Breadcrumbs */
+        .breadcrumb { @apply bg-slate-50 border-b border-slate-200 py-3; }
+        .breadcrumb-list { @apply flex items-center space-x-2 text-sm; }
+        .breadcrumb-item { @apply text-slate-600; }
+        .breadcrumb-link { @apply text-blue-600 hover:text-blue-800; }
+        .breadcrumb-separator { @apply text-slate-400; }
+
+        /* Footer */
+        .footer { @apply bg-slate-900 text-white mt-16; }
+        .footer-links { @apply flex flex-wrap justify-center gap-6 mb-8; }
+        .footer-link { @apply text-slate-300 hover:text-white transition-colors; }
+        .footer-bottom { @apply border-t border-slate-800 pt-8 text-center text-slate-400; }
+
+        /* Utilities */
+        .section-padding { @apply py-12; }
+        .section-padding-lg { @apply py-16; }
+        .divider { @apply border-t border-slate-200 my-8; }
+        .text-muted { @apply text-slate-500; }
+        .bg-muted { @apply bg-slate-50; }
+
+        /* Calculator Grid Layouts */
+        .calc-input-grid { @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4; }
+        .calc-result-summary { @apply space-y-4; }
+        .calc-breakdown { @apply border border-slate-200 rounded-lg divide-y divide-slate-200; }
+
+        /* Responsive Utilities */
+        @media (max-width: 768px) {
+            .mobile-stack { @apply space-y-4; }
+            .mobile-full { @apply w-full; }
         }
-    </script>
+
+        /* Animation States */
+        .fade-in { @apply opacity-0 translate-y-4 transition-all duration-300; }
+        .fade-in.active { @apply opacity-100 translate-y-0; }
+
+        /* Loading States */
+        .loading { @apply opacity-50 pointer-events-none; }
+        .loading::after {
+            content: '';
+            @apply absolute inset-0 bg-white bg-opacity-50;
+        }
+    </style>
 </head>
-<body class="bg-background text-text-primary font-sans min-h-screen">
+
+<body class="bg-slate-50 min-h-screen font-sans">
 <!-- Header -->
-<header class="bg-gradient-to-r from-accent-500 to-accent-600 text-white sticky top-0 z-50 shadow-lg">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <nav class="flex justify-between items-center h-16">
-            <a href="/" class="text-lg sm:text-xl font-semibold text-white hover:opacity-90 transition-opacity">
-                ✨ <span th:text="${appName}">CalcHub</span>
-            </a>
-
-            <!-- Desktop Navigation -->
-            <ul class="hidden md:flex space-x-6 lg:space-x-8">
-                <li><a href="/" class="text-white/90 hover:text-white font-medium py-2 px-1 transition-colors relative"
-                       th:classappend="${activePage == 'home'} ? 'border-b-2 border-white' : ''">Home</a></li>
-                <li><a href="/about" class="text-white/90 hover:text-white font-medium py-2 px-1 transition-colors relative"
-                       th:classappend="${activePage == 'about'} ? 'border-b-2 border-white' : ''">About</a></li>
-                <li><a href="/tools" class="text-white/90 hover:text-white font-medium py-2 px-1 transition-colors relative"
-                       th:classappend="${activePage == 'tools'} ? 'border-b-2 border-white' : ''">Tools</a></li>
-                <li><a href="/contact" class="text-white/90 hover:text-white font-medium py-2 px-1 transition-colors relative"
-                       th:classappend="${activePage == 'contact'} ? 'border-b-2 border-white' : ''">Contact</a></li>
-            </ul>
-
-            <!-- Mobile Menu Toggle -->
-            <button id="mobile-menu-toggle" class="md:hidden flex flex-col justify-center gap-1 w-8 h-8 p-1" aria-label="Toggle navigation menu">
-                <span class="w-full h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
-                <span class="w-full h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
-                <span class="w-full h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
-            </button>
-        </nav>
-
-        <!-- Mobile Menu -->
-        <nav id="mobile-menu" class="md:hidden pb-4 hidden">
-            <a href="/" class="block py-3 px-4 text-white/90 hover:text-white font-medium border-l-4 transition-colors"
-               th:classappend="${activePage == 'home'} ? 'border-white bg-white/10' : 'border-transparent'">Home</a>
-            <a href="/about" class="block py-3 px-4 text-white/90 hover:text-white font-medium border-l-4 transition-colors"
-               th:classappend="${activePage == 'about'} ? 'border-white bg-white/10' : 'border-transparent'">About</a>
-            <a href="/tools" class="block py-3 px-4 text-white/90 hover:text-white font-medium border-l-4 transition-colors"
-               th:classappend="${activePage == 'tools'} ? 'border-white bg-white/10' : 'border-transparent'">Tools</a>
-            <a href="/contact" class="block py-3 px-4 text-white/90 hover:text-white font-medium border-l-4 transition-colors"
-               th:classappend="${activePage == 'contact'} ? 'border-white bg-white/10' : 'border-transparent'">Contact</a>
-        </nav>
-    </div>
-</header>
+<header th:replace="~{fragments/header :: header}"></header>
 
 <!-- Breadcrumb -->
-<div th:if="${breadcrumbs != null and !breadcrumbs.empty}" class="bg-white border-b border-gray-200 py-3">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <nav aria-label="Breadcrumb" class="text-sm text-text-secondary flex items-center space-x-2 overflow-x-auto">
-            <th:block th:each="crumb, iter : ${breadcrumbs}">
-                <th:block th:if="${!iter.last}">
-                    <a href="/" th:if="${crumb == 'Home'}" th:text="${crumb}"
-                       class="text-text-secondary hover:text-primary-500 transition-colors whitespace-nowrap">Home</a>
-                    <span th:unless="${crumb == 'Home'}" th:text="${crumb}" class="whitespace-nowrap">Breadcrumb</span>
-                    <span class="text-gray-300 flex-shrink-0">›</span>
-                </th:block>
-                <span th:if="${iter.last}" th:text="${crumb}" class="text-text-primary font-medium whitespace-nowrap">Current Page</span>
-            </th:block>
-        </nav>
-    </div>
-</div>
+<nav th:if="${breadcrumbs}" th:replace="~{fragments/breadcrumb :: breadcrumb}"></nav>
 
-<!-- Main Layout -->
-<div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-    <div class="py-6 lg:py-8">
-        <!-- Dynamic Layout Based on Sidebar Configuration -->
-        <div th:if="${showLeftSidebar and showRightSidebar}" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <!-- Left Sidebar -->
-            <aside class="lg:col-span-3 order-2 lg:order-1">
-                <div class="bg-white/50 rounded-xl p-4 lg:p-6 border border-gray-200 h-fit sticky top-24">
-                    <div th:replace="~{fragments/sidebar :: left-sidebar}"></div>
-                </div>
-            </aside>
-            <!-- Main Content -->
-            <main class="lg:col-span-6 order-1 lg:order-2">
-                <div class="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm border border-gray-200">
-                    <div th:replace="${content}"></div>
-                </div>
-            </main>
-            <!-- Right Sidebar -->
-            <aside class="lg:col-span-3 order-3">
-                <div class="bg-white/50 rounded-xl p-4 lg:p-6 border border-gray-200 h-fit sticky top-24">
-                    <div th:replace="~{fragments/sidebar :: right-sidebar}"></div>
-                </div>
-            </aside>
-        </div>
-
-        <div th:if="${showLeftSidebar and !showRightSidebar}" class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <!-- Left Sidebar -->
-            <aside class="order-2 lg:order-1">
-                <div class="bg-white/50 rounded-xl p-4 lg:p-6 border border-gray-200 h-fit sticky top-24">
-                    <div th:replace="~{fragments/sidebar :: left-sidebar}"></div>
-                </div>
-            </aside>
-            <!-- Main Content -->
-            <main class="lg:col-span-3 order-1 lg:order-2">
-                <div class="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm border border-gray-200">
-                    <div th:replace="${content}"></div>
-                </div>
-            </main>
-        </div>
-
-        <div th:if="${!showLeftSidebar and showRightSidebar}" class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <!-- Main Content -->
-            <main class="lg:col-span-3 order-1">
-                <div class="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm border border-gray-200">
-                    <div th:replace="${content}"></div>
-                </div>
-            </main>
-            <!-- Right Sidebar -->
-            <aside class="order-2">
-                <div class="bg-white/50 rounded-xl p-4 lg:p-6 border border-gray-200 h-fit sticky top-24">
-                    <div th:replace="~{fragments/sidebar :: right-sidebar}"></div>
-                </div>
-            </aside>
-        </div>
-
-        <div th:if="${!showLeftSidebar and !showRightSidebar}">
-            <!-- Main Content Only -->
-            <main>
-                <div class="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm border border-gray-200">
-                    <div th:replace="${content}"></div>
-                </div>
-            </main>
-        </div>
-    </div>
-</div>
+<!-- Main Content -->
+<main class="section-padding">
+    <div th:replace="${content}"></div>
+</main>
 
 <!-- Footer -->
-<footer class="bg-gradient-to-r from-accent-500 to-accent-600 text-white mt-12" role="contentinfo">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 lg:py-12">
-        <nav class="flex flex-wrap justify-center gap-4 lg:gap-6 mb-6" role="navigation">
-            <a href="/about" class="text-white/80 hover:text-white transition-colors text-sm lg:text-base">About Us</a>
-            <a href="/tools" class="text-white/80 hover:text-white transition-colors text-sm lg:text-base">Site Map</a>
-            <a href="/terms" class="text-white/80 hover:text-white transition-colors text-sm lg:text-base">Terms of Use</a>
-            <a href="/privacy" class="text-white/80 hover:text-white transition-colors text-sm lg:text-base">Privacy Policy</a>
-            <a href="/contact" class="text-white/80 hover:text-white transition-colors text-sm lg:text-base">Contact</a>
-            <a href="/help" class="text-white/80 hover:text-white transition-colors text-sm lg:text-base">Help</a>
-        </nav>
-        <div class="text-center text-white text-sm font-medium">
-            <p>&copy; 2025 <span th:text="${appName}">CalcHub</span>. Beautiful calculator tools for everyone.</p>
-        </div>
-    </div>
-</footer>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 
-<!-- JavaScript for mobile menu -->
+<!-- Alpine.js Global Functions -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
+    document.addEventListener('alpine:init', () => {
+        // Global utilities
+        Alpine.store('utils', {
+            formatCurrency(amount) {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD'
+                }).format(amount || 0);
+            },
 
-        if (mobileMenuToggle && mobileMenu) {
-            mobileMenuToggle.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-                // Animate hamburger
-                const spans = mobileMenuToggle.querySelectorAll('span');
-                if (mobileMenu.classList.contains('hidden')) {
-                    spans[0].style.transform = 'rotate(0) translateY(0)';
-                    spans[1].style.opacity = '1';
-                    spans[2].style.transform = 'rotate(0) translateY(0)';
-                } else {
-                    spans[0].style.transform = 'rotate(45deg) translateY(4px)';
-                    spans[1].style.opacity = '0';
-                    spans[2].style.transform = 'rotate(-45deg) translateY(-4px)';
-                }
-            });
-        }
+            formatNumber(num) {
+                return new Intl.NumberFormat('en-US').format(num || 0);
+            },
+
+            formatPercent(num) {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'percent',
+                    minimumFractionDigits: 2
+                }).format((num || 0) / 100);
+            }
+        });
     });
 </script>
-
 </body>
 </html>

@@ -2,58 +2,51 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <div th:fragment="left-sidebar">
-    <div class="text-center mb-3 lg:mb-4 text-xs text-text-muted uppercase tracking-wider font-medium">SPONSORED</div>
-    <div class="h-48 lg:h-64 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-text-muted font-medium text-center transition-all duration-200 hover:border-primary-500 hover:bg-primary-50 hover:text-primary-500 cursor-pointer"
-         onclick="handleAdClick('left-sidebar')">
-        <div class="text-xl lg:text-2xl mb-2">📢</div>
-        <div class="font-medium text-sm lg:text-base">Your Ad Here</div>
+    <div class="ad-header">SPONSORED</div>
+    <div class="ad-space" onclick="handleAdClick('left-sidebar')">
+        <div class="card-icon">📢</div>
+        <div class="font-medium text-responsive-lg">Your Ad Here</div>
         <small class="text-xs">250×250</small>
     </div>
 
     <!-- Calculator Quick Links -->
-    <div th:if="${featuredCalculators}" class="mt-6 lg:mt-8 pt-4 lg:pt-6 border-t border-gray-200">
-        <h3 class="text-sm lg:text-base font-semibold text-text-primary mb-3 lg:mb-4">Popular Calculators</h3>
+    <div th:if="${featuredCalculators}" class="sidebar-section">
+        <h3 class="sidebar-title">Popular Calculators</h3>
         <div class="space-y-2">
             <a th:each="calc : ${featuredCalculators}"
                th:href="${calc.url}"
-               class="flex items-center gap-2 lg:gap-3 p-2 lg:p-3 bg-gray-100 rounded-lg text-text-secondary transition-all duration-200 hover:bg-primary-50 hover:text-primary-500 hover:no-underline">
+               class="sidebar-link">
                 <span th:text="${calc.icon}" class="text-base lg:text-lg flex-shrink-0">🔢</span>
-                <span th:text="${calc.name}" class="text-xs lg:text-sm font-medium truncate">Calculator</span>
+                <span th:text="${calc.name}" class="text-responsive font-medium truncate">Calculator</span>
             </a>
         </div>
     </div>
 </div>
 
 <div th:fragment="right-sidebar">
-    <div class="text-center mb-3 lg:mb-4 text-xs text-text-muted uppercase tracking-wider font-medium">FEATURED</div>
-    <div class="h-48 lg:h-64 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-text-muted font-medium text-center transition-all duration-200 hover:border-primary-500 hover:bg-primary-50 hover:text-primary-500 cursor-pointer"
-         onclick="handleAdClick('right-sidebar')">
-        <div class="text-xl lg:text-2xl mb-2">⭐</div>
-        <div class="font-medium text-sm lg:text-base">Premium Space</div>
+    <div class="ad-header">FEATURED</div>
+    <div class="ad-space" onclick="handleAdClick('right-sidebar')">
+        <div class="card-icon">⭐</div>
+        <div class="font-medium text-responsive-lg">Premium Space</div>
         <small class="text-xs">250×250</small>
     </div>
 
     <!-- Newsletter Signup -->
-    <div class="mt-6 lg:mt-8 pt-4 lg:pt-6 border-t border-gray-200">
-        <h3 class="text-sm lg:text-base font-semibold text-text-primary mb-3 lg:mb-4">Stay Updated</h3>
-        <p class="text-xs lg:text-sm text-text-secondary mb-3 lg:mb-4">Get notified about new calculators and features.</p>
+    <div class="sidebar-section">
+        <h3 class="sidebar-title">Stay Updated</h3>
+        <p class="text-responsive text-text-secondary mb-3">Get notified about new calculators and features.</p>
         <form class="newsletter-form space-y-3">
-            <div>
-                <input type="email" name="email" placeholder="Your email"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs lg:text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-                       required>
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Your email" class="form-input" required>
             </div>
-            <button type="submit"
-                    class="w-full px-3 lg:px-4 py-2 bg-primary-500 text-white font-medium rounded-lg text-xs lg:text-sm transition-all duration-200 hover:bg-primary-600">
-                Subscribe
-            </button>
+            <button type="submit" class="btn-primary w-full text-responsive">Subscribe</button>
         </form>
     </div>
 
     <!-- Recent Updates -->
-    <div class="mt-6 lg:mt-8 pt-4 lg:pt-6 border-t border-gray-200">
-        <h3 class="text-sm lg:text-base font-semibold text-text-primary mb-3 lg:mb-4">Recent Updates</h3>
-        <div class="space-y-2 text-xs lg:text-sm text-text-secondary">
+    <div class="sidebar-section">
+        <h3 class="sidebar-title">Recent Updates</h3>
+        <div class="space-y-2 text-responsive text-text-secondary">
             <div class="flex items-start gap-2">
                 <span class="text-xs flex-shrink-0 mt-0.5">🔄</span>
                 <span>Improved mortgage calculator accuracy</span>
